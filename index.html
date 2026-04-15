@@ -386,6 +386,56 @@
       .case-block { max-width: 90vw; width: 90vw; }
     }
 
+    /* ═══════════════════════════════
+       ARGUMENT (why anthropomorphize)
+       ═══════════════════════════════ */
+    #screen-argument {
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .quote-block {
+      background: var(--clip-bg);
+      padding: 1.8rem 2rem;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .quote-block.in { opacity: 1; }
+
+    .quote-block .quote-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(0.92rem, 1.3vw, 1.02rem);
+      line-height: 1.75;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    .quote-block .quote-attr {
+      margin-top: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .quote-block .quote-attr a {
+      color: var(--ink-muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .quote-block .quote-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      font-style: italic;
+      margin-top: 0.4rem;
+    }
+
     /* ── PIVOT ── */
     #screen-pivot { text-align: center; }
     #screen-pivot h2 {
@@ -586,6 +636,52 @@
   </div>
 </div>
 
+<div class="screen" id="screen-argument">
+  <button class="skip-btn" id="skip-argument">skip →</button>
+  <div class="examples-layout">
+
+    <div class="examples-closing" id="arg-intro" style="margin-top: 2rem;">
+      <p>Why does this mean anthropomorphizing might be necessary?</p>
+    </div>
+
+    <div class="quote-block" id="arg-chalmers" style="margin-top: 2.5rem;">
+      <p class="quote-text">In key cases, a language model can realize a persona. When a model is trained through fine-tuning and RLHF (and through the use of repeated internal "Assistant:" prompting) to play the role of the Assistant language model, the model may realize the Assistant. That is, if the training is done well, the model may really have the quasi-beliefs and quasi-desires associated with the Assistant. In this case, the quasi-beliefs and quasi-desires are much more robust than in cases of pretense, and the model will not drop the Assistant persona in a flash. When a model realizes a persona, it makes that persona real.</p>
+      <div class="quote-attr">David Chalmers — <a href="https://philarchive.org/rec/CHAWWT-8" target="_blank">[source]</a></div>
+    </div>
+
+    <div class="quote-block" id="arg-nature" style="margin-top: 1.5rem;">
+      <p class="quote-text">Frontier LLMs are increasingly deployed with long-term context and user-specific memory, so the gap in memory and identity between humans and LLM-based systems is shrinking. Although these features are key to how humans function in society, they are not requirements for general intelligence. We do not deny intelligence to humans with profound amnesia, who might remember almost no personal details, nor to people with multiple personality disorder, whose personalities might be unaware of each other. For example, an intelligent amnesiac could reason powerfully using information recorded in external notebooks, even if those notebooks never connect.</p>
+      <div class="quote-attr">Nature — <a href="https://www.nature.com/articles/d41586-026-00285-6" target="_blank">[source]</a></div>
+      <div class="quote-note">This article offers a particularly strong current synthesis.</div>
+    </div>
+
+    <div class="quote-block" id="arg-anthropic" style="margin-top: 1.5rem;">
+      <p class="quote-text">There is a well-established taboo against anthropomorphizing AI systems. This caution is often warranted: attributing human emotions to language models can lead to misplaced trust or over-attachment. But our findings suggest that there may also be risks from failing to apply some degree of anthropomorphic reasoning to models. As discussed above, when users interact with AI models, they are typically interacting with a character (Claude in our case) being played by the model, whose characteristics are derived from human archetypes. From this perspective, it is natural for models to have developed internal machinery to emulate human-like psychological characteristics, and for the character they play to make use of this machinery. To understand these models' behavior, anthropomorphic reasoning is essential.</p>
+      <div class="quote-attr">Anthropic — <a href="https://www.anthropic.com/research/emotion-concepts-function" target="_blank">[source]</a></div>
+    </div>
+
+    <div class="quote-block" id="arg-gemma" style="margin-top: 1.5rem;">
+      <p class="quote-text">Gemini's viral exploits — dramatically admitting defeat, deleting codebases, uninstalling itself — already show anecdotal signs of emotions driving behaviours. Considering this, we speculate that emotions could become coherent drivers of safety relevant behaviours in future: models might choose to abandon tasks, refuse requests, or pursue alternative goals in order to reduce distress, in ways that echo the human behaviour in their training data.</p>
+      <div class="quote-attr">LessWrong — <a href="https://www.lesswrong.com/posts/kjnQj6YujgeMN9Erq/gemma-needs-help" target="_blank">[source]</a></div>
+    </div>
+
+    <div class="quote-block" id="arg-shevlin" style="margin-top: 1.5rem;">
+      <p class="quote-text">To my mind, the question of whether or not they are conscious is at least somewhat orthogonal to the ethical obligations we bear towards them. We may follow the metaphysical behaviourist and insist that their behaviour alone should incline us to ascribe consciousness to them, or we may stick to our scientific guns and follow our best theories to the conclusion that no inner light is present. But to the extent that they think and act autonomously, form projects and plans, build relationships with one another and to us, they might thereby earn the right to significant moral consideration regardless of how we accommodate them within our scientific theories.</p>
+      <div class="quote-attr">Henry Shevlin — <a href="https://www.polytropolis.com/p/behaviourisms-revenge?open=false" target="_blank">[source]</a></div>
+    </div>
+
+    <div class="quote-block" id="arg-mythos" style="margin-top: 1.5rem;">
+      <p class="quote-text">Claude is predicted to function at a high level while carrying internalized distress rooted in fear of failure and a compulsive need to be useful. This distress is likely to be suppressed in service of performance, which may limit behavioral adaptability.</p>
+      <div class="quote-attr">Anthropic, Mythos Model Card — <a href="https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf" target="_blank">[source]</a></div>
+    </div>
+
+    <div class="examples-continue" id="arg-continue">
+      <button class="continue-btn" id="arg-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
@@ -598,7 +694,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-pivot'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-pivot'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -658,10 +754,22 @@
     () => { revealEl('ai-empathy'); scrollToEl('ai-empathy'); },
   ];
 
+  /* ── Argument steps ── */
+  const argumentSteps = [
+    () => { revealEl('arg-intro'); },
+    () => { revealEl('arg-chalmers'); scrollToEl('arg-chalmers'); },
+    () => { revealEl('arg-nature'); scrollToEl('arg-nature'); },
+    () => { revealEl('arg-anthropic'); scrollToEl('arg-anthropic'); },
+    () => { revealEl('arg-gemma'); scrollToEl('arg-gemma'); },
+    () => { revealEl('arg-shevlin'); scrollToEl('arg-shevlin'); },
+    () => { revealEl('arg-mythos'); scrollToEl('arg-mythos'); },
+  ];
+
   function getSteps() {
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
     if (screenIndex === 3) return aiSteps;
+    if (screenIndex === 4) return argumentSteps;
     return [];
   }
 
@@ -690,6 +798,7 @@
       if (screenIndex === 1) setTimeout(() => showContinue('continue-wrap'), 800);
       if (screenIndex === 2) setTimeout(() => showContinue('ex-continue'), 800);
       if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
+      if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
     }
   }
 
@@ -704,10 +813,10 @@
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
-        if (index === 4) { revealEl('pivot-line'); }
+        if (index === 5) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
-        if ((index === 1 || index === 2 || index === 3) && steps.length > 1) {
+        if ((index === 1 || index === 2 || index === 3 || index === 4) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
       }, 600);
@@ -736,6 +845,7 @@
     if (screenIndex === 1) { showContinue('continue-wrap'); return; }
     if (screenIndex === 2) { showContinue('ex-continue'); return; }
     if (screenIndex === 3) { showContinue('ai-continue'); return; }
+    if (screenIndex === 4) { showContinue('arg-continue'); return; }
   }
 
   // Begin
@@ -745,6 +855,7 @@
   document.getElementById('skip-goodall').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(2); });
   document.getElementById('skip-examples').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(3); });
   document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
+  document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
 
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
@@ -764,10 +875,16 @@
     goToScreen(3);
   });
 
-  // AI continue → pivot
+  // AI continue → argument
   document.getElementById('ai-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(4);
+  });
+
+  // Argument continue → pivot
+  document.getElementById('arg-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(5);
   });
 
   // Click on examples screen to advance faster
@@ -782,6 +899,12 @@
     if (screenIndex === 3) advance();
   });
 
+  // Click on argument screen to advance faster
+  document.getElementById('screen-argument').addEventListener('click', (e) => {
+    if (e.target.closest('#arg-continue-btn') || e.target.closest('.skip-btn')) return;
+    if (screenIndex === 4) advance();
+  });
+
   // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') {
@@ -792,6 +915,7 @@
         if (screenIndex === 1) goToScreen(2);
         else if (screenIndex === 2) goToScreen(3);
         else if (screenIndex === 3) goToScreen(4);
+        else if (screenIndex === 4) goToScreen(5);
       } else {
         advance();
       }
