@@ -250,6 +250,21 @@
       letter-spacing: 0.02em;
     }
     .skip-btn:hover { color: var(--ink); }
+    .skip-end-btn {
+      position: fixed;
+      top: 2.8rem;
+      right: 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      color: var(--ink-ghost);
+      cursor: pointer;
+      z-index: 50;
+      transition: color 0.3s;
+      background: none;
+      border: none;
+      letter-spacing: 0.02em;
+    }
+    .skip-end-btn:hover { color: var(--ink-muted); }
 
     /* ═══════════════════════════════
        EXAMPLES (animal consciousness)
@@ -1245,6 +1260,7 @@
   </div>
 </div>
 
+<button class="skip-end-btn" id="skip-to-exercises" style="display:none;">skip to exercises →</button>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
 <script>
@@ -1785,6 +1801,18 @@
   }
   setupViewer('a');
   setupViewer('b');
+
+  // Skip to exercises button — visible on screens 1-6, hidden on begin and exercises
+  const skipEndBtn = document.getElementById('skip-to-exercises');
+  const origGoToScreen = goToScreen;
+  goToScreen = function(index) {
+    origGoToScreen(index);
+    skipEndBtn.style.display = (index >= 1 && index <= 6) ? 'block' : 'none';
+  };
+  skipEndBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    goToScreen(7);
+  });
 
 </script>
 </body>
