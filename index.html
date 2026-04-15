@@ -531,18 +531,7 @@
       .component-map { grid-template-columns: 1fr; }
     }
 
-    /* ── PIVOT ── */
-    #screen-pivot { text-align: center; }
-    #screen-pivot h2 {
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
-      font-weight: 400;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 1.5s ease, transform 1.4s ease;
-    }
-    #screen-pivot h2.in { opacity: 1; transform: translateY(0); }
+    /* ── (pivot removed) ── */
   </style>
 </head>
 <body>
@@ -902,9 +891,6 @@
   </div>
 </div>
 
-<div class="screen" id="screen-pivot">
-  <h2 id="pivot-line">Here we are again.</h2>
-</div>
 
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
@@ -914,7 +900,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-pivot'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -1061,7 +1047,6 @@
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
-        if (index === 7) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
         if ((index >= 1 && index <= 6) && steps.length > 1) {
@@ -1145,10 +1130,10 @@
     goToScreen(6);
   });
 
-  // Closing continue → pivot
+  // Closing continue — will eventually go to exercises
   document.getElementById('close-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    goToScreen(7);
+    // TODO: goToScreen for exercises page
   });
 
   // Click on examples screen to advance faster
@@ -1193,7 +1178,7 @@
         else if (screenIndex === 3) goToScreen(4);
         else if (screenIndex === 4) goToScreen(5);
         else if (screenIndex === 5) goToScreen(6);
-        else if (screenIndex === 6) goToScreen(7);
+        // screenIndex 6 (closing) — will go to exercises once built
       } else {
         advance();
       }
