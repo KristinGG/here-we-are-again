@@ -1870,6 +1870,7 @@
   goToScreen = function(index) {
     origGoToScreen(index);
     skipEndBtn.style.display = (index >= 1 && index <= 6) ? 'block' : 'none';
+    if (index === 7) hideHint();
   };
   skipEndBtn.addEventListener('click', function(e) {
     e.stopPropagation();
