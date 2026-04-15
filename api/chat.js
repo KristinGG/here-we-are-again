@@ -7,13 +7,18 @@ export default async function handler(req) {
     });
   }
 
-  const { messages, model } = await req.json();
+  const { messages, model, reasoning } = await req.json();
   const apiKey = process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'API key not configured' }), {
       status: 500, headers: { 'Content-Type': 'application/json' }
     });
+  }
+
+  const body = { model, messages, max_tokens: 1024, stream: true };
+  if (reasoning) {
+    body.reasoning = { effort: 'medium' };
   }
 
   try {
@@ -25,7 +30,7 @@ export default async function handler(req) {
         'HTTP-Referer': 'https://here-we-are-again.vercel.app',
         'X-Title': 'Here We Are Again',
       },
-      body: JSON.stringify({ model, messages, max_tokens: 1024, stream: true }),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
