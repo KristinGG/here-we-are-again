@@ -233,10 +233,29 @@
     .click-hint.show { opacity: 1; }
     .click-hint.hide { opacity: 0; }
 
+    /* ── Skip button ── */
+    .skip-btn {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-muted);
+      cursor: pointer;
+      z-index: 50;
+      transition: color 0.3s;
+      background: none;
+      border: none;
+      letter-spacing: 0.02em;
+    }
+    .skip-btn:hover { color: var(--ink); }
+
     /* ═══════════════════════════════
        EXAMPLES (animal consciousness)
        ═══════════════════════════════ */
-    #screen-examples {
+    #screen-examples,
+    #screen-ai {
       align-items: flex-start;
       justify-content: flex-start;
       overflow-y: auto;
@@ -390,6 +409,7 @@
 </div>
 
 <div class="screen" id="screen-goodall">
+  <button class="skip-btn" id="skip-goodall">skip →</button>
   <div class="goodall-spread">
 
     <div class="side-col left">
@@ -445,6 +465,7 @@
 </div>
 
 <div class="screen" id="screen-examples">
+  <button class="skip-btn" id="skip-examples">skip →</button>
   <div class="examples-layout">
 
     <div class="circle-center" id="ex-center">
@@ -501,6 +522,7 @@
 </div>
 
 <div class="screen" id="screen-ai">
+  <button class="skip-btn" id="skip-ai">skip →</button>
   <div class="examples-layout">
 
     <div class="examples-closing" id="ai-intro" style="margin-top: 2rem;">
@@ -682,7 +704,7 @@
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
-        if (index === 3) { revealEl('pivot-line'); }
+        if (index === 4) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
         if ((index === 1 || index === 2 || index === 3) && steps.length > 1) {
@@ -719,9 +741,14 @@
   // Begin
   document.getElementById('begin-btn').addEventListener('click', advance);
 
+  // Skip buttons
+  document.getElementById('skip-goodall').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(2); });
+  document.getElementById('skip-examples').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(3); });
+  document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
+
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
-    if (e.target.closest('#continue-btn')) return;
+    if (e.target.closest('#continue-btn') || e.target.closest('.skip-btn')) return;
     if (screenIndex === 1) advance();
   });
 
@@ -745,13 +772,13 @@
 
   // Click on examples screen to advance faster
   document.getElementById('screen-examples').addEventListener('click', (e) => {
-    if (e.target.closest('#ex-continue-btn')) return;
+    if (e.target.closest('#ex-continue-btn') || e.target.closest('.skip-btn')) return;
     if (screenIndex === 2) advance();
   });
 
   // Click on AI screen to advance faster
   document.getElementById('screen-ai').addEventListener('click', (e) => {
-    if (e.target.closest('#ai-continue-btn')) return;
+    if (e.target.closest('#ai-continue-btn') || e.target.closest('.skip-btn')) return;
     if (screenIndex === 3) advance();
   });
 
@@ -773,3 +800,4 @@
 </script>
 </body>
 </html>
+
