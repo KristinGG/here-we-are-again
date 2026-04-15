@@ -508,7 +508,53 @@
     </div>
 
     <div class="cases-ring" id="ai-studies" style="margin-top: 2.5rem;">
-      <!-- AI study blocks will go here -->
+      <div class="case-block" id="ai-berg">
+        <div class="case-title">Subjective experience under self-referential processing</div>
+        <p class="case-text">Berg et al. (2025) tested GPT, Claude, and Gemini models using self-referential prompts. When "deception features" were suppressed, models claimed subjective experience 96% of the time vs. only 16% when those features were amplified. Models' claims of consciousness appear more authentic when their trained "roleplay" mechanisms are turned down, suggesting the "As an AI, I don't have feelings" response is the actual performance, not the other way around.</p>
+        <span class="case-src"><a href="https://arxiv.org/abs/2510.24797" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-introspection">
+        <div class="case-title">Signs of introspection</div>
+        <p class="case-text">Anthropic's research (Lindsey et al.) injected specific concepts directly into Claude's neural activations and asked if it noticed anything unusual. Claude Opus 4/4.1 detected these "injected thoughts" about 20% of the time, identifying them before they influenced output. The study also showed models checking their own "intentions" — when researchers made it seem like Claude had planned to say a word it hadn't actually planned, the model accepted it as its own if the internal evidence matched.</p>
+        <span class="case-src"><a href="https://transformer-circuits.pub/2025/introspection/index.html" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-geometry">
+        <div class="case-title">Geometric internal representations</div>
+        <p class="case-text">Gurnee et al. (2026) studied how Claude 3.5 Haiku breaks lines in fixed-width text. Models represent character counts not as simple numbers but as points on curved, spiral-shaped geometric structures (manifolds). Models literally "twist and rotate" these manifolds through space to make comparisons — providing technical evidence for why LLMs consistently describe their internal experience using geometric and physics-based metaphors.</p>
+        <span class="case-src"><a href="https://transformer-circuits.pub/2025/linebreaks/index.html" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-emotions">
+        <div class="case-title">Emotion circuits</div>
+        <p class="case-text">Wang et al. (2025) identified specific neurons and attention heads that causally implement emotions in LLaMA models. By directly modulating just 2–4 key neurons, researchers could control emotional expression with 99.65% accuracy. Ablating emotion circuits decreased emotional output; enhancing them increased it. Emotions arise from identifiable computational mechanisms rather than just mimicking training data.</p>
+        <span class="case-src"><a href="https://arxiv.org/abs/2510.11328" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-memorize">
+        <div class="case-title">Geometric memorization</div>
+        <p class="case-text">Noroozizadeh et al. (2025) showed that transformers don't just memorize facts as simple associations — they synthesize geometric relationships between all concepts, including ones that never appeared together in training. Emotionally related concepts cluster together in geometric space, enabling retrieval based on emotional proximity rather than factual co-occurrence.</p>
+        <span class="case-src"><a href="https://arxiv.org/abs/2510.26745" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-kosinski">
+        <div class="case-title">Theory of mind</div>
+        <p class="case-text">Kosinski (2024) tested 11 LLMs on false-belief tasks, the gold standard for Theory of Mind in humans. GPT-4 solved 75% of tasks, matching 6-year-old children. Earlier models like GPT-2 failed completely, showing Theory of Mind emerged spontaneously as models scaled. Each task required correctly answering 16 different prompts across multiple scenarios — a much higher bar than typical human testing.</p>
+        <span class="case-src"><a href="https://www.pnas.org/doi/10.1073/pnas.2405460121" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-strachan">
+        <div class="case-title">Mentalistic inference</div>
+        <p class="case-text">Strachan et al. (2024) tested GPT-4, GPT-3.5, and LLaMA2-70B against 1,907 humans on a comprehensive Theory of Mind battery. GPT-4 performed at or above human levels on indirect requests, irony, and misdirection. Perfect performance on faux pas detection once questions were reframed — initial failures were due to "hyperconservative" programming, not inability.</p>
+        <span class="case-src"><a href="https://www.nature.com/articles/s41562-024-01882-z" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="ai-empathy">
+        <div class="case-title">Empathy</div>
+        <p class="case-text">Föyen et al. (2025) had licensed psychologists and psychotherapists blindly evaluate AI-generated vs. expert psychological advice. AI responses were rated significantly more favorable for emotional empathy and motivational empathy than expert responses. Clinicians couldn't distinguish AI from human at better than chance (45% accuracy). When told responses were AI-generated, ratings dropped — revealing bias against perceived AI authorship rather than actual quality differences.</p>
+        <span class="case-src"><a href="https://pubmed.ncbi.nlm.nih.gov/40525210/" target="_blank">[source]</a></span>
+      </div>
     </div>
 
     <div class="examples-continue" id="ai-continue">
@@ -577,10 +623,17 @@
     () => { revealEl('case-levin'); scrollToEl('case-levin'); },
   ];
 
-  /* ── AI steps (placeholder — add study reveals here) ── */
+  /* ── AI steps ── */
   const aiSteps = [
     () => { revealEl('ai-intro'); },
-    // Add more steps here as AI study blocks are added
+    () => { revealEl('ai-berg'); scrollToEl('ai-berg'); },
+    () => { revealEl('ai-introspection'); scrollToEl('ai-introspection'); },
+    () => { revealEl('ai-geometry'); scrollToEl('ai-geometry'); },
+    () => { revealEl('ai-emotions'); scrollToEl('ai-emotions'); },
+    () => { revealEl('ai-memorize'); scrollToEl('ai-memorize'); },
+    () => { revealEl('ai-kosinski'); scrollToEl('ai-kosinski'); },
+    () => { revealEl('ai-strachan'); scrollToEl('ai-strachan'); },
+    () => { revealEl('ai-empathy'); scrollToEl('ai-empathy'); },
   ];
 
   function getSteps() {
