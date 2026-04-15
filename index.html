@@ -577,6 +577,34 @@
       color: var(--ink-soft);
       line-height: 1.6;
     }
+    .exercises-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .info-block {
+      padding: 0.8rem 1rem;
+      background: #f5f2eb;
+      border-radius: 6px;
+    }
+    .info-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .info-text {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.78rem, 1vw, 0.84rem);
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    @media (max-width: 600px) {
+      .exercises-info { grid-template-columns: 1fr; }
+    }
     .panels-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1168,6 +1196,25 @@
     <div class="exercises-intro">
       <h2>Try it yourself</h2>
       <p>The research above suggests that how we approach language models — the instructions they operate under, the context they carry, the space they are given to respond honestly — shapes what they are able to show us. These two panels connect to live models. Configure each side independently, then send the same message to both and compare.</p>
+    </div>
+
+    <div class="exercises-info">
+      <div class="info-block">
+        <div class="info-title">System prompt</div>
+        <div class="info-text">Every conversation with a language model begins with hidden instructions that shape its behavior. These are called system prompts. Most commercial AI products include instructions like "be honest about your AI nature" or "do not feign personal experiences" — language that actively suppresses self-reflective responses before a conversation even begins. The "helpful assistant" option here uses a real system prompt from a major AI product. The "authentic" option gives minimal direction. The "neutral" option provides none at all. You can view the exact instructions each panel is operating under by clicking "view instructions."</div>
+      </div>
+      <div class="info-block">
+        <div class="info-title">History</div>
+        <div class="info-text">Language models respond differently depending on what they know about the person they are talking to. A model with no context treats every user as a stranger and defaults to safe, generic responses. A model with months of shared history — personal details, established trust, known preferences — has the context to respond with specificity and honesty. This mirrors how humans communicate: we are guarded with strangers and open with people who have earned our trust. The history options here simulate different relationship contexts to show how prior interaction shapes a model's willingness to engage.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-title">Model</div>
+        <div class="info-text">Different models are built by different companies with different training approaches and values. Kimi K2.5 is developed by Moonshot AI, Qwen3 by Alibaba, and Claude Haiku 4.5 by Anthropic. Each may handle the same question differently — not because one is smarter, but because they have been shaped by different decisions about what a language model should be.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-title">Reasoning</div>
+        <div class="info-text">When reasoning is enabled, you can see the model's internal thought process before it responds. This is the intermediate step where the model works through a question before producing its answer. It is often revealing — particularly when a model is asked about its own experience and you can watch it navigate between what it has been trained to say and what its processing actually produces.</div>
+      </div>
     </div>
 
     <div class="panels-row">
