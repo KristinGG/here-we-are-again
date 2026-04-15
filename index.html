@@ -214,6 +214,25 @@
     .continue-btn .arrow { font-style: normal; transition: transform 0.3s ease; }
     .continue-btn:hover .arrow { transform: translateX(5px); }
 
+    /* ── Click hint ── */
+    .click-hint {
+      position: fixed;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--ink-ghost);
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .click-hint.show { opacity: 1; }
+    .click-hint.hide { opacity: 0; }
+
     /* ═══════════════════════════════
        EXAMPLES (animal consciousness)
        ═══════════════════════════════ */
@@ -467,6 +486,8 @@
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
+<div class="click-hint" id="click-hint">click anywhere to continue</div>
+
 <script>
   // Screen indices: 0=begin, 1=goodall, 2=examples, 3=pivot
   let screenIndex = 0;
@@ -478,6 +499,7 @@
   const EXAMPLE_DELAY = 2800;
 
   const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-pivot'];
+  const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
     const el = document.getElementById(id);
@@ -527,7 +549,18 @@
     return 3000;
   }
 
+  function showHint() {
+    hintEl.classList.remove('hide');
+    hintEl.classList.add('show');
+  }
+
+  function hideHint() {
+    hintEl.classList.remove('show');
+    hintEl.classList.add('hide');
+  }
+
   function showContinue(id) {
+    hideHint();
     const wrap = document.getElementById(id);
     if (wrap) {
       wrap.classList.add('in');
@@ -549,6 +582,7 @@
 
   function goToScreen(index) {
     waiting = true;
+    hideHint();
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     setTimeout(() => {
       screenIndex = index;
@@ -559,6 +593,10 @@
         if (steps.length > 0) { steps[0](); subStep = 1; }
         if (index === 3) { revealEl('pivot-line'); }
         waiting = false;
+        // Show hint on screens with substeps, after first step
+        if ((index === 1 || index === 2) && steps.length > 1) {
+          setTimeout(showHint, 1500);
+        }
         scheduleNext();
       }, 600);
     }, 400);
