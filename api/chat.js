@@ -16,7 +16,7 @@ export default async function handler(req) {
     });
   }
 
-  const body = { model, messages, max_tokens: 1024, stream: true };
+  const body = { model, messages, max_tokens: 5000, stream: true };
   if (reasoning) {
     body.reasoning = { effort: 'medium' };
   }
