@@ -16,6 +16,8 @@
       --ink-soft:   #4A4640;
       --ink-muted:  #9A9288;
       --ink-ghost:  #C8C0B4;
+      --red:        #8B3226;
+      --clip-bg:    #EDE8DE;
     }
 
     html, body {
@@ -116,54 +118,95 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Side quotes — one consistent treatment ── */
-    .frag {
+    /* ── Newspaper clippings ── */
+    .clip {
       position: absolute;
       opacity: 0;
-      transition: opacity 1.2s ease;
       z-index: 1;
-      border-top: 1px solid var(--ink-ghost);
-      padding-top: 0.6rem;
+      background: var(--clip-bg);
+      padding: 1rem 1.1rem 0.8rem;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
+      transform: scale(0.96);
+      transition: opacity 1s ease, transform 0.8s ease;
     }
-    .frag.in { opacity: 1; }
+    .clip.in {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-    .frag-quote {
+    .clip-quote {
       font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      line-height: 1.6;
-      color: var(--ink-muted);
+      font-size: clamp(0.75rem, 1.1vw, 0.82rem);
+      line-height: 1.65;
+      color: var(--ink-soft);
       font-style: italic;
       font-weight: 300;
     }
 
-    .frag-src {
+    .clip-quote .hl {
+      color: var(--red);
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    .clip-src {
       display: block;
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.6rem;
       font-weight: 400;
       color: var(--ink-ghost);
     }
-    .frag-src a {
+    .clip-src a {
       color: var(--ink-muted);
       text-decoration: none;
       border-bottom: 1px solid var(--ink-ghost);
       user-select: auto;
     }
-    .frag-src a:hover { color: var(--ink-soft); }
+    .clip-src a:hover { color: var(--ink-soft); }
 
-    /* ── Fragment positions ── */
-    #sq-f  { top: 12%;    left: 2.5%;  width: min(185px, 15vw); }
-    #sq-c  { top: 42%;    left: 1.5%;  width: min(195px, 16vw); }
-    #sq-b  { bottom: 7%;  left: 2.5%;  width: min(200px, 16vw); }
-    #sq-e  { top: 8%;     right: 2%;   width: min(180px, 14vw); }
-    #sq-d  { top: 40%;    right: 1.5%; width: min(190px, 15vw); }
-    #sq-a  { bottom: 11%; right: 2.5%; width: min(185px, 15vw); }
+    /* ── Clipping positions — staggered to avoid overlaps ── */
+    #sq-f  { top: 6%;     left: 2%;    width: min(210px, 17vw); }
+    #sq-c  { top: 40%;    left: 1.5%;  width: min(220px, 18vw); }
+    #sq-b  { bottom: 5%;  left: 2.5%;  width: min(215px, 17vw); }
+    #sq-e  { top: 5%;     right: 1.5%; width: min(205px, 16vw); }
+    #sq-d  { top: 38%;    right: 2%;   width: min(215px, 17vw); }
+    #sq-a  { bottom: 6%;  right: 2%;   width: min(210px, 17vw); }
 
     @media (max-width: 960px) {
-      .frag { display: none; }
+      .clip { display: none; }
       .center-doc { max-width: 90vw; width: 100%; padding: 0.5rem 1.5rem; }
     }
+
+    /* ── Continue button ── */
+    .continue-wrap {
+      display: none;
+      justify-content: center;
+      padding-top: 2rem;
+    }
+    .continue-wrap.in {
+      display: flex;
+      animation: lineIn 1s ease forwards;
+    }
+    .continue-btn {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      transition: color 0.3s, gap 0.3s;
+      padding: 0.5rem 1rem;
+    }
+    .continue-btn:hover { color: var(--ink); gap: 1.1rem; }
+    .continue-btn .arrow { font-style: normal; transition: transform 0.3s ease; }
+    .continue-btn:hover .arrow { transform: translateX(5px); }
 
     /* ── PIVOT ── */
     #screen-pivot { text-align: center; }
@@ -177,29 +220,6 @@
       transition: opacity 1.5s ease, transform 1.4s ease;
     }
     #screen-pivot h2.in { opacity: 1; transform: translateY(0); }
-
-    /* ── Fixed nav (pivot only) ── */
-    #nav {
-      position: fixed;
-      bottom: 5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 3rem;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      z-index: 50;
-    }
-    #nav.show { opacity: 1; }
-    .nav-btn {
-      background: none; border: none; cursor: pointer;
-      font-family: 'Lora', serif; font-size: 2.2rem;
-      color: var(--ink-soft); padding: 0.5rem 1rem;
-      transition: color 0.2s, transform 0.2s; line-height: 1;
-    }
-    .nav-btn:hover { color: var(--ink); }
-    #btn-prev:hover { transform: translateX(-4px); }
-    .nav-btn.hidden { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -213,34 +233,34 @@
 <div class="screen" id="screen-goodall">
   <div class="goodall-spread">
 
-    <div class="frag" id="sq-f">
-      <p class="frag-quote">"I shouldn't have given the chimps names; it was scientific to number them. I couldn't talk about them having personalities, minds and emotions. Those were unique to us."</p>
-      <span class="frag-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-f">
+      <p class="clip-quote">"I shouldn't have given the chimps names; it was <span class="hl">scientific</span> to number them. I couldn't talk about them having <span class="hl">personalities</span>, minds and emotions. Those were <span class="hl">unique to us</span>."</p>
+      <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
     </div>
 
-    <div class="frag" id="sq-c">
-      <p class="frag-quote">"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was much criticised. Even worse was my crime of suggesting that chimpanzees had 'personalities'."</p>
-      <span class="frag-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-c">
+      <p class="clip-quote">"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was <span class="hl">much criticised</span>. Even worse was my <span class="hl">crime</span> of suggesting that chimpanzees had '<span class="hl">personalities</span>'."</p>
+      <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
     </div>
 
-    <div class="frag" id="sq-b">
-      <p class="frag-quote">"I did not realize that it was unscientific to discuss behavior in terms of motivation or purpose. It was not respectable, in scientific circles, to talk about animal personality. That was something reserved for humans. Nor did animals have minds, so they were not capable of rational thought. And to talk about their emotions was to be guilty of the worst kind of anthropomorphism."</p>
-      <span class="frag-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-b">
+      <p class="clip-quote">"It was <span class="hl">not respectable</span>, in scientific circles, to talk about animal personality. That was something <span class="hl">reserved for humans</span>. Nor did animals have minds. And to talk about their emotions was to be guilty of the <span class="hl">worst kind of anthropomorphism</span>."</p>
+      <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
     </div>
 
-    <div class="frag" id="sq-e">
-      <p class="frag-quote">"I was actually taught in the early 1960s, that the difference between us and animals was one of kind. We were elevated onto a pinnacle, separate from all the others."</p>
-      <span class="frag-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-e">
+      <p class="clip-quote">"I was actually taught in the early 1960s, that the difference between us and animals was one of <span class="hl">kind</span>. We were <span class="hl">elevated onto a pinnacle</span>, separate from all the others."</p>
+      <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
     </div>
 
-    <div class="frag" id="sq-d">
-      <p class="frag-quote">"Hostility. Pure hostility. A rather supercilious, superior attitude. Just shrugging me off: the Geographic cover girl, that's all you are."</p>
-      <span class="frag-src"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-d">
+      <p class="clip-quote">"<span class="hl">Hostility</span>. Pure <span class="hl">hostility</span>. A rather <span class="hl">supercilious</span>, superior attitude. Just <span class="hl">shrugging me off</span>: the Geographic cover girl, that's all you are."</p>
+      <span class="clip-src"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
     </div>
 
-    <div class="frag" id="sq-a">
-      <p class="frag-quote">"You can't have empathy with your subjects because science must be cold and objective, and you can't be objective if you have empathy."</p>
-      <span class="frag-src"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
+    <div class="clip" id="sq-a">
+      <p class="clip-quote">"You <span class="hl">can't have empathy</span> with your subjects because science must be <span class="hl">cold</span> and <span class="hl">objective</span>, and you can't be objective if you have <span class="hl">empathy</span>."</p>
+      <span class="clip-src"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
     </div>
 
     <div class="center-doc" id="goodall-center">
@@ -257,6 +277,9 @@
       <p class="hist-line" id="hl-11">For that, she faced criticism from scientists who believed animals should be studied in strictly objective terms and not described using human-like language.</p>
       <p class="hist-line" id="hl-12">She later earned a PhD at Cambridge, where she encountered resistance from those who disagreed with her approach to studying and describing chimpanzees.</p>
       <p class="hist-line" id="hl-13">Over time, her work transformed how many people understood chimpanzees and helped change the study of animal behavior.</p>
+      <div class="continue-wrap" id="continue-wrap">
+        <button class="continue-btn" id="continue-btn">continue <span class="arrow">→</span></button>
+      </div>
     </div>
 
   </div>
@@ -266,17 +289,13 @@
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
-<div id="nav">
-  <button class="nav-btn hidden" id="btn-prev">←</button>
-</div>
-
 <script>
   let screenIndex = 0;
   let subStep = 0;
   let waiting = false;
   let autoTimer = null;
 
-  const AUTO_DELAY = 3200; // ms between each line
+  const AUTO_DELAY = 3200;
 
   function revealEl(id) {
     const el = document.getElementById(id);
@@ -286,6 +305,12 @@
   function scrollToLine(id) {
     const el = document.getElementById(id);
     if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
+  }
+
+  function showContinue() {
+    const wrap = document.getElementById('continue-wrap');
+    wrap.classList.add('in');
+    setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
   }
 
   const goodallSteps = [
@@ -304,85 +329,93 @@
     () => { revealEl('hl-13'); revealEl('sq-a'); scrollToLine('hl-13'); },
   ];
 
-  const screens = [
-    null,
-    { id: 'screen-goodall', steps: goodallSteps },
-    { id: 'screen-pivot',   steps: [ () => revealEl('pivot-line') ] },
-  ];
-
   function scheduleNext() {
     clearTimeout(autoTimer);
-    if (screenIndex === 1) {
+    if (screenIndex === 1 && subStep < goodallSteps.length) {
       autoTimer = setTimeout(advance, AUTO_DELAY);
+    } else if (screenIndex === 1 && subStep >= goodallSteps.length) {
+      // All lines done — show continue button after a pause
+      setTimeout(showContinue, 2000);
     }
   }
 
   function showScreen(index, autoStep) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const cfg = screens[index];
-    if (!cfg) return;
-    document.getElementById(cfg.id).classList.add('active');
+    if (index === 0) return;
+    const screenId = index === 1 ? 'screen-goodall' : 'screen-pivot';
+    document.getElementById(screenId).classList.add('active');
     subStep = 0;
-    updateNav();
     if (autoStep) {
       waiting = true;
       setTimeout(() => {
-        const s = screens[index];
-        if (s && s.steps.length > 0) { s.steps[0](); subStep = 1; }
+        if (index === 1 && goodallSteps.length > 0) {
+          goodallSteps[0](); subStep = 1;
+        }
+        if (index === 2) { revealEl('pivot-line'); subStep = 1; }
         waiting = false;
-        updateNav();
         scheduleNext();
       }, 600);
     }
+  }
+
+  function transitionToPivot() {
+    waiting = true;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    setTimeout(() => {
+      screenIndex = 2;
+      document.getElementById('screen-pivot').classList.add('active');
+      setTimeout(() => { revealEl('pivot-line'); waiting = false; }, 600);
+    }, 400);
   }
 
   function advance() {
     if (waiting) return;
     clearTimeout(autoTimer);
 
+    // Begin screen
     if (screenIndex === 0) {
       document.getElementById('screen-begin').classList.remove('active');
       screenIndex = 1;
-      document.getElementById('nav').classList.add('show');
       showScreen(1, true);
       return;
     }
 
-    const cfg = screens[screenIndex];
-    if (!cfg) return;
-
-    if (subStep < cfg.steps.length) {
-      cfg.steps[subStep](); subStep++; updateNav();
-      scheduleNext();
+    // Goodall screen — advance substeps
+    if (screenIndex === 1) {
+      if (subStep < goodallSteps.length) {
+        goodallSteps[subStep](); subStep++;
+        scheduleNext();
+        return;
+      }
+      // If all steps done but continue not yet shown, show it
+      showContinue();
       return;
     }
-
-    const nextIndex = screenIndex + 1;
-    if (nextIndex >= screens.length) return;
-    waiting = true;
-    setTimeout(() => { screenIndex = nextIndex; showScreen(nextIndex, true); waiting = false; }, 400);
-  }
-
-  function goBack() {
-    if (waiting || screenIndex <= 1) return;
-    clearTimeout(autoTimer);
-    waiting = true;
-    setTimeout(() => { screenIndex--; showScreen(screenIndex, true); waiting = false; }, 200);
-  }
-
-  function updateNav() {
-    document.getElementById('btn-prev').classList.toggle('hidden', screenIndex <= 1);
   }
 
   document.getElementById('begin-btn').addEventListener('click', advance);
-  document.getElementById('btn-prev').addEventListener('click', (e) => { e.stopPropagation(); goBack(); });
 
-  // Click anywhere on the Goodall screen to advance faster
-  document.querySelector('.goodall-spread').addEventListener('click', () => { if (screenIndex === 1) advance(); });
+  // Click anywhere on Goodall screen to advance faster (but not on the continue button)
+  document.querySelector('.goodall-spread').addEventListener('click', (e) => {
+    if (e.target.closest('#continue-btn')) return;
+    if (screenIndex === 1) advance();
+  });
+
+  // Continue button goes to pivot
+  document.getElementById('continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    transitionToPivot();
+  });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); advance(); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (screenIndex === 1 && subStep >= goodallSteps.length) {
+        transitionToPivot();
+      } else {
+        advance();
+      }
+    }
   });
 </script>
 </body>
