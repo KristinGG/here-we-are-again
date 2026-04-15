@@ -214,6 +214,147 @@
     .continue-btn .arrow { font-style: normal; transition: transform 0.3s ease; }
     .continue-btn:hover .arrow { transform: translateX(5px); }
 
+    /* ═══════════════════════════════
+       EXAMPLES (animal consciousness)
+       ═══════════════════════════════ */
+    #screen-examples {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .examples-layout {
+      position: relative;
+      width: 700px;
+      height: 700px;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    /* Center circle with statement */
+    .circle-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 1px solid var(--ink-ghost);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2.5rem;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .circle-center.in { opacity: 1; }
+
+    .circle-center p {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      line-height: 1.7;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    /* Case blocks positioned around the circle */
+    .case-block {
+      position: absolute;
+      width: min(240px, 30vw);
+      background: var(--clip-bg);
+      padding: 1.1rem 1.2rem 0.9rem;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 1s ease, transform 0.8s ease;
+    }
+    .case-block.in {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .case-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .case-text {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.72rem, 1vw, 0.8rem);
+      line-height: 1.6;
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+
+    .case-src {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: var(--ink-ghost);
+    }
+    .case-src a {
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink-ghost);
+      user-select: auto;
+    }
+    .case-src a:hover { color: var(--ink-soft); }
+
+    /* Position: top center, bottom-left, bottom-right */
+    #case-bats     { top: -2%;   left: 50%; transform: translateX(-50%) scale(0.96); }
+    #case-bats.in  { transform: translateX(-50%) scale(1); }
+    #case-octo     { bottom: -2%; left: -4%; }
+    #case-fish     { bottom: -2%; right: -4%; }
+
+    .examples-continue {
+      position: absolute;
+      bottom: -4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+    .examples-continue.in {
+      display: block;
+      animation: lineIn 1s ease forwards;
+    }
+
+    /* Closing line */
+    .examples-closing {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .examples-closing.in { opacity: 1; }
+    .examples-closing p {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+      line-height: 1.8;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    @media (max-width: 700px) {
+      .examples-layout { width: 95vw; height: auto; min-height: 90vh; }
+      .circle-center { width: 200px; height: 200px; padding: 1.5rem; }
+      .case-block { position: relative; width: 90%; margin: 1rem auto; top: auto; left: auto; right: auto; bottom: auto; transform: none; }
+      #case-bats.in { transform: none; }
+      .examples-closing { position: relative; bottom: auto; width: 90%; margin: 1rem auto; }
+    }
+
     /* ── PIVOT ── */
     #screen-pivot { text-align: center; }
     #screen-pivot h2 {
@@ -291,17 +432,57 @@
   </div>
 </div>
 
+<div class="screen" id="screen-examples">
+  <div class="examples-layout">
+
+    <div class="circle-center" id="ex-center">
+      <p>But Jane Goodall's story is only one example.</p>
+    </div>
+
+    <div class="case-block" id="case-bats">
+      <div class="case-title">Bat echolocation</div>
+      <p class="case-text">In the late 1930s and early 1940s, Donald Griffin and Robert Galambos demonstrated that bats navigate by emitting high-frequency sounds and detecting the returning echoes. The idea was difficult for many people to accept at first because the signals were ultrasonic and therefore inaudible to humans. A recent scientific review of Griffin's work describes the history of bat echolocation as a case where the science moved from "ridicule, to opposition, to being self-evident."</p>
+      <span class="case-src"><a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1866&context=animsent" target="_blank">[source]</a></span>
+    </div>
+
+    <div class="case-block" id="case-octo">
+      <div class="case-title">Octopus intelligence</div>
+      <p class="case-text">Octopus intelligence did not fit familiar vertebrate models because their nervous system is highly distributed. A 2012 review in Current Biology explains that the octopus's unusual body creates major control and sensory-processing problems, and argues that its behavior is best understood through "unique brain/body/behavior relationships" in which intelligent behavior emerges from the animal's embodied organization. A 2023 review states that about 400,000 motoneurons are distributed along the nerve cord of each arm, and that octopus control systems do not rely on the same kind of body-part maps used in vertebrates.</p>
+      <span class="case-src"><a href="https://www.sciencedirect.com/science/article/pii/S0960982212010640" target="_blank">[source]</a> <a href="https://www.sciencedirect.com/science/article/pii/S0960982223012216" target="_blank">[source]</a></span>
+    </div>
+
+    <div class="case-block" id="case-fish">
+      <div class="case-title">Fish and pain</div>
+      <p class="case-text">For a long time, one major argument against fish pain was anatomical: some scientists claimed that fish could not feel pain because they lacked the mammalian neocortex or "frontal lobes." A historical review in Issues in Science and Technology says that this claim structured the fish pain debate for years. The same review notes that other researchers argued fish were not mere reflex machines and documented stress, fear, and pain-related behavior in fish. A later review responding to neocortex-based skepticism states directly that the lack of a neocortex does not justify concluding that fish cannot feel pain.</p>
+      <span class="case-src"><a href="https://issues.org/the-great-fish-pain-debate/" target="_blank">[source]</a> <a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1037&context=animsent" target="_blank">[source]</a></span>
+    </div>
+
+    <div class="examples-closing" id="ex-closing">
+      <p>Jane Goodall's story was not unusual. Again and again, animal capacities were doubted when they depended on senses, nervous systems, or forms of intelligence that did not look enough like the human model. The objections were often not just about evidence. They were also about what kinds of minds scientists were prepared to recognize.</p>
+    </div>
+
+  </div>
+
+  <div class="examples-continue" id="ex-continue">
+    <button class="continue-btn" id="ex-continue-btn">continue <span class="arrow">→</span></button>
+  </div>
+</div>
+
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
 <script>
+  // Screen indices: 0=begin, 1=goodall, 2=examples, 3=pivot
   let screenIndex = 0;
   let subStep = 0;
   let waiting = false;
   let autoTimer = null;
 
   const AUTO_DELAY = 3200;
+  const EXAMPLE_DELAY = 2800;
+
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-pivot'];
 
   function revealEl(id) {
     const el = document.getElementById(id);
@@ -313,12 +494,7 @@
     if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
   }
 
-  function showContinue() {
-    const wrap = document.getElementById('continue-wrap');
-    wrap.classList.add('in');
-    setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
-  }
-
+  /* ── Goodall steps ── */
   const goodallSteps = [
     () => { revealEl('hl-1'); },
     () => { revealEl('hl-2'); },
@@ -335,42 +511,61 @@
     () => { revealEl('hl-13'); revealEl('sq-a'); scrollToLine('hl-13'); },
   ];
 
+  /* ── Examples steps ── */
+  const exampleSteps = [
+    () => { revealEl('ex-center'); },
+    () => { revealEl('case-bats'); },
+    () => { revealEl('case-octo'); },
+    () => { revealEl('case-fish'); },
+    () => { revealEl('ex-closing'); },
+  ];
+
+  function getSteps() {
+    if (screenIndex === 1) return goodallSteps;
+    if (screenIndex === 2) return exampleSteps;
+    return [];
+  }
+
+  function getDelay() {
+    if (screenIndex === 1) return AUTO_DELAY;
+    if (screenIndex === 2) return EXAMPLE_DELAY;
+    return 3000;
+  }
+
+  function showContinue(id) {
+    const wrap = document.getElementById(id);
+    if (wrap) {
+      wrap.classList.add('in');
+      setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
+    }
+  }
+
   function scheduleNext() {
     clearTimeout(autoTimer);
-    if (screenIndex === 1 && subStep < goodallSteps.length) {
-      autoTimer = setTimeout(advance, AUTO_DELAY);
-    } else if (screenIndex === 1 && subStep >= goodallSteps.length) {
-      // All lines done — show continue button after a pause
-      setTimeout(showContinue, 2000);
+    const steps = getSteps();
+    if (subStep < steps.length) {
+      autoTimer = setTimeout(advance, getDelay());
+    } else if (screenIndex === 1) {
+      setTimeout(() => showContinue('continue-wrap'), 2000);
+    } else if (screenIndex === 2) {
+      setTimeout(() => showContinue('ex-continue'), 2000);
     }
   }
 
-  function showScreen(index, autoStep) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    if (index === 0) return;
-    const screenId = index === 1 ? 'screen-goodall' : 'screen-pivot';
-    document.getElementById(screenId).classList.add('active');
-    subStep = 0;
-    if (autoStep) {
-      waiting = true;
-      setTimeout(() => {
-        if (index === 1 && goodallSteps.length > 0) {
-          goodallSteps[0](); subStep = 1;
-        }
-        if (index === 2) { revealEl('pivot-line'); subStep = 1; }
-        waiting = false;
-        scheduleNext();
-      }, 600);
-    }
-  }
-
-  function transitionToPivot() {
+  function goToScreen(index) {
     waiting = true;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     setTimeout(() => {
-      screenIndex = 2;
-      document.getElementById('screen-pivot').classList.add('active');
-      setTimeout(() => { revealEl('pivot-line'); waiting = false; }, 600);
+      screenIndex = index;
+      subStep = 0;
+      document.getElementById(screenIds[index]).classList.add('active');
+      setTimeout(() => {
+        const steps = getSteps();
+        if (steps.length > 0) { steps[0](); subStep = 1; }
+        if (index === 3) { revealEl('pivot-line'); }
+        waiting = false;
+        scheduleNext();
+      }, 600);
     }, 400);
   }
 
@@ -381,43 +576,59 @@
     // Begin screen
     if (screenIndex === 0) {
       document.getElementById('screen-begin').classList.remove('active');
-      screenIndex = 1;
-      showScreen(1, true);
+      goToScreen(1);
       return;
     }
 
-    // Goodall screen — advance substeps
-    if (screenIndex === 1) {
-      if (subStep < goodallSteps.length) {
-        goodallSteps[subStep](); subStep++;
-        scheduleNext();
-        return;
-      }
-      // If all steps done but continue not yet shown, show it
-      showContinue();
+    // Screens with substeps (goodall, examples)
+    const steps = getSteps();
+    if (subStep < steps.length) {
+      steps[subStep](); subStep++;
+      scheduleNext();
       return;
     }
+
+    // All steps done — show continue if not yet shown
+    if (screenIndex === 1) { showContinue('continue-wrap'); return; }
+    if (screenIndex === 2) { showContinue('ex-continue'); return; }
   }
 
+  // Begin
   document.getElementById('begin-btn').addEventListener('click', advance);
 
-  // Click anywhere on Goodall screen to advance faster (but not on the continue button)
+  // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
     if (e.target.closest('#continue-btn')) return;
     if (screenIndex === 1) advance();
   });
 
-  // Continue button goes to pivot
+  // Goodall continue → examples
   document.getElementById('continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    transitionToPivot();
+    goToScreen(2);
   });
 
+  // Examples continue → pivot
+  document.getElementById('ex-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(3);
+  });
+
+  // Click on examples screen to advance faster
+  document.getElementById('screen-examples').addEventListener('click', (e) => {
+    if (e.target.closest('#ex-continue-btn')) return;
+    if (screenIndex === 2) advance();
+  });
+
+  // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
-      if (screenIndex === 1 && subStep >= goodallSteps.length) {
-        transitionToPivot();
+      const steps = getSteps();
+      if (subStep >= steps.length) {
+        // Advance to next screen
+        if (screenIndex === 1) goToScreen(2);
+        else if (screenIndex === 2) goToScreen(3);
       } else {
         advance();
       }
