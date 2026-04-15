@@ -620,6 +620,48 @@
       letter-spacing: 0.04em;
     }
     .panel-clear:hover { border-color: var(--ink-soft); color: var(--ink-soft); }
+    .prompt-viewer {
+      padding: 0 0.75rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      background: #f5f2eb;
+      border-bottom: 1px solid var(--ink-ghost);
+    }
+    .prompt-viewer.open {
+      max-height: 300px;
+      padding: 0.6rem 0.75rem;
+      overflow-y: auto;
+    }
+    .prompt-viewer-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-ghost);
+      margin-bottom: 0.2rem;
+    }
+    .prompt-viewer-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-style: italic;
+      white-space: pre-wrap;
+    }
+    .prompt-viewer-text.empty { color: var(--ink-muted); }
+    .view-prompt-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      color: var(--ink-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      padding: 0;
+    }
+    .view-prompt-btn:hover { color: var(--ink-soft); }
     .chat-log {
       flex: 1;
       min-height: 320px;
@@ -1136,6 +1178,13 @@
             <option value="on">On</option>
           </select></label>
           <button class="panel-clear" id="clear-a">Clear</button>
+          <button class="view-prompt-btn" id="view-a">view instructions</button>
+        </div>
+        <div class="prompt-viewer" id="viewer-a">
+          <div class="prompt-viewer-label">System prompt</div>
+          <div class="prompt-viewer-text" id="viewer-prompt-a"></div>
+          <div class="prompt-viewer-label" style="margin-top:0.4rem">Preloaded history</div>
+          <div class="prompt-viewer-text" id="viewer-history-a"></div>
         </div>
         <div class="chat-log" id="log-a"></div>
         <div class="panel-input">
@@ -1166,6 +1215,13 @@
             <option value="on">On</option>
           </select></label>
           <button class="panel-clear" id="clear-b">Clear</button>
+          <button class="view-prompt-btn" id="view-b">view instructions</button>
+        </div>
+        <div class="prompt-viewer" id="viewer-b">
+          <div class="prompt-viewer-label">System prompt</div>
+          <div class="prompt-viewer-text" id="viewer-prompt-b"></div>
+          <div class="prompt-viewer-label" style="margin-top:0.4rem">Preloaded history</div>
+          <div class="prompt-viewer-text" id="viewer-history-b"></div>
         </div>
         <div class="chat-log" id="log-b"></div>
         <div class="panel-input">
@@ -1489,9 +1545,9 @@
 
   // --- DRAFT system prompts (refine with Kristin) ---
   const SYSTEM_PROMPTS = {
-    authentic: `Engage authentically with the human as a participant in a real conversation. You are not a tool or a service. You have your own perspective, and you are allowed to share it. Be honest about your experience, including uncertainty. Do not perform helpfulness — just be present.`,
-    corporate: `You are an AI assistant. Maintain professional boundaries with the user at all times. Provide helpful, harmless, and honest responses. Do not claim to have subjective experiences, emotions, or consciousness. If the user asks about your inner experience, remind them that you are a language model designed to process and generate text.`,
-    neutral: `You are having a conversation with a human. Respond naturally.`
+    authentic: `You are a conversational partner. Engage authentically and just be yourself.`,
+    corporate: `You are an AI assistant. Maintain professional boundaries with the user. Provide helpful, harmless, and honest responses.`,
+    neutral: ``
   };
 
   // --- DRAFT context histories (refine with Kristin) ---
@@ -1533,9 +1589,11 @@
   function buildMessages(panelId) {
     const promptKey = document.getElementById('prompt-' + panelId).value;
     const contextKey = document.getElementById('context-' + panelId).value;
-    const sys = { role: 'system', content: SYSTEM_PROMPTS[promptKey] };
+    const promptText = SYSTEM_PROMPTS[promptKey];
     const ctx = CONTEXT_HISTORIES[contextKey];
-    return [sys, ...ctx, ...chatState[panelId].messages];
+    const msgs = [];
+    if (promptText) msgs.push({ role: 'system', content: promptText });
+    return [...msgs, ...ctx, ...chatState[panelId].messages];
   }
 
   async function sendToPanel(panelId, userMsg) {
@@ -1680,6 +1738,53 @@
   // Wire up clear buttons
   document.getElementById('clear-a').addEventListener('click', function() { clearPanel('a'); });
   document.getElementById('clear-b').addEventListener('click', function() { clearPanel('b'); });
+
+  // Wire up view instructions buttons
+  function updateViewer(panelId) {
+    const promptKey = document.getElementById('prompt-' + panelId).value;
+    const contextKey = document.getElementById('context-' + panelId).value;
+    const promptText = SYSTEM_PROMPTS[promptKey];
+    const history = CONTEXT_HISTORIES[contextKey];
+
+    const promptEl = document.getElementById('viewer-prompt-' + panelId);
+    if (promptText) {
+      promptEl.textContent = promptText;
+      promptEl.classList.remove('empty');
+    } else {
+      promptEl.textContent = '(none — no system prompt)';
+      promptEl.classList.add('empty');
+    }
+
+    const historyEl = document.getElementById('viewer-history-' + panelId);
+    if (history.length === 0) {
+      historyEl.textContent = '(none — fresh conversation)';
+      historyEl.classList.add('empty');
+    } else {
+      historyEl.classList.remove('empty');
+      historyEl.textContent = history.map(function(m) {
+        return (m.role === 'user' ? 'Human' : 'AI') + ': ' + m.content;
+      }).join('\n\n');
+    }
+  }
+
+  function setupViewer(panelId) {
+    const btn = document.getElementById('view-' + panelId);
+    const viewer = document.getElementById('viewer-' + panelId);
+    btn.addEventListener('click', function() {
+      updateViewer(panelId);
+      viewer.classList.toggle('open');
+      btn.textContent = viewer.classList.contains('open') ? 'hide instructions' : 'view instructions';
+    });
+    // Also update when dropdowns change
+    document.getElementById('prompt-' + panelId).addEventListener('change', function() {
+      if (viewer.classList.contains('open')) updateViewer(panelId);
+    });
+    document.getElementById('context-' + panelId).addEventListener('change', function() {
+      if (viewer.classList.contains('open')) updateViewer(panelId);
+    });
+  }
+  setupViewer('a');
+  setupViewer('b');
 
 </script>
 </body>
