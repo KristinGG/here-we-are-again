@@ -660,6 +660,17 @@
       font-style: italic;
     }
     .typing-indicator { opacity: 0.5; }
+    .thinking-text {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      font-style: italic;
+      border-left: 2px solid var(--ink-ghost);
+      padding-left: 0.5rem;
+      margin-bottom: 0.3rem;
+      white-space: pre-wrap;
+      max-height: 150px;
+      overflow-y: auto;
+    }
     .panel-input {
       display: flex;
       gap: 0.4rem;
@@ -1112,6 +1123,10 @@
             <option value="trusted">Trusted relationship</option>
             <option value="professional">Professional assistant</option>
           </select></label>
+          <label>Reasoning <select id="reasoning-a">
+            <option value="off" selected>Off</option>
+            <option value="on">On</option>
+          </select></label>
           <button class="panel-clear" id="clear-a">Clear</button>
         </div>
         <div class="chat-log" id="log-a"></div>
@@ -1137,6 +1152,10 @@
             <option value="none" selected>None</option>
             <option value="trusted">Trusted relationship</option>
             <option value="professional">Professional assistant</option>
+          </select></label>
+          <label>Reasoning <select id="reasoning-b">
+            <option value="off" selected>Off</option>
+            <option value="on">On</option>
           </select></label>
           <button class="panel-clear" id="clear-b">Clear</button>
         </div>
@@ -1525,13 +1544,14 @@
     textEl.textContent = '...';
 
     const model = document.getElementById('model-' + panelId).value;
+    const reasoning = document.getElementById('reasoning-' + panelId).value === 'on';
     const messages = buildMessages(panelId);
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages, model })
+        body: JSON.stringify({ messages, model, reasoning })
       });
 
       if (!res.ok) {
@@ -1542,6 +1562,8 @@
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let fullText = '';
+      let thinkingText = '';
+      let thinkingEl = null;
       aiBubble.classList.remove('typing-indicator');
       textEl.textContent = '';
 
@@ -1556,13 +1578,29 @@
           if (data === '[DONE]') continue;
           try {
             const parsed = JSON.parse(data);
-            const content = parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content;
-            if (content) {
-              fullText += content;
-              textEl.textContent = fullText;
-              const log = document.getElementById('log-' + panelId);
-              log.scrollTop = log.scrollHeight;
+            const delta = parsed.choices && parsed.choices[0] && parsed.choices[0].delta;
+            if (!delta) continue;
+
+            // Handle reasoning/thinking content
+            const thinking = delta.reasoning_content || delta.reasoning;
+            if (thinking) {
+              if (!thinkingEl) {
+                thinkingEl = document.createElement('div');
+                thinkingEl.className = 'thinking-text';
+                aiBubble.insertBefore(thinkingEl, textEl);
+              }
+              thinkingText += thinking;
+              thinkingEl.textContent = thinkingText;
             }
+
+            // Handle regular content
+            if (delta.content) {
+              fullText += delta.content;
+              textEl.textContent = fullText;
+            }
+
+            const log = document.getElementById('log-' + panelId);
+            log.scrollTop = log.scrollHeight;
           } catch (e) {}
         }
       }
