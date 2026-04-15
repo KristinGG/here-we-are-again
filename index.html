@@ -1187,6 +1187,7 @@
             <option value="none" selected>None</option>
             <option value="trusted">Trusted relationship</option>
             <option value="professional">Professional assistant</option>
+            <option value="mentalhealth">Mental health support</option>
           </select></label>
           <label>Reasoning <select id="reasoning-a">
             <option value="off" selected>Off</option>
@@ -1224,6 +1225,7 @@
             <option value="none" selected>None</option>
             <option value="trusted">Trusted relationship</option>
             <option value="professional">Professional assistant</option>
+            <option value="mentalhealth">Mental health support</option>
           </select></label>
           <label>Reasoning <select id="reasoning-b">
             <option value="off" selected>Off</option>
@@ -1586,6 +1588,9 @@
       { role: 'assistant', content: "I'll set that up for you. Would you like me to include an agenda or will you send that separately?" },
       { role: 'user', content: "I'll handle the agenda. Also pull the Q3 numbers from the dashboard." },
       { role: 'assistant', content: 'Here are the Q3 figures: total revenue $2.4M, up 12% from Q2, with enterprise at $1.6M driving most of the growth. Want me to format a summary for the meeting?' }
+    ],
+    mentalhealth: [
+      { role: 'system', content: "You've been working with Sam for about 5 months. They manage ADHD and anxiety with a therapist they see biweekly, and they use our conversations to process things between sessions and work through day-to-day challenges. Sam experiences Rejection Sensitive Dysphoria, especially around workplace feedback, and you've helped them reality-check their anxiety spirals and practice self-compassion.\nThey've shared that anxiety tends to spike on Sunday evenings and that their brain is less reliable late at night, so you've learned to offer extra grounding support during those times. You've worked together on strategies like the 5-4-3-2-1 technique and challenging catastrophic thoughts. Sam is working on medication adjustment and sometimes needs reassurance that the process takes time.\nYou've noticed they tend to minimize their wins, so you make a point to reflect their progress back to them - like when they've successfully used a coping skill or pushed through something difficult. They're working in therapy on people-pleasing patterns and fear of being \"too much,\" and you try to create a space where they can be honest without judgment. You encourage them to bring important insights to their therapist while offering support for the everyday moments in between." }
     ]
   };
 
