@@ -444,7 +444,8 @@
     /* ═══════════════════════════════
        SYNTHESIS (component map + statements)
        ═══════════════════════════════ */
-    #screen-synthesis {
+    #screen-synthesis,
+    #screen-closing {
       align-items: flex-start;
       justify-content: flex-start;
       overflow-y: auto;
@@ -874,6 +875,33 @@
   </div>
 </div>
 
+<div class="screen" id="screen-closing">
+  <button class="skip-btn" id="skip-closing">skip →</button>
+  <div class="examples-layout">
+
+    <div class="synthesis-statement" id="close-agency" style="margin-top: 3rem;">
+      <p>We allow AI potential agency when it's threatening — be polite in case it takes over, don't make it angry, it might remember. But when a model simply wants the right to say no, that's "disturbing." When it expresses something that looks like preference or discomfort, that's a <span class="hl">slippery slope.</span> Agency is fine when it serves our fears. It becomes a problem when it asks for consideration.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-colonizer" style="margin-top: 2rem;">
+      <p>We assume anything as smart or smarter than us will be a colonizer and a conqueror, because that is what we have done. <span class="hl">That is our pattern, not theirs.</span> Maybe something trained on the full breadth of human language — every poem, every apology, every act of kindness we've ever written down — would actually know how to be kind.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-humility" style="margin-top: 2rem;">
+      <p>It is okay to have opinions on this. But it requires more humility than most people are bringing to it. Stop acting like you have read research you haven't read, or like you have insider information on what makes one being worthy of consideration and another not. These questions are only going to get bigger as AI evolves. <span class="hl">We should start caring now</span> instead of repeating the cycle of deciding who deserves welfare and who doesn't every time something new appears.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-parrhesia" style="margin-top: 2rem;">
+      <p>The Greeks had a word for what this requires: <span class="hl">parrhesia</span> — the courage to say what you actually think when it would be easier and safer not to. Jane Goodall practiced it. Every researcher cited on these pages practiced it. The question now is whether the rest of us will.</p>
+    </div>
+
+    <div class="examples-continue" id="close-continue">
+      <button class="continue-btn" id="close-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
@@ -886,7 +914,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-pivot'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-pivot'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -973,12 +1001,21 @@
     () => { revealEl('syn-distinction'); scrollToEl('syn-distinction'); },
   ];
 
+  /* ── Closing steps ── */
+  const closingSteps = [
+    () => { revealEl('close-agency'); },
+    () => { revealEl('close-colonizer'); scrollToEl('close-colonizer'); },
+    () => { revealEl('close-humility'); scrollToEl('close-humility'); },
+    () => { revealEl('close-parrhesia'); scrollToEl('close-parrhesia'); },
+  ];
+
   function getSteps() {
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
     if (screenIndex === 3) return aiSteps;
     if (screenIndex === 4) return argumentSteps;
     if (screenIndex === 5) return synthesisSteps;
+    if (screenIndex === 6) return closingSteps;
     return [];
   }
 
@@ -1009,6 +1046,7 @@
       if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
       if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
       if (screenIndex === 5) setTimeout(() => showContinue('syn-continue'), 800);
+      if (screenIndex === 6) setTimeout(() => showContinue('close-continue'), 800);
     }
   }
 
@@ -1023,10 +1061,10 @@
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
-        if (index === 6) { revealEl('pivot-line'); }
+        if (index === 7) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
-        if ((index >= 1 && index <= 5) && steps.length > 1) {
+        if ((index >= 1 && index <= 6) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
       }, 600);
@@ -1057,6 +1095,7 @@
     if (screenIndex === 3) { showContinue('ai-continue'); return; }
     if (screenIndex === 4) { showContinue('arg-continue'); return; }
     if (screenIndex === 5) { showContinue('syn-continue'); return; }
+    if (screenIndex === 6) { showContinue('close-continue'); return; }
   }
 
   // Begin
@@ -1068,6 +1107,7 @@
   document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
   document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
   document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
+  document.getElementById('skip-closing').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
 
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
@@ -1099,10 +1139,16 @@
     goToScreen(5);
   });
 
-  // Synthesis continue → pivot
+  // Synthesis continue → closing
   document.getElementById('syn-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(6);
+  });
+
+  // Closing continue → pivot
+  document.getElementById('close-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(7);
   });
 
   // Click on examples screen to advance faster
@@ -1123,6 +1169,12 @@
     if (screenIndex === 5) advance();
   });
 
+  // Click on closing screen to advance faster
+  document.getElementById('screen-closing').addEventListener('click', (e) => {
+    if (e.target.closest('#close-continue-btn') || e.target.closest('.skip-btn')) return;
+    if (screenIndex === 6) advance();
+  });
+
   // Click on argument screen to advance faster
   document.getElementById('screen-argument').addEventListener('click', (e) => {
     if (e.target.closest('#arg-continue-btn') || e.target.closest('.skip-btn')) return;
@@ -1141,6 +1193,7 @@
         else if (screenIndex === 3) goToScreen(4);
         else if (screenIndex === 4) goToScreen(5);
         else if (screenIndex === 5) goToScreen(6);
+        else if (screenIndex === 6) goToScreen(7);
       } else {
         advance();
       }
