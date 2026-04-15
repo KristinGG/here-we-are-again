@@ -460,7 +460,7 @@
 
       <div class="case-block" id="case-octo">
         <div class="case-title">Octopus intelligence</div>
-        <p class="case-text">Octopus intelligence did not fit familiar vertebrate models because their nervous system is highly distributed. A 2012 review in Current Biology explains that the octopus's unusual body creates major control and sensory-processing problems, and argues that its behavior is best understood through "unique brain/body/behavior relationships" in which intelligent behavior emerges from the animal's embodied organization. A 2023 review states that about 400,000 motoneurons are distributed along the nerve cord of each arm, and that octopus control systems do not rely on the same kind of body-part maps used in vertebrates.</p>
+        <p class="case-text">Octopus intelligence did not fit the usual picture of a single centralized mind. Their nervous system is highly distributed, with large numbers of neurons in the arms, and researchers have described their behavior in terms of unusual brain-body relationships rather than the familiar vertebrate model. That difference also made their abilities harder to interpret: early studies of octopus learning led to heated debate over whether they could really learn detours and spatial layouts, before later controlled studies supported the view that they could.</p>
         <span class="case-src"><a href="https://www.sciencedirect.com/science/article/pii/S0960982212010640" target="_blank">[source]</a> <a href="https://www.sciencedirect.com/science/article/pii/S0960982223012216" target="_blank">[source]</a></span>
       </div>
 
@@ -472,7 +472,25 @@
     </div>
 
     <div class="examples-closing" id="ex-closing">
-      <p>Jane Goodall's story was not unusual. Again and again, animal capacities were doubted when they depended on senses, nervous systems, or forms of intelligence that did not look enough like the human model. The objections were often not just about evidence. They were also about what kinds of minds scientists were prepared to recognize.</p>
+      <p>Jane Goodall's story was not unusual. Again and again, animal capacities were doubted when they depended on senses, nervous systems, or forms of intelligence that did not look enough like the human model. In many cases, recognition came only after significant harm had already been done. And even when the science caught up, it did not always change how humans treated those animals.</p>
+    </div>
+
+    <div class="examples-closing" id="ex-beyond" style="margin-top: 2.5rem;">
+      <p>The pattern doesn't end with animals. Researchers have found problem-solving and adaptive behavior in systems far stranger than any animal brain. Here are just a couple of examples.</p>
+    </div>
+
+    <div class="cases-ring" id="beyond-ring" style="margin-top: 2rem;">
+      <div class="case-block" id="case-slime">
+        <div class="case-title">Slime molds</div>
+        <p class="case-text">Slime molds have no nervous system at all. But research on <em>Physarum polycephalum</em> has shown maze-solving, network optimization, habituation, and learning-like behavior — coordinated, flexible responses from an organism that lacks anything resembling a brain.</p>
+        <span class="case-src"><a href="https://royalsocietypublishing.org/doi/10.1098/rstb.2019.0757" target="_blank">[source]</a></span>
+      </div>
+
+      <div class="case-block" id="case-levin">
+        <div class="case-title">Basal intelligence</div>
+        <p class="case-text">Michael Levin and colleagues used sorting algorithms as a model for biological intelligence. Instead of treating array elements as passive entries controlled from above, they treated them as autonomous units operating under local rules. The system could self-organize and work around damage without any centralized control — a model for how living systems coordinate without a brain directing them.</p>
+        <span class="case-src"><a href="https://arxiv.org/abs/2401.05375" target="_blank">[source]</a></span>
+      </div>
     </div>
 
     <div class="examples-continue" id="ex-continue">
@@ -525,12 +543,20 @@
   ];
 
   /* ── Examples steps ── */
+  function scrollToEl(id) {
+    const el = document.getElementById(id);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
+  }
+
   const exampleSteps = [
     () => { revealEl('ex-center'); },
-    () => { revealEl('case-bats'); },
-    () => { revealEl('case-octo'); },
-    () => { revealEl('case-fish'); },
-    () => { revealEl('ex-closing'); },
+    () => { revealEl('case-bats'); scrollToEl('case-bats'); },
+    () => { revealEl('case-octo'); scrollToEl('case-octo'); },
+    () => { revealEl('case-fish'); scrollToEl('case-fish'); },
+    () => { revealEl('ex-closing'); scrollToEl('ex-closing'); },
+    () => { revealEl('ex-beyond'); scrollToEl('ex-beyond'); },
+    () => { revealEl('case-slime'); scrollToEl('case-slime'); },
+    () => { revealEl('case-levin'); scrollToEl('case-levin'); },
   ];
 
   function getSteps() {
