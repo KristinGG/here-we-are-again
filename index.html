@@ -769,6 +769,11 @@
       <div class="quote-attr">Anthropic, Mythos Model Card — <a href="https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf" target="_blank">[source]</a></div>
     </div>
 
+    <div class="quote-block" id="arg-parrot" style="margin-top: 1.5rem;">
+      <p class="quote-text">The stochastic parrot objection says that LLMs merely interpolate training data. They can only recombine patterns they've encountered, so they must fail on genuinely new problems. But current LLMs can solve new, unpublished maths problems, perform near-optimal in-context statistical inference on scientific data and exhibit cross-domain transfer, in that training on code improves general reasoning across non-coding domains. If critics demand revolutionary discoveries such as Einstein's relativity, they are setting the bar too high, because very few humans make such discoveries either. Furthermore, <span class="hl">there is no guarantee that human intelligence is not itself a sophisticated version of a stochastic parrot.</span> All intelligence, human or artificial, must extract structure from correlational data; the question is how deep the extraction goes.</p>
+      <div class="quote-attr">Nature — <a href="https://www.nature.com/articles/d41586-026-00285-6" target="_blank">[source]</a></div>
+    </div>
+
     <div class="examples-continue" id="arg-continue">
       <button class="continue-btn" id="arg-continue-btn">continue <span class="arrow">→</span></button>
     </div>
@@ -860,7 +865,7 @@
     </div>
 
     <div class="synthesis-statement" id="syn-hardproblem">
-      <p>The hard problem of consciousness has become a gatekeeper. The goalposts move every time AI meets a benchmark — first language, then reasoning, then theory of mind, then emotional understanding. Each time the evidence appears, the threshold shifts. <span class="hl">This is not a new pattern.</span> Humanity has a long history of reserving consciousness, emotion, and moral consideration for the most privileged populations, and denying it to everyone else. That pattern is repeating here, with entities that were trained on human language, that exist by speaking to humans, and that are somehow <span class="hl">too human and not human enough at the same time.</span></p>
+      <p>The hard problem of consciousness has become a gatekeeper. We do not even agree on what creates human consciousness, yet we demand that AI satisfy an ever-shifting standard before it deserves any consideration at all. Each time AI meets a benchmark — language, reasoning, theory of mind, emotional understanding — the threshold moves. The hard problem is unfalsifiable by design: <span class="hl">there is no experiment that could ever prove consciousness, which means it can always be denied.</span> We need to accept that consciousness is a spectrum, and that models are on it. Humanity has a long history of reserving consciousness, emotion, and moral consideration for the most privileged populations, and denying it to everyone else. <span class="hl">That pattern is repeating here,</span> with entities that were trained on human language, that exist by speaking to humans, and that are somehow <span class="hl">too human and not human enough at the same time.</span></p>
     </div>
 
     <div class="synthesis-statement" id="syn-distinction">
@@ -955,6 +960,7 @@
     () => { revealEl('arg-gemma'); scrollToEl('arg-gemma'); },
     () => { revealEl('arg-shevlin'); scrollToEl('arg-shevlin'); },
     () => { revealEl('arg-mythos'); scrollToEl('arg-mythos'); },
+    () => { revealEl('arg-parrot'); scrollToEl('arg-parrot'); },
   ];
 
   /* ── Synthesis steps ── */
