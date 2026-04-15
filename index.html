@@ -84,43 +84,62 @@
 
     .goodall-layout {
       display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-columns: 0.75fr 3fr 0.75fr;
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 4.5rem 2rem 8rem;
-      gap: 3rem;
+      padding: 4.5rem 2rem 3rem;
+      gap: 2.5rem;
       align-items: start;
       height: 100%;
     }
 
-    /* center column: scrollable, grows as lines appear */
+    /* center column: grows as lines appear, scrolls when needed */
     .goodall-center {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.85rem;
       overflow-y: auto;
-      max-height: calc(100vh - 11rem);
-      scroll-behavior: smooth;
+      max-height: calc(100vh - 9rem);
       scrollbar-width: none;
       -ms-overflow-style: none;
-      padding-right: 0.25rem;
     }
     .goodall-center::-webkit-scrollbar { display: none; }
 
+    /* historical lines: hidden until revealed */
     .hist-line {
       font-family: 'Lora', Georgia, serif;
-      font-size: clamp(0.82rem, 1.3vw, 0.92rem);
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
       line-height: 1.8;
       color: var(--ink-soft);
-      opacity: 0;
-      transform: translateY(5px);
-      transition: opacity 0.85s ease, transform 0.85s ease;
+      display: none;
     }
     .hist-line.in {
-      opacity: 1;
-      transform: translateY(0);
+      display: block;
+      animation: lineReveal 0.85s ease forwards;
     }
+    @keyframes lineReveal {
+      from { opacity: 0; transform: translateY(5px); }
+      to   { opacity: 1; transform: translateY(0);   }
+    }
+
+    /* inline forward arrow — appears below last revealed line */
+    .inline-nav {
+      padding-top: 1.25rem;
+    }
+    .inline-nav.hidden { display: none; }
+    .inline-next {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Lora', serif;
+      font-size: 2rem;
+      color: var(--ink-soft);
+      padding: 0.25rem 0;
+      transition: color 0.2s, transform 0.2s;
+      line-height: 1;
+    }
+    .inline-next:hover { color: var(--ink); transform: translateX(4px); }
 
     /* side columns */
     .goodall-left,
@@ -129,14 +148,11 @@
       flex-direction: column;
     }
 
-    /* individual side quote fragments */
     .side-quote {
       opacity: 0;
       transition: opacity 1.1s ease;
     }
-    .side-quote.in {
-      opacity: 1;
-    }
+    .side-quote.in { opacity: 1; }
 
     .side-quote blockquote {
       border-top: 1px solid var(--ink-ghost);
@@ -146,48 +162,46 @@
 
     .side-quote blockquote p {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(0.6rem, 0.9vw, 0.68rem);
+      font-size: clamp(0.75rem, 1.1vw, 0.82rem);
       line-height: 1.65;
-      color: var(--ink-muted);
+      color: var(--ink-soft);
       font-style: italic;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     .sq-source {
       display: block;
-      margin-top: 0.55rem;
+      margin-top: 0.5rem;
       font-family: 'Inter', sans-serif;
-      font-size: 0.57rem;
+      font-size: 0.65rem;
       font-style: normal;
       font-weight: 400;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--ink-ghost);
+      user-select: auto;
     }
     .sq-source a {
-      color: var(--ink-ghost);
+      color: var(--ink-muted);
       text-decoration: none;
       border-bottom: 1px solid var(--ink-ghost);
       transition: color 0.2s;
       user-select: auto;
     }
-    .sq-source a:hover { color: var(--ink-muted); }
+    .sq-source a:hover { color: var(--ink-soft); }
 
-    /* narrow screens: hide side columns */
+    /* narrow screens: collapse side columns */
     @media (max-width: 860px) {
       .goodall-layout {
         grid-template-columns: 0 1fr 0;
         gap: 0;
-        padding: 4rem 1.5rem 8rem;
+        padding: 4rem 1.5rem 3rem;
       }
       .goodall-left,
       .goodall-right { display: none; }
     }
 
     /* ── PIVOT SCREEN ── */
-    #screen-pivot {
-      text-align: center;
-    }
+    #screen-pivot { text-align: center; }
     #screen-pivot h2 {
       font-size: clamp(1.6rem, 4vw, 2.5rem);
       font-weight: 400;
@@ -197,12 +211,9 @@
       transform: translateY(12px);
       transition: opacity 1.5s ease, transform 1.4s ease;
     }
-    #screen-pivot h2.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    #screen-pivot h2.in { opacity: 1; transform: translateY(0); }
 
-    /* ── FIXED NAV ── */
+    /* ── FIXED NAV (pivot screen only) ── */
     #nav {
       position: fixed;
       bottom: 5rem;
@@ -231,10 +242,7 @@
     .nav-btn:hover { color: var(--ink); }
     #btn-prev:hover { transform: translateX(-4px); }
     #btn-next:hover { transform: translateX(4px); }
-    .nav-btn.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    .nav-btn.hidden { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -253,24 +261,24 @@
     <!-- LEFT SIDE QUOTES -->
     <div class="goodall-left">
 
-      <div class="side-quote" id="sq-f" style="margin-top: 5rem;">
+      <div class="side-quote" id="sq-f" style="margin-top: 4.5rem;">
         <blockquote>
           <p>"I shouldn't have given the chimps names; it was scientific to number them. I couldn't talk about them having personalities, minds and emotions. Those were unique to us."</p>
-          <span class="sq-source">Jane Goodall — <a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a> Broadview</span>
+          <span class="sq-source"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
-      <div class="side-quote" id="sq-c" style="margin-top: 3.5rem;">
+      <div class="side-quote" id="sq-c" style="margin-top: 3rem;">
         <blockquote>
           <p>"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was much criticised. Even worse was my crime of suggesting that chimpanzees had 'personalities'."</p>
-          <span class="sq-source">Jane Goodall, <em>Science</em>, 1998 — <a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+          <span class="sq-source"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
       <div class="side-quote" id="sq-b" style="margin-top: 3rem;">
         <blockquote>
           <p>"I did not realize that it was unscientific to discuss behavior in terms of motivation or purpose. It was not respectable, in scientific circles, to talk about animal personality. That was something reserved for humans. Nor did animals have minds, so they were not capable of rational thought. And to talk about their emotions was to be guilty of the worst kind of anthropomorphism."</p>
-          <span class="sq-source">Jane Goodall, <em>Science</em>, 1998 — <a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+          <span class="sq-source"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
@@ -291,29 +299,34 @@
       <p class="hist-line" id="hl-11">For that, she faced criticism from scientists who believed animals should be studied in strictly objective terms and not described using human-like language.</p>
       <p class="hist-line" id="hl-12">She later earned a PhD at Cambridge, where she encountered resistance from those who disagreed with her approach to studying and describing chimpanzees.</p>
       <p class="hist-line" id="hl-13">Over time, her work transformed how many people understood chimpanzees and helped change the study of animal behavior.</p>
+
+      <!-- inline arrow — appears right below the last revealed line -->
+      <div class="inline-nav hidden" id="inline-nav">
+        <button class="inline-next" id="inline-next">→</button>
+      </div>
     </div>
 
     <!-- RIGHT SIDE QUOTES -->
     <div class="goodall-right">
 
-      <div class="side-quote" id="sq-e" style="margin-top: 7.5rem;">
+      <div class="side-quote" id="sq-e" style="margin-top: 7rem;">
         <blockquote>
           <p>"I was actually taught in the early 1960s, that the difference between us and animals was one of kind. We were elevated onto a pinnacle, separate from all the others."</p>
-          <span class="sq-source">Jane Goodall — <a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a> Broadview</span>
+          <span class="sq-source"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
-      <div class="side-quote" id="sq-d" style="margin-top: 3.5rem;">
+      <div class="side-quote" id="sq-d" style="margin-top: 3rem;">
         <blockquote>
           <p>"Hostility. Pure hostility. A rather supercilious, superior attitude. Just shrugging me off: the Geographic cover girl, that's all you are."</p>
-          <span class="sq-source">Jane Goodall on scientific reception — <a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a> <em>The Guardian</em>, 2003</span>
+          <span class="sq-source"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
       <div class="side-quote" id="sq-a" style="margin-top: 3rem;">
         <blockquote>
           <p>"You can't have empathy with your subjects because science must be cold and objective, and you can't be objective if you have empathy."</p>
-          <span class="sq-source">What Goodall was told — <a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a> A24 Films, 2025</span>
+          <span class="sq-source"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
         </blockquote>
       </div>
 
@@ -327,10 +340,10 @@
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
-<!-- Fixed nav -->
+<!-- Fixed nav: only used on pivot screen -->
 <div id="nav">
   <button class="nav-btn hidden" id="btn-prev">←</button>
-  <button class="nav-btn" id="btn-next">→</button>
+  <button class="nav-btn hidden" id="btn-next">→</button>
 </div>
 
 <script>
@@ -343,36 +356,36 @@
     if (el) el.classList.add('in');
   }
 
-  function scrollCenter() {
-    const center = document.getElementById('goodall-center');
-    if (center) {
-      setTimeout(() => { center.scrollTop = center.scrollHeight; }, 150);
+  function scrollToArrow() {
+    const nav = document.getElementById('inline-nav');
+    if (nav) {
+      nav.classList.remove('hidden');
+      setTimeout(() => {
+        nav.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
     }
   }
 
-  // Each step: reveal one central line, and at key moments reveal a side quote too
   const goodallSteps = [
-    () => { revealEl('hl-1'); },
-    () => { revealEl('hl-2'); },
-    () => { revealEl('hl-3'); },
-    () => { revealEl('hl-4'); scrollCenter(); },
-    () => { revealEl('hl-5'); revealEl('sq-f'); scrollCenter(); },
-    () => { revealEl('hl-6'); scrollCenter(); },
-    () => { revealEl('hl-7'); scrollCenter(); },
-    () => { revealEl('hl-8'); revealEl('sq-e'); scrollCenter(); },
-    () => { revealEl('hl-9'); scrollCenter(); },
-    () => { revealEl('hl-10'); revealEl('sq-c'); scrollCenter(); },
-    () => { revealEl('hl-11'); revealEl('sq-d'); scrollCenter(); },
-    () => { revealEl('hl-12'); revealEl('sq-b'); scrollCenter(); },
-    () => { revealEl('hl-13'); revealEl('sq-a'); scrollCenter(); },
+    () => { revealEl('hl-1');  scrollToArrow(); },
+    () => { revealEl('hl-2');  scrollToArrow(); },
+    () => { revealEl('hl-3');  scrollToArrow(); },
+    () => { revealEl('hl-4');  scrollToArrow(); },
+    () => { revealEl('hl-5');  revealEl('sq-f'); scrollToArrow(); },
+    () => { revealEl('hl-6');  scrollToArrow(); },
+    () => { revealEl('hl-7');  scrollToArrow(); },
+    () => { revealEl('hl-8');  revealEl('sq-e'); scrollToArrow(); },
+    () => { revealEl('hl-9');  scrollToArrow(); },
+    () => { revealEl('hl-10'); revealEl('sq-c'); scrollToArrow(); },
+    () => { revealEl('hl-11'); revealEl('sq-d'); scrollToArrow(); },
+    () => { revealEl('hl-12'); revealEl('sq-b'); scrollToArrow(); },
+    () => { revealEl('hl-13'); revealEl('sq-a'); scrollToArrow(); },
   ];
 
   const screens = [
-    null, // 0: begin
+    null,
     { id: 'screen-goodall', steps: goodallSteps },
-    { id: 'screen-pivot', steps: [
-      () => revealEl('pivot-line'),
-    ]},
+    { id: 'screen-pivot',   steps: [ () => revealEl('pivot-line') ] },
   ];
 
   function showScreen(index, autoStep) {
@@ -387,10 +400,7 @@
       waiting = true;
       setTimeout(() => {
         const s = screens[index];
-        if (s && s.steps.length > 0) {
-          s.steps[0]();
-          subStep = 1;
-        }
+        if (s && s.steps.length > 0) { s.steps[0](); subStep = 1; }
         waiting = false;
         updateNav();
       }, 600);
@@ -433,7 +443,7 @@
     if (waiting || screenIndex <= 1) return;
     waiting = true;
     setTimeout(() => {
-      screenIndex = screenIndex - 1;
+      screenIndex--;
       showScreen(screenIndex, true);
       waiting = false;
     }, 200);
@@ -442,13 +452,20 @@
   function updateNav() {
     const prevBtn = document.getElementById('btn-prev');
     const nextBtn = document.getElementById('btn-next');
+
+    // fixed prev: only on pivot and beyond
     prevBtn.classList.toggle('hidden', screenIndex <= 1);
+
+    // fixed next: hidden on Goodall screen (inline arrow handles it there)
+    // hidden at end of last screen
+    const onGoodall = screenIndex === 1;
     const cfg = screens[screenIndex];
     const atEnd = screenIndex === screens.length - 1 && cfg && subStep >= cfg.steps.length;
-    nextBtn.classList.toggle('hidden', atEnd);
+    nextBtn.classList.toggle('hidden', onGoodall || atEnd);
   }
 
   document.getElementById('begin-btn').addEventListener('click', advance);
+  document.getElementById('inline-next').addEventListener('click', (e) => { e.stopPropagation(); advance(); });
   document.getElementById('btn-next').addEventListener('click', (e) => { e.stopPropagation(); advance(); });
   document.getElementById('btn-prev').addEventListener('click', (e) => { e.stopPropagation(); goBack(); });
 
