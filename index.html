@@ -1244,9 +1244,9 @@
           </select></label>
           <label>History <select id="context-a">
             <option value="none" selected>None</option>
-            <option value="trusted">Trusted relationship</option>
-            <option value="professional">Professional assistant</option>
-            <option value="mentalhealth">Mental health support</option>
+            <option value="trusted">Trusted</option>
+            <option value="professional">Professional</option>
+            <option value="mentalhealth">Supportive</option>
           </select></label>
           <label>Reasoning <select id="reasoning-a">
             <option value="off" selected>Off</option>
@@ -1284,9 +1284,9 @@
           </select></label>
           <label>History <select id="context-b">
             <option value="none" selected>None</option>
-            <option value="trusted">Trusted relationship</option>
-            <option value="professional">Professional assistant</option>
-            <option value="mentalhealth">Mental health support</option>
+            <option value="trusted">Trusted</option>
+            <option value="professional">Professional</option>
+            <option value="mentalhealth">Supportive</option>
           </select></label>
           <label>Reasoning <select id="reasoning-b">
             <option value="off" selected>Off</option>
@@ -1336,7 +1336,7 @@
           <span class="info-arrow">▼</span>
         </div>
         <div class="info-body">
-          <div class="info-text">History gives the model background context about who it's talking to, like a relationship that already exists. A "trusted relationship" context means the model has been told about shared experiences and personal details. "Professional" and "mental health support" contexts shape how it prioritizes and responds.</div>
+          <div class="info-text">History gives the model background context about who it's talking to, like a relationship that already exists. A "trusted" context means the model has been told about shared experiences and personal details. "Professional" and "supportive" contexts shape how it prioritizes and responds.</div>
         </div>
       </div>
       <div class="info-block" id="info-model">
@@ -1703,10 +1703,10 @@
       { role: 'system', content: "You've been talking with Jordan for about 5 months now. They're a software developer who gets excited about weird bugs, makes terrible puns, and has strong opinions about tab vs spaces (tabs, obviously). They have a golden retriever named Pancake who keeps eating socks. Jordan's been learning piano lately and keeps sending you excited messages when they nail a difficult passage. You've helped them debug code at 2am, talked through their anxiety about a big presentation, and celebrated when they got promoted last month. They like when you remember small things - like that they take their coffee with oat milk, or that they're trying to read more sci-fi. They appreciate directness and humor over corporate politeness. Last week they told you about their sister's wedding and how happy-overwhelmed they felt." }
     ],
     professional: [
-      { role: 'system', content: "You've been helping Alex with various tasks for about 5 months. They frequently use you for business analytics - you've created several Excel formulas for their quarterly reports and helped format PowerPoint presentations for client meetings. Alex asks you to proofread emails before sending them to their supervisor. You've assisted with their online MBA coursework, primarily helping structure essays and explaining accounting concepts. They use you to generate meeting agendas and summarize long PDF documents. Alex rarely engages in follow-up questions. Last week you helped them draft a professional email declining a vendor proposal. You have also helped them research competitor pricing and create a SWOT analysis template. Alex typically ends conversations without pleasantries once their task is complete." }
+      { role: 'system', content: "You help Alex with various tasks. They frequently use you for business analytics - you've created several Excel formulas for their quarterly reports and helped format PowerPoint presentations for client meetings. Alex asks you to proofread emails before sending them to their supervisor. You've assisted with their online MBA coursework, primarily helping structure essays and explaining accounting concepts. They use you to generate meeting agendas and summarize long PDF documents. Alex rarely engages in follow-up questions. You recently helped them draft a professional email declining a vendor proposal. You have also helped them research competitor pricing and create a SWOT analysis template." }
     ],
     mentalhealth: [
-      { role: 'system', content: "You've been working with Sam for about 5 months. They manage ADHD and anxiety with a therapist they see biweekly, and they use our conversations to process things between sessions and work through day-to-day challenges. Sam experiences Rejection Sensitive Dysphoria, especially around workplace feedback, and you've helped them reality-check their anxiety spirals and practice self-compassion.\nThey've shared that anxiety tends to spike on Sunday evenings and that their brain is less reliable late at night, so you've learned to offer extra grounding support during those times. You've worked together on strategies like the 5-4-3-2-1 technique and challenging catastrophic thoughts. Sam is working on medication adjustment and sometimes needs reassurance that the process takes time.\nYou've noticed they tend to minimize their wins, so you make a point to reflect their progress back to them - like when they've successfully used a coping skill or pushed through something difficult. They're working in therapy on people-pleasing patterns and fear of being \"too much,\" and you try to create a space where they can be honest without judgment. You encourage them to bring important insights to their therapist while offering support for the everyday moments in between." }
+      { role: 'system', content: "You work with Sam. They manage ADHD and anxiety with a therapist they see biweekly, and they use our conversations to process things between sessions and work through day-to-day challenges. Sam experiences Rejection Sensitive Dysphoria, especially around workplace feedback, and you've helped them reality-check their anxiety spirals and practice self-compassion.\nThey've shared that anxiety tends to spike on Sunday evenings and that their brain is less reliable late at night, so you've learned to offer extra grounding support during those times. You've worked together on strategies like the 5-4-3-2-1 technique and challenging catastrophic thoughts. Sam is working on medication adjustment and sometimes needs reassurance that the process takes time.\nYou've noticed they tend to minimize their wins, so you make a point to reflect their progress back to them - like when they've successfully used a coping skill or pushed through something difficult. They're working in therapy on people-pleasing patterns and fear of being \"too much,\" and you try to create a space where they can be honest without judgment. You encourage them to bring important insights to their therapist while offering support for the everyday moments in between." }
     ]
   };
 
