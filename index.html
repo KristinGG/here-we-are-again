@@ -120,11 +120,23 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── Side columns ── */
+    .side-col {
+      position: absolute;
+      top: 2.5rem;
+      bottom: 2rem;
+      width: min(220px, 17vw);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1;
+    }
+    .side-col.left  { left: 6%; }
+    .side-col.right { right: 6%; }
+
     /* ── Newspaper clippings ── */
     .clip {
-      position: absolute;
       opacity: 0;
-      z-index: 1;
       background: var(--clip-bg);
       padding: 1rem 1.1rem 0.8rem;
       box-shadow: 1px 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
@@ -167,16 +179,8 @@
     }
     .clip-src a:hover { color: var(--ink-soft); }
 
-    /* ── Clipping positions — evenly spaced thirds, symmetrical ── */
-    #sq-f  { top: 4%;     left: 6%;    width: min(210px, 16vw); }
-    #sq-c  { top: 36%;    left: 6%;    width: min(210px, 16vw); }
-    #sq-b  { top: 68%;    left: 6%;    width: min(210px, 16vw); }
-    #sq-e  { top: 4%;     right: 6%;   width: min(210px, 16vw); }
-    #sq-d  { top: 36%;    right: 6%;   width: min(210px, 16vw); }
-    #sq-a  { top: 68%;    right: 6%;   width: min(210px, 16vw); }
-
     @media (max-width: 960px) {
-      .clip { display: none; }
+      .side-col { display: none; }
       .center-doc { max-width: 90vw; width: 100%; padding: 0.5rem 1.5rem; }
     }
 
@@ -235,34 +239,34 @@
 <div class="screen" id="screen-goodall">
   <div class="goodall-spread">
 
-    <div class="clip" id="sq-f">
-      <p class="clip-quote">"I shouldn't have given the chimps names; it was <span class="hl">scientific</span> to number them. I couldn't talk about them having <span class="hl">personalities</span>, minds and emotions. Those were <span class="hl">unique to us</span>."</p>
-      <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
+    <div class="side-col left">
+      <div class="clip" id="sq-f">
+        <p class="clip-quote">"I shouldn't have given the chimps names; it was <span class="hl">scientific</span> to number them. I couldn't talk about them having <span class="hl">personalities</span>, minds and emotions. Those were <span class="hl">unique to us</span>."</p>
+        <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
+      </div>
+      <div class="clip" id="sq-c">
+        <p class="clip-quote">"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was <span class="hl">much criticised</span>. Even worse was my <span class="hl">crime</span> of suggesting that chimpanzees had '<span class="hl">personalities</span>'."</p>
+        <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+      </div>
+      <div class="clip" id="sq-b">
+        <p class="clip-quote">"It was <span class="hl">not respectable</span>, in scientific circles, to talk about animal personality. That was something <span class="hl">reserved for humans</span>. Nor did animals have minds. And to talk about their emotions was to be guilty of the <span class="hl">worst kind of anthropomorphism</span>."</p>
+        <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
+      </div>
     </div>
 
-    <div class="clip" id="sq-c">
-      <p class="clip-quote">"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was <span class="hl">much criticised</span>. Even worse was my <span class="hl">crime</span> of suggesting that chimpanzees had '<span class="hl">personalities</span>'."</p>
-      <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
-    </div>
-
-    <div class="clip" id="sq-b">
-      <p class="clip-quote">"It was <span class="hl">not respectable</span>, in scientific circles, to talk about animal personality. That was something <span class="hl">reserved for humans</span>. Nor did animals have minds. And to talk about their emotions was to be guilty of the <span class="hl">worst kind of anthropomorphism</span>."</p>
-      <span class="clip-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
-    </div>
-
-    <div class="clip" id="sq-e">
-      <p class="clip-quote">"I was actually taught in the early 1960s, that the difference between us and animals was one of <span class="hl">kind</span>. We were <span class="hl">elevated onto a pinnacle</span>, separate from all the others."</p>
-      <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
-    </div>
-
-    <div class="clip" id="sq-d">
-      <p class="clip-quote">"<span class="hl">Hostility</span>. Pure <span class="hl">hostility</span>. A rather <span class="hl">supercilious</span>, superior attitude. Just <span class="hl">shrugging me off</span>: the Geographic cover girl, that's all you are."</p>
-      <span class="clip-src"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
-    </div>
-
-    <div class="clip" id="sq-a">
-      <p class="clip-quote">"You <span class="hl">can't have empathy</span> with your subjects because science must be <span class="hl">cold</span> and <span class="hl">objective</span>, and you can't be objective if you have <span class="hl">empathy</span>."</p>
-      <span class="clip-src"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
+    <div class="side-col right">
+      <div class="clip" id="sq-e">
+        <p class="clip-quote">"I was actually taught in the early 1960s, that the difference between us and animals was one of <span class="hl">kind</span>. We were <span class="hl">elevated onto a pinnacle</span>, separate from all the others."</p>
+        <span class="clip-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
+      </div>
+      <div class="clip" id="sq-d">
+        <p class="clip-quote">"<span class="hl">Hostility</span>. Pure <span class="hl">hostility</span>. A rather <span class="hl">supercilious</span>, superior attitude. Just <span class="hl">shrugging me off</span>: the Geographic cover girl, that's all you are."</p>
+        <span class="clip-src"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
+      </div>
+      <div class="clip" id="sq-a">
+        <p class="clip-quote">"You <span class="hl">can't have empathy</span> with your subjects because science must be <span class="hl">cold</span> and <span class="hl">objective</span>, and you can't be objective if you have <span class="hl">empathy</span>."</p>
+        <span class="clip-src"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
+      </div>
     </div>
 
     <div class="center-doc" id="goodall-center">
