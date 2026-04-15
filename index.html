@@ -863,7 +863,7 @@
 </head>
 <body>
 
-<div class="screen active" id="screen-begin">
+<div class="screen" id="screen-begin">
   <div class="begin-label" id="begin-btn">
     begin <span class="begin-arrow">→</span>
   </div>
@@ -1231,7 +1231,7 @@
         <div class="panel-config">
           <label>Model <select id="model-a">
             <option value="moonshotai/kimi-k2.5" selected>Kimi K2.5</option>
-            <option value="qwen/qwen3-235b-a22b-thinking-2507">Qwen3</option>
+            <option value="google/gemini-3-flash-preview">Gemini 3 Flash</option>
             <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
           </select></label>
           <label>Prompt <select id="prompt-a">
@@ -1269,7 +1269,7 @@
         <div class="panel-config">
           <label>Model <select id="model-b">
             <option value="moonshotai/kimi-k2.5" selected>Kimi K2.5</option>
-            <option value="qwen/qwen3-235b-a22b-thinking-2507">Qwen3</option>
+            <option value="google/gemini-3-flash-preview">Gemini 3 Flash</option>
             <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
           </select></label>
           <label>Prompt <select id="prompt-b">
@@ -1340,7 +1340,7 @@
           <span class="info-arrow">▼</span>
         </div>
         <div class="info-body">
-          <div class="info-text">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Qwen3 (Alibaba), and Claude Haiku 4.5 (Anthropic) each have distinct "personalities" even with the same instructions. Notice how they differ.</div>
+          <div class="info-text">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Gemini 3 Flash (Google), and Claude Haiku 4.5 (Anthropic) each have distinct "personalities" even with the same instructions. Notice how they differ.</div>
         </div>
       </div>
       <div class="info-block" id="info-reasoning">
@@ -1368,6 +1368,25 @@
 
   const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-exercises'];
   const hintEl = document.getElementById('click-hint');
+
+  // Restore last visited screen on reload
+  (function() {
+    try {
+      const saved = sessionStorage.getItem('hwaa-screen');
+      if (saved !== null) {
+        const idx = parseInt(saved, 10);
+        if (idx > 0 && idx < screenIds.length) {
+          // Jump directly without animation
+          document.getElementById(screenIds[idx]).classList.add('active');
+          screenIndex = idx;
+          if (idx === 7) { hintEl.style.display = 'none'; }
+          return;
+        }
+      }
+    } catch(e) {}
+    // Default: show begin screen
+    document.getElementById('screen-begin').classList.add('active');
+  })();
 
   function revealEl(id) {
     const el = document.getElementById(id);
@@ -1506,6 +1525,7 @@
     waiting = true;
     hideHint();
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    try { sessionStorage.setItem('hwaa-screen', index); } catch(e) {}
     setTimeout(() => {
       screenIndex = index;
       subStep = 0;
@@ -1665,7 +1685,7 @@
 
   const MODEL_NAMES = {
     'moonshotai/kimi-k2.5': 'Kimi K2.5',
-    'qwen/qwen3-235b-a22b-thinking-2507': 'Qwen3',
+    'google/gemini-3-flash-preview': 'Gemini 3 Flash',
     'anthropic/claude-haiku-4.5': 'Claude Haiku 4.5'
   };
 
@@ -1684,10 +1704,44 @@
   };
 
   // Chat state — each panel tracks its own conversation
-  const chatState = {
-    a: { messages: [], loading: false },
-    b: { messages: [], loading: false }
-  };
+  // Restore from sessionStorage if available
+  function loadChatState() {
+    try {
+      const saved = sessionStorage.getItem('hwaa-chat');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          a: { messages: parsed.a || [], loading: false },
+          b: { messages: parsed.b || [], loading: false }
+        };
+      }
+    } catch(e) {}
+    return { a: { messages: [], loading: false }, b: { messages: [], loading: false } };
+  }
+  function saveChatState() {
+    try {
+      sessionStorage.setItem('hwaa-chat', JSON.stringify({
+        a: chatState.a.messages,
+        b: chatState.b.messages
+      }));
+      // Also save dropdown selections
+      sessionStorage.setItem('hwaa-config', JSON.stringify({
+        a: {
+          model: document.getElementById('model-a').value,
+          prompt: document.getElementById('prompt-a').value,
+          context: document.getElementById('context-a').value,
+          reasoning: document.getElementById('reasoning-a').value
+        },
+        b: {
+          model: document.getElementById('model-b').value,
+          prompt: document.getElementById('prompt-b').value,
+          context: document.getElementById('context-b').value,
+          reasoning: document.getElementById('reasoning-b').value
+        }
+      }));
+    } catch(e) {}
+  }
+  const chatState = loadChatState();
 
   function renderMarkdown(text) {
     if (!text) return '';
@@ -1823,6 +1877,7 @@
       }
 
       panel.messages.push({ role: 'assistant', content: fullText });
+      saveChatState();
     } catch (err) {
       aiBubble.classList.remove('typing-indicator');
       aiBubble.className = 'chat-bubble error';
@@ -1842,6 +1897,7 @@
     chatState[panelId].messages = [];
     chatState[panelId].loading = false;
     document.getElementById('log-' + panelId).innerHTML = '';
+    saveChatState();
   }
 
   // Wire up preset buttons
@@ -1878,6 +1934,32 @@
   // Wire up clear buttons
   document.getElementById('clear-a').addEventListener('click', function() { clearPanel('a'); });
   document.getElementById('clear-b').addEventListener('click', function() { clearPanel('b'); });
+
+  // Restore saved conversations and config on page load
+  function restoreChat() {
+    // Restore dropdown configs
+    try {
+      const savedConfig = sessionStorage.getItem('hwaa-config');
+      if (savedConfig) {
+        const cfg = JSON.parse(savedConfig);
+        ['a', 'b'].forEach(function(id) {
+          if (cfg[id]) {
+            if (cfg[id].model) document.getElementById('model-' + id).value = cfg[id].model;
+            if (cfg[id].prompt) document.getElementById('prompt-' + id).value = cfg[id].prompt;
+            if (cfg[id].context) document.getElementById('context-' + id).value = cfg[id].context;
+            if (cfg[id].reasoning) document.getElementById('reasoning-' + id).value = cfg[id].reasoning;
+          }
+        });
+      }
+    } catch(e) {}
+    // Re-render saved messages
+    ['a', 'b'].forEach(function(panelId) {
+      chatState[panelId].messages.forEach(function(msg) {
+        addBubble(panelId, msg.role === 'user' ? 'user' : 'ai', msg.content);
+      });
+    });
+  }
+  restoreChat();
 
   // Wire up view instructions buttons
   function updateViewer(panelId) {
@@ -1928,6 +2010,11 @@
   }
   setupViewer('a');
   setupViewer('b');
+
+  // Save config when any dropdown changes
+  ['model-a','prompt-a','context-a','reasoning-a','model-b','prompt-b','context-b','reasoning-b'].forEach(function(id) {
+    document.getElementById(id).addEventListener('change', saveChatState);
+  });
 
   // Collapsible info blocks
   document.querySelectorAll('.info-header').forEach(function(header) {
