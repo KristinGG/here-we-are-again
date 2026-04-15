@@ -90,7 +90,7 @@
       width: 580px;
       max-width: 55vw;
       margin: 0 auto;
-      padding: 0.5rem 0;
+      padding: 0.5rem 2rem;
       display: flex;
       flex-direction: column;
       gap: 0.65rem;
@@ -99,6 +99,8 @@
       scrollbar-width: none;
       z-index: 2;
       position: relative;
+      border-left: 1px solid var(--ink-ghost);
+      border-right: 1px solid var(--ink-ghost);
     }
     .center-doc::-webkit-scrollbar { display: none; }
 
@@ -165,13 +167,13 @@
     }
     .clip-src a:hover { color: var(--ink-soft); }
 
-    /* ── Clipping positions — staggered to avoid overlaps ── */
-    #sq-f  { top: 6%;     left: 2%;    width: min(210px, 17vw); }
-    #sq-c  { top: 40%;    left: 1.5%;  width: min(220px, 18vw); }
-    #sq-b  { bottom: 5%;  left: 2.5%;  width: min(215px, 17vw); }
-    #sq-e  { top: 5%;     right: 1.5%; width: min(205px, 16vw); }
-    #sq-d  { top: 38%;    right: 2%;   width: min(215px, 17vw); }
-    #sq-a  { bottom: 6%;  right: 2%;   width: min(210px, 17vw); }
+    /* ── Clipping positions — symmetrical, pulled inward ── */
+    #sq-f  { top: 5%;     left: 6%;    width: min(210px, 16vw); }
+    #sq-c  { top: 38%;    left: 6%;    width: min(210px, 16vw); }
+    #sq-b  { bottom: 5%;  left: 6%;    width: min(210px, 16vw); }
+    #sq-e  { top: 5%;     right: 6%;   width: min(210px, 16vw); }
+    #sq-d  { top: 38%;    right: 6%;   width: min(210px, 16vw); }
+    #sq-a  { bottom: 5%;  right: 6%;   width: min(210px, 16vw); }
 
     @media (max-width: 960px) {
       .clip { display: none; }
