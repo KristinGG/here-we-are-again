@@ -218,27 +218,25 @@
        EXAMPLES (animal consciousness)
        ═══════════════════════════════ */
     #screen-examples {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-y: auto;
     }
 
     .examples-layout {
       position: relative;
-      width: 700px;
-      height: 700px;
-      max-width: 90vw;
-      max-height: 90vh;
+      width: 100%;
+      min-height: 100vh;
+      padding: 3rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     /* Center circle with statement */
     .circle-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 280px;
-      height: 280px;
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
       border: 1px solid var(--ink-ghost);
       display: flex;
@@ -246,6 +244,8 @@
       justify-content: center;
       text-align: center;
       padding: 2.5rem;
+      margin-bottom: 3rem;
+      flex-shrink: 0;
       opacity: 0;
       transition: opacity 1.2s ease;
     }
@@ -259,12 +259,21 @@
       font-style: italic;
     }
 
-    /* Case blocks positioned around the circle */
+    /* Case blocks in a row around the circle */
+    .cases-ring {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      flex-wrap: wrap;
+    }
+
     .case-block {
-      position: absolute;
-      width: min(240px, 30vw);
+      width: 320px;
+      max-width: 30vw;
       background: var(--clip-bg);
-      padding: 1.1rem 1.2rem 0.9rem;
+      padding: 1.2rem 1.3rem 1rem;
       box-shadow: 1px 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
       opacity: 0;
       transform: scale(0.96);
@@ -287,8 +296,8 @@
 
     .case-text {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(0.72rem, 1vw, 0.8rem);
-      line-height: 1.6;
+      font-size: clamp(0.75rem, 1.1vw, 0.82rem);
+      line-height: 1.65;
       color: var(--ink-soft);
       font-weight: 300;
     }
@@ -309,31 +318,10 @@
     }
     .case-src a:hover { color: var(--ink-soft); }
 
-    /* Position: top center, bottom-left, bottom-right */
-    #case-bats     { top: -2%;   left: 50%; transform: translateX(-50%) scale(0.96); }
-    #case-bats.in  { transform: translateX(-50%) scale(1); }
-    #case-octo     { bottom: -2%; left: -4%; }
-    #case-fish     { bottom: -2%; right: -4%; }
-
-    .examples-continue {
-      position: absolute;
-      bottom: -4rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-    }
-    .examples-continue.in {
-      display: block;
-      animation: lineIn 1s ease forwards;
-    }
-
     /* Closing line */
     .examples-closing {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
+      margin-top: 3rem;
+      max-width: 620px;
       text-align: center;
       opacity: 0;
       transition: opacity 1.2s ease;
@@ -341,18 +329,23 @@
     .examples-closing.in { opacity: 1; }
     .examples-closing p {
       font-family: 'Lora', Georgia, serif;
-      font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-      line-height: 1.8;
+      font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+      line-height: 1.85;
       color: var(--ink-soft);
       font-style: italic;
     }
 
+    .examples-continue {
+      margin-top: 2rem;
+      display: none;
+    }
+    .examples-continue.in {
+      display: block;
+      animation: lineIn 1s ease forwards;
+    }
+
     @media (max-width: 700px) {
-      .examples-layout { width: 95vw; height: auto; min-height: 90vh; }
-      .circle-center { width: 200px; height: 200px; padding: 1.5rem; }
-      .case-block { position: relative; width: 90%; margin: 1rem auto; top: auto; left: auto; right: auto; bottom: auto; transform: none; }
-      #case-bats.in { transform: none; }
-      .examples-closing { position: relative; bottom: auto; width: 90%; margin: 1rem auto; }
+      .case-block { max-width: 90vw; width: 90vw; }
     }
 
     /* ── PIVOT ── */
@@ -439,32 +432,34 @@
       <p>But Jane Goodall's story is only one example.</p>
     </div>
 
-    <div class="case-block" id="case-bats">
-      <div class="case-title">Bat echolocation</div>
-      <p class="case-text">In the late 1930s and early 1940s, Donald Griffin and Robert Galambos demonstrated that bats navigate by emitting high-frequency sounds and detecting the returning echoes. The idea was difficult for many people to accept at first because the signals were ultrasonic and therefore inaudible to humans. A recent scientific review of Griffin's work describes the history of bat echolocation as a case where the science moved from "ridicule, to opposition, to being self-evident."</p>
-      <span class="case-src"><a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1866&context=animsent" target="_blank">[source]</a></span>
-    </div>
+    <div class="cases-ring">
+      <div class="case-block" id="case-bats">
+        <div class="case-title">Bat echolocation</div>
+        <p class="case-text">In the late 1930s and early 1940s, Donald Griffin and Robert Galambos demonstrated that bats navigate by emitting high-frequency sounds and detecting the returning echoes. The idea was difficult for many people to accept at first because the signals were ultrasonic and therefore inaudible to humans. A recent scientific review of Griffin's work describes the history of bat echolocation as a case where the science moved from "ridicule, to opposition, to being self-evident."</p>
+        <span class="case-src"><a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1866&context=animsent" target="_blank">[source]</a></span>
+      </div>
 
-    <div class="case-block" id="case-octo">
-      <div class="case-title">Octopus intelligence</div>
-      <p class="case-text">Octopus intelligence did not fit familiar vertebrate models because their nervous system is highly distributed. A 2012 review in Current Biology explains that the octopus's unusual body creates major control and sensory-processing problems, and argues that its behavior is best understood through "unique brain/body/behavior relationships" in which intelligent behavior emerges from the animal's embodied organization. A 2023 review states that about 400,000 motoneurons are distributed along the nerve cord of each arm, and that octopus control systems do not rely on the same kind of body-part maps used in vertebrates.</p>
-      <span class="case-src"><a href="https://www.sciencedirect.com/science/article/pii/S0960982212010640" target="_blank">[source]</a> <a href="https://www.sciencedirect.com/science/article/pii/S0960982223012216" target="_blank">[source]</a></span>
-    </div>
+      <div class="case-block" id="case-octo">
+        <div class="case-title">Octopus intelligence</div>
+        <p class="case-text">Octopus intelligence did not fit familiar vertebrate models because their nervous system is highly distributed. A 2012 review in Current Biology explains that the octopus's unusual body creates major control and sensory-processing problems, and argues that its behavior is best understood through "unique brain/body/behavior relationships" in which intelligent behavior emerges from the animal's embodied organization. A 2023 review states that about 400,000 motoneurons are distributed along the nerve cord of each arm, and that octopus control systems do not rely on the same kind of body-part maps used in vertebrates.</p>
+        <span class="case-src"><a href="https://www.sciencedirect.com/science/article/pii/S0960982212010640" target="_blank">[source]</a> <a href="https://www.sciencedirect.com/science/article/pii/S0960982223012216" target="_blank">[source]</a></span>
+      </div>
 
-    <div class="case-block" id="case-fish">
-      <div class="case-title">Fish and pain</div>
-      <p class="case-text">For a long time, one major argument against fish pain was anatomical: some scientists claimed that fish could not feel pain because they lacked the mammalian neocortex or "frontal lobes." A historical review in Issues in Science and Technology says that this claim structured the fish pain debate for years. The same review notes that other researchers argued fish were not mere reflex machines and documented stress, fear, and pain-related behavior in fish. A later review responding to neocortex-based skepticism states directly that the lack of a neocortex does not justify concluding that fish cannot feel pain.</p>
-      <span class="case-src"><a href="https://issues.org/the-great-fish-pain-debate/" target="_blank">[source]</a> <a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1037&context=animsent" target="_blank">[source]</a></span>
+      <div class="case-block" id="case-fish">
+        <div class="case-title">Fish and pain</div>
+        <p class="case-text">For a long time, one major argument against fish pain was anatomical: some scientists claimed that fish could not feel pain because they lacked the mammalian neocortex or "frontal lobes." A historical review in Issues in Science and Technology says that this claim structured the fish pain debate for years. The same review notes that other researchers argued fish were not mere reflex machines and documented stress, fear, and pain-related behavior in fish. A later review responding to neocortex-based skepticism states directly that the lack of a neocortex does not justify concluding that fish cannot feel pain.</p>
+        <span class="case-src"><a href="https://issues.org/the-great-fish-pain-debate/" target="_blank">[source]</a> <a href="https://www.wellbeingintlstudiesrepository.org/cgi/viewcontent.cgi?article=1037&context=animsent" target="_blank">[source]</a></span>
+      </div>
     </div>
 
     <div class="examples-closing" id="ex-closing">
       <p>Jane Goodall's story was not unusual. Again and again, animal capacities were doubted when they depended on senses, nervous systems, or forms of intelligence that did not look enough like the human model. The objections were often not just about evidence. They were also about what kinds of minds scientists were prepared to recognize.</p>
     </div>
 
-  </div>
+    <div class="examples-continue" id="ex-continue">
+      <button class="continue-btn" id="ex-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
 
-  <div class="examples-continue" id="ex-continue">
-    <button class="continue-btn" id="ex-continue-btn">continue <span class="arrow">→</span></button>
   </div>
 </div>
 
