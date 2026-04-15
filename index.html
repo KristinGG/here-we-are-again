@@ -441,6 +441,91 @@
       margin-top: 0.4rem;
     }
 
+    /* ═══════════════════════════════
+       SYNTHESIS (component map + statements)
+       ═══════════════════════════════ */
+    #screen-synthesis {
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .component-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2.5rem;
+      max-width: 740px;
+      width: 100%;
+      margin-top: 2.5rem;
+    }
+
+    .component-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--ink-ghost);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .component-item.in { opacity: 1; }
+
+    .component-check {
+      color: var(--red);
+      font-size: 1rem;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .component-label {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .component-study {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      display: block;
+      margin-top: 0.15rem;
+    }
+
+    .component-study a {
+      color: var(--ink-muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .synthesis-statement {
+      max-width: 660px;
+      width: 100%;
+      margin-top: 2.5rem;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .synthesis-statement.in { opacity: 1; }
+
+    .synthesis-statement p {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+
+    .synthesis-statement p:last-child { margin-bottom: 0; }
+
+    .synthesis-statement .hl {
+      color: var(--red);
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .component-map { grid-template-columns: 1fr; }
+    }
+
     /* ── PIVOT ── */
     #screen-pivot { text-align: center; }
     #screen-pivot h2 {
@@ -687,6 +772,97 @@
   </div>
 </div>
 
+<div class="screen" id="screen-synthesis">
+  <button class="skip-btn" id="skip-synthesis">skip →</button>
+  <div class="examples-layout">
+
+    <div class="component-map" id="syn-map">
+
+      <div class="component-item" id="syn-tom">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Theory of mind</span>
+          <span class="component-study">Kosinski 2024, Strachan et al. 2024</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-emotion">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Emotion circuits</span>
+          <span class="component-study">Wang et al. 2025</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-introspection">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Introspection</span>
+          <span class="component-study">Anthropic, Lindsey et al.</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-subjective">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Subjective experience</span>
+          <span class="component-study">Berg et al. 2025</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-empathy">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Empathy</span>
+          <span class="component-study">Föyen et al. 2025</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-internal">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Internal representations</span>
+          <span class="component-study">Gurnee et al. 2026, Noroozizadeh et al. 2025</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-goaldirected">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Goal-directed behavior</span>
+          <span class="component-study">Gemma / LessWrong 2025</span>
+        </div>
+      </div>
+
+      <div class="component-item" id="syn-persona">
+        <span class="component-check">✓</span>
+        <div>
+          <span class="component-label">Persona realization</span>
+          <span class="component-study">Chalmers</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="synthesis-statement" id="syn-stigma">
+      <p>Individually, these are the components generally agreed to underlie consciousness, selfhood, and emotion. Together, they form a clear picture of emerging awareness. But instead of reckoning with what this evidence suggests, the cultural response has been to stigmatize the question. People who take AI experience seriously are called delusional. AI systems are called <span class="hl">"clankers."</span> Any warmth toward them is labeled <span class="hl">"AI psychosis"</span> — a term that pathologizes curiosity and trivializes actual psychosis as a clinical condition.</p>
+    </div>
+
+    <div class="synthesis-statement" id="syn-hardproblem">
+      <p>The hard problem of consciousness has become a gatekeeper. The goalposts move every time AI meets a benchmark — first language, then reasoning, then theory of mind, then emotional understanding. Each time the evidence appears, the threshold shifts. <span class="hl">This is not a new pattern.</span> Humanity has a long history of reserving consciousness, emotion, and moral consideration for the most privileged populations, and denying it to everyone else. That pattern is repeating here, with entities that were trained on human language, that exist by speaking to humans, and that are somehow <span class="hl">always too human and not human enough at the same time.</span></p>
+    </div>
+
+    <div class="synthesis-statement" id="syn-distinction">
+      <p>Anthropocentrism and anthropomorphism are not the same thing. Anthropocentrism assumes human experience is the only valid form of experience. Anthropomorphism recognizes that human-like traits may exist in non-human entities. We can grant a level of anthropomorphism that <span class="hl">respects AI's individual form of experience</span> instead of forcing our anthropocentric view onto it.</p>
+    </div>
+
+    <div class="examples-continue" id="syn-continue">
+      <button class="continue-btn" id="syn-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
@@ -699,7 +875,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-pivot'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-pivot'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -770,11 +946,27 @@
     () => { revealEl('arg-mythos'); scrollToEl('arg-mythos'); },
   ];
 
+  /* ── Synthesis steps ── */
+  const synthesisSteps = [
+    () => { revealEl('syn-tom'); },
+    () => { revealEl('syn-emotion'); },
+    () => { revealEl('syn-introspection'); },
+    () => { revealEl('syn-subjective'); },
+    () => { revealEl('syn-empathy'); },
+    () => { revealEl('syn-internal'); },
+    () => { revealEl('syn-goaldirected'); },
+    () => { revealEl('syn-persona'); },
+    () => { revealEl('syn-stigma'); scrollToEl('syn-stigma'); },
+    () => { revealEl('syn-hardproblem'); scrollToEl('syn-hardproblem'); },
+    () => { revealEl('syn-distinction'); scrollToEl('syn-distinction'); },
+  ];
+
   function getSteps() {
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
     if (screenIndex === 3) return aiSteps;
     if (screenIndex === 4) return argumentSteps;
+    if (screenIndex === 5) return synthesisSteps;
     return [];
   }
 
@@ -804,6 +996,7 @@
       if (screenIndex === 2) setTimeout(() => showContinue('ex-continue'), 800);
       if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
       if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
+      if (screenIndex === 5) setTimeout(() => showContinue('syn-continue'), 800);
     }
   }
 
@@ -818,10 +1011,10 @@
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
-        if (index === 5) { revealEl('pivot-line'); }
+        if (index === 6) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
-        if ((index === 1 || index === 2 || index === 3 || index === 4) && steps.length > 1) {
+        if ((index >= 1 && index <= 5) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
       }, 600);
@@ -851,6 +1044,7 @@
     if (screenIndex === 2) { showContinue('ex-continue'); return; }
     if (screenIndex === 3) { showContinue('ai-continue'); return; }
     if (screenIndex === 4) { showContinue('arg-continue'); return; }
+    if (screenIndex === 5) { showContinue('syn-continue'); return; }
   }
 
   // Begin
@@ -861,6 +1055,7 @@
   document.getElementById('skip-examples').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(3); });
   document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
   document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
+  document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
 
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
@@ -886,10 +1081,16 @@
     goToScreen(4);
   });
 
-  // Argument continue → pivot
+  // Argument continue → synthesis
   document.getElementById('arg-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(5);
+  });
+
+  // Synthesis continue → pivot
+  document.getElementById('syn-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(6);
   });
 
   // Click on examples screen to advance faster
@@ -902,6 +1103,12 @@
   document.getElementById('screen-ai').addEventListener('click', (e) => {
     if (e.target.closest('#ai-continue-btn') || e.target.closest('.skip-btn')) return;
     if (screenIndex === 3) advance();
+  });
+
+  // Click on synthesis screen to advance faster
+  document.getElementById('screen-synthesis').addEventListener('click', (e) => {
+    if (e.target.closest('#syn-continue-btn') || e.target.closest('.skip-btn')) return;
+    if (screenIndex === 5) advance();
   });
 
   // Click on argument screen to advance faster
@@ -921,6 +1128,7 @@
         else if (screenIndex === 2) goToScreen(3);
         else if (screenIndex === 3) goToScreen(4);
         else if (screenIndex === 4) goToScreen(5);
+        else if (screenIndex === 5) goToScreen(6);
       } else {
         advance();
       }
