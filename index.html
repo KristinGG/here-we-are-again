@@ -221,10 +221,10 @@
       left: 50%;
       transform: translateX(-50%);
       font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      color: var(--ink-ghost);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: var(--ink-muted);
       opacity: 0;
       transition: opacity 1.5s ease;
       z-index: 50;
@@ -493,10 +493,6 @@
   let screenIndex = 0;
   let subStep = 0;
   let waiting = false;
-  let autoTimer = null;
-
-  const AUTO_DELAY = 3200;
-  const EXAMPLE_DELAY = 2800;
 
   const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-pivot'];
   const hintEl = document.getElementById('click-hint');
@@ -543,12 +539,6 @@
     return [];
   }
 
-  function getDelay() {
-    if (screenIndex === 1) return AUTO_DELAY;
-    if (screenIndex === 2) return EXAMPLE_DELAY;
-    return 3000;
-  }
-
   function showHint() {
     hintEl.classList.remove('hide');
     hintEl.classList.add('show');
@@ -568,15 +558,11 @@
     }
   }
 
-  function scheduleNext() {
-    clearTimeout(autoTimer);
+  function checkDone() {
     const steps = getSteps();
-    if (subStep < steps.length) {
-      autoTimer = setTimeout(advance, getDelay());
-    } else if (screenIndex === 1) {
-      setTimeout(() => showContinue('continue-wrap'), 2000);
-    } else if (screenIndex === 2) {
-      setTimeout(() => showContinue('ex-continue'), 2000);
+    if (subStep >= steps.length) {
+      if (screenIndex === 1) setTimeout(() => showContinue('continue-wrap'), 800);
+      if (screenIndex === 2) setTimeout(() => showContinue('ex-continue'), 800);
     }
   }
 
@@ -597,14 +583,12 @@
         if ((index === 1 || index === 2) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
-        scheduleNext();
       }, 600);
     }, 400);
   }
 
   function advance() {
     if (waiting) return;
-    clearTimeout(autoTimer);
 
     // Begin screen
     if (screenIndex === 0) {
@@ -617,7 +601,7 @@
     const steps = getSteps();
     if (subStep < steps.length) {
       steps[subStep](); subStep++;
-      scheduleNext();
+      checkDone();
       return;
     }
 
