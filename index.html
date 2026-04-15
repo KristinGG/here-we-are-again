@@ -18,6 +18,37 @@
       --ink-ghost:  #C8C0B4;
       --red:        #8B3226;
       --clip-bg:    #EDE8DE;
+      --panel-bg:   #ffffff;
+      --hover-bg:   #f5f2eb;
+      --hover-strong: #e5e0d5;
+    }
+
+    :root.dark {
+      --cream:      #1a1a1a;
+      --ink:        #e8e4dc;
+      --ink-soft:   #b8b0a4;
+      --ink-muted:  #7a7268;
+      --ink-ghost:  #3a3632;
+      --red:        #c4574a;
+      --clip-bg:    #252220;
+      --panel-bg:   #222222;
+      --hover-bg:   #2a2724;
+      --hover-strong: #333028;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not(.light) {
+        --cream:      #1a1a1a;
+        --ink:        #e8e4dc;
+        --ink-soft:   #b8b0a4;
+        --ink-muted:  #7a7268;
+        --ink-ghost:  #3a3632;
+        --red:        #c4574a;
+        --clip-bg:    #252220;
+        --panel-bg:   #222222;
+        --hover-bg:   #2a2724;
+        --hover-strong: #333028;
+      }
     }
 
     html, body {
@@ -232,6 +263,28 @@
     }
     .click-hint.show { opacity: 1; }
     .click-hint.hide { opacity: 0; }
+
+    /* ── Dark mode toggle ── */
+    .theme-toggle {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 50%;
+      background: var(--clip-bg);
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      line-height: 1;
+    }
+    .theme-toggle:hover { border-color: var(--ink-soft); color: var(--ink-soft); }
 
     /* ── Skip button ── */
     .skip-btn {
@@ -598,7 +651,7 @@
       background: var(--clip-bg);
       transition: background 0.2s;
     }
-    .info-header:hover { background: #e5e0d5; }
+    .info-header:hover { background: var(--hover-strong); }
     .info-title {
       font-family: 'Lora', Georgia, serif;
       font-size: 0.85rem;
@@ -641,7 +694,7 @@
     .chat-panel {
       border: 1px solid var(--ink-ghost);
       border-radius: 6px;
-      background: #fff;
+      background: var(--panel-bg);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -671,7 +724,7 @@
       padding: 0.2rem 0.4rem;
       border: 1px solid var(--ink-ghost);
       border-radius: 4px;
-      background: #fff;
+      background: var(--panel-bg);
       color: var(--ink);
       cursor: pointer;
       outline: none;
@@ -696,7 +749,7 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease, padding 0.3s ease;
-      background: #f5f2eb;
+      background: var(--hover-bg);
       border-bottom: 1px solid var(--ink-ghost);
     }
     .prompt-viewer.open {
@@ -762,7 +815,7 @@
     }
     .chat-bubble.ai {
       align-self: flex-start;
-      background: #f5f2eb;
+      background: var(--hover-bg);
       color: var(--ink);
       border-bottom-left-radius: 3px;
     }
@@ -807,7 +860,7 @@
       padding: 0.45rem 0.7rem;
       border: 1px solid var(--ink-ghost);
       border-radius: 5px;
-      background: #fff;
+      background: var(--panel-bg);
       color: var(--ink);
       outline: none;
     }
@@ -1363,9 +1416,50 @@
 </div>
 
 <button class="skip-end-btn" id="skip-to-exercises" style="display:none;">skip to exercises →</button>
+<button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">☾</button>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
 <script>
+  // Dark mode toggle
+  (function() {
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('hwaa-theme');
+
+    function applyTheme(mode) {
+      root.classList.remove('dark', 'light');
+      if (mode === 'dark') {
+        root.classList.add('dark');
+        toggle.textContent = '☀';
+      } else if (mode === 'light') {
+        root.classList.add('light');
+        toggle.textContent = '☾';
+      } else {
+        // auto — check system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          toggle.textContent = '☀';
+        } else {
+          toggle.textContent = '☾';
+        }
+      }
+    }
+
+    if (saved) applyTheme(saved);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isDark = root.classList.contains('dark') ||
+        (!root.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (isDark) {
+        localStorage.setItem('hwaa-theme', 'light');
+        applyTheme('light');
+      } else {
+        localStorage.setItem('hwaa-theme', 'dark');
+        applyTheme('dark');
+      }
+    });
+  })();
+
   // Screen indices: 0=begin, 1=goodall, 2=examples, 3=ai, 4=pivot
   let screenIndex = 0;
   let subStep = 0;
