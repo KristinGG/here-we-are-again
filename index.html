@@ -6,20 +6,16 @@
   <title>Here We Are Again</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --cream:      #FAF8F2;
-      --cream-mid:  #F0EBE0;
-      --cream-warm: #F5F0E6;
       --ink:        #1E1C18;
       --ink-soft:   #4A4640;
       --ink-muted:  #9A9288;
       --ink-ghost:  #C8C0B4;
-      --aged:       #8B7355;
-      --aged-light: #C4A87A;
     }
 
     html, body {
@@ -35,17 +31,15 @@
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 100;
     }
 
-    /* ── SCREEN SYSTEM ── */
     .screen {
       position: fixed;
       inset: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       opacity: 0;
@@ -73,89 +67,78 @@
     .begin-arrow { display: inline-block; font-style: normal; transition: transform 0.3s ease; }
     .begin-label:hover .begin-arrow { transform: translateX(5px); }
 
-    /* ══════════════════════════════════════════
-       GOODALL: ARCHIVAL SPREAD
-       ══════════════════════════════════════════ */
+    /* ═══════════════════════════════
+       GOODALL
+       ═══════════════════════════════ */
     #screen-goodall {
+      align-items: flex-start;
       justify-content: flex-start;
-      align-items: stretch;
+      cursor: pointer;
     }
 
     .goodall-spread {
       position: relative;
       width: 100%;
       height: 100%;
-      padding: 2rem 0;
-      overflow: hidden;
+      padding: 2.5rem 0 2rem;
     }
 
-    /* ── CENTER DOCUMENT ── */
+    /* ── Center narrative ── */
     .center-doc {
-      position: relative;
-      width: 540px;
-      max-width: 52vw;
+      width: 580px;
+      max-width: 55vw;
       margin: 0 auto;
-      padding: 1.5rem 0;
+      padding: 0.5rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 0.65rem;
       overflow-y: auto;
-      max-height: calc(100vh - 5rem);
+      max-height: calc(100vh - 5.5rem);
       scrollbar-width: none;
-      -ms-overflow-style: none;
       z-index: 2;
+      position: relative;
     }
     .center-doc::-webkit-scrollbar { display: none; }
 
     .hist-line {
       font-family: 'Lora', Georgia, serif;
-      font-size: clamp(1rem, 1.4vw, 1.08rem);
+      font-size: clamp(1.05rem, 1.5vw, 1.15rem);
       line-height: 1.85;
       color: var(--ink-soft);
       display: none;
     }
     .hist-line.in {
       display: block;
-      animation: lineReveal 0.9s ease forwards;
+      animation: lineIn 1s ease forwards;
     }
-    @keyframes lineReveal {
-      from { opacity: 0; transform: translateY(4px); }
+    @keyframes lineIn {
+      from { opacity: 0; transform: translateY(3px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .inline-nav { padding-top: 1.5rem; text-align: center; }
-    .inline-nav.hidden { display: none; }
-    .inline-next {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Lora', serif;
-      font-size: 2rem;
-      color: var(--ink-soft);
-      padding: 0.25rem 0;
-      transition: color 0.2s, transform 0.2s;
-      line-height: 1;
-    }
-    .inline-next:hover { color: var(--ink); transform: translateX(4px); }
-
-    /* ── ARCHIVAL FRAGMENTS ── */
+    /* ── Side quotes — one consistent treatment ── */
     .frag {
       position: absolute;
       opacity: 0;
-      transition: opacity 1.3s ease;
+      transition: opacity 1.2s ease;
       z-index: 1;
+      border-top: 1px solid var(--ink-ghost);
+      padding-top: 0.6rem;
     }
     .frag.in { opacity: 1; }
 
     .frag-quote {
-      font-size: 0.78rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
       line-height: 1.6;
-      color: var(--ink-soft);
+      color: var(--ink-muted);
+      font-style: italic;
+      font-weight: 300;
     }
 
     .frag-src {
       display: block;
-      margin-top: 0.45rem;
+      margin-top: 0.4rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.6rem;
       font-weight: 400;
@@ -169,123 +152,17 @@
     }
     .frag-src a:hover { color: var(--ink-soft); }
 
-    /* — Treatment: Paper Clipping — */
-    .frag-clip {
-      background: var(--cream-warm);
-      padding: 1rem 1.1rem;
-      box-shadow:
-        0 1px 4px rgba(30, 28, 24, 0.06),
-        0 0 0 0.5px rgba(30, 28, 24, 0.04);
-    }
-    .frag-clip .frag-quote {
-      font-family: 'Inter', sans-serif;
-      font-style: italic;
-      font-weight: 300;
-    }
+    /* ── Fragment positions ── */
+    #sq-f  { top: 12%;    left: 2.5%;  width: min(185px, 15vw); }
+    #sq-c  { top: 42%;    left: 1.5%;  width: min(195px, 16vw); }
+    #sq-b  { bottom: 7%;  left: 2.5%;  width: min(200px, 16vw); }
+    #sq-e  { top: 8%;     right: 2%;   width: min(180px, 14vw); }
+    #sq-d  { top: 40%;    right: 1.5%; width: min(190px, 15vw); }
+    #sq-a  { bottom: 11%; right: 2.5%; width: min(185px, 15vw); }
 
-    /* — Treatment: Typed Excerpt — */
-    .frag-typed {
-      background: #F7F5EE;
-      padding: 1rem 1.2rem;
-      border: 1px solid rgba(200, 192, 180, 0.45);
-    }
-    .frag-typed .frag-quote {
-      font-family: 'Special Elite', 'Courier New', monospace;
-      font-style: normal;
-      font-size: 0.72rem;
-      line-height: 1.65;
-      letter-spacing: 0.01em;
-      color: var(--ink-soft);
-    }
-
-    /* — Treatment: Sharp Edge — for hostile/harsh quotes */
-    .frag-edge {
-      background: var(--cream-warm);
-      padding: 0.9rem 1.1rem 0.9rem 1rem;
-      border-left: 2.5px solid var(--ink-soft);
-      box-shadow: 0 2px 8px rgba(30, 28, 24, 0.08);
-    }
-    .frag-edge .frag-quote {
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 500;
-      color: var(--ink);
-      font-size: 0.8rem;
-    }
-
-    /* — Treatment: Margin Note — */
-    .frag-margin {
-      background: transparent;
-      padding: 0.2rem 0 0.2rem 0.9rem;
-      border-left: 1px solid var(--aged-light);
-    }
-    .frag-margin .frag-quote {
-      font-family: 'Inter', sans-serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 0.74rem;
-      color: var(--ink-muted);
-    }
-
-    .date-label { display: none; }
-
-    /* ── FRAGMENT POSITIONS ── */
-    #sq-f {
-      top: 7%;
-      left: 2.5%;
-      width: min(200px, 16vw);
-      transform: rotate(-0.7deg);
-    }
-    #sq-c {
-      top: 37%;
-      left: 1.5%;
-      width: min(215px, 17vw);
-      transform: rotate(0.3deg);
-    }
-    #sq-b {
-      bottom: 5%;
-      left: 3%;
-      width: min(225px, 18vw);
-      transform: rotate(-0.4deg);
-    }
-    #sq-e {
-      top: 5%;
-      right: 2%;
-      width: min(195px, 15vw);
-      transform: rotate(0.5deg);
-    }
-    #sq-d {
-      top: 40%;
-      right: 1.5%;
-      width: min(205px, 16vw);
-      transform: rotate(-0.3deg);
-    }
-    #sq-a {
-      bottom: 9%;
-      right: 2.5%;
-      width: min(190px, 15vw);
-      transform: rotate(0.4deg);
-    }
-
-    #date-gombe {
-      top: 2.5%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    #date-cambridge {
-      bottom: 3%;
-      right: 22%;
-      transform: rotate(0.3deg);
-    }
-
-    /* ── Small screens: hide fragments ── */
     @media (max-width: 960px) {
-      .frag, .date-label { display: none; }
-      .center-doc {
-        max-width: 90vw;
-        width: 100%;
-        padding: 1rem 1.5rem;
-      }
+      .frag { display: none; }
+      .center-doc { max-width: 90vw; width: 100%; padding: 0.5rem 1.5rem; }
     }
 
     /* ── PIVOT ── */
@@ -301,14 +178,13 @@
     }
     #screen-pivot h2.in { opacity: 1; transform: translateY(0); }
 
-    /* ── FIXED NAV ── */
+    /* ── Fixed nav (pivot only) ── */
     #nav {
       position: fixed;
       bottom: 5rem;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      align-items: center;
       gap: 3rem;
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -316,82 +192,57 @@
     }
     #nav.show { opacity: 1; }
     .nav-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Lora', serif;
-      font-size: 2.2rem;
-      color: var(--ink-soft);
-      padding: 0.5rem 1rem;
-      transition: color 0.2s, transform 0.2s;
-      line-height: 1;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Lora', serif; font-size: 2.2rem;
+      color: var(--ink-soft); padding: 0.5rem 1rem;
+      transition: color 0.2s, transform 0.2s; line-height: 1;
     }
     .nav-btn:hover { color: var(--ink); }
     #btn-prev:hover { transform: translateX(-4px); }
-    #btn-next:hover { transform: translateX(4px); }
     .nav-btn.hidden { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body>
 
-<!-- BEGIN -->
 <div class="screen active" id="screen-begin">
   <div class="begin-label" id="begin-btn">
     begin <span class="begin-arrow">→</span>
   </div>
 </div>
 
-<!-- ═══════════════════════════════
-     GOODALL: ARCHIVAL SPREAD
-     ═══════════════════════════════ -->
 <div class="screen" id="screen-goodall">
   <div class="goodall-spread">
 
-    <!-- DATE LABELS -->
-    <span class="date-label" id="date-gombe">Gombe Stream, Tanzania — July 1960</span>
-    <span class="date-label" id="date-cambridge">Cambridge, England</span>
-
-    <!-- ——— LEFT FRAGMENTS ——— -->
-
-    <!-- Paper clipping -->
-    <div class="frag frag-clip" id="sq-f">
+    <div class="frag" id="sq-f">
       <p class="frag-quote">"I shouldn't have given the chimps names; it was scientific to number them. I couldn't talk about them having personalities, minds and emotions. Those were unique to us."</p>
       <span class="frag-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
     </div>
 
-    <!-- Margin note -->
-    <div class="frag frag-margin" id="sq-c">
+    <div class="frag" id="sq-c">
       <p class="frag-quote">"When, in the early 1960s, I brazenly used such words as 'childhood', 'adolescence', 'motivation', 'excitement', and 'mood' I was much criticised. Even worse was my crime of suggesting that chimpanzees had 'personalities'."</p>
       <span class="frag-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
     </div>
 
-    <!-- Typed excerpt -->
-    <div class="frag frag-typed" id="sq-b">
+    <div class="frag" id="sq-b">
       <p class="frag-quote">"I did not realize that it was unscientific to discuss behavior in terms of motivation or purpose. It was not respectable, in scientific circles, to talk about animal personality. That was something reserved for humans. Nor did animals have minds, so they were not capable of rational thought. And to talk about their emotions was to be guilty of the worst kind of anthropomorphism."</p>
       <span class="frag-src"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a></span>
     </div>
 
-    <!-- ——— RIGHT FRAGMENTS ——— -->
-
-    <!-- Paper clipping -->
-    <div class="frag frag-clip" id="sq-e">
+    <div class="frag" id="sq-e">
       <p class="frag-quote">"I was actually taught in the early 1960s, that the difference between us and animals was one of kind. We were elevated onto a pinnacle, separate from all the others."</p>
       <span class="frag-src"><a href="https://www.broadview.org/jane-goodall-interview/" target="_blank">[source]</a></span>
     </div>
 
-    <!-- Sharp edge — the harshest quote -->
-    <div class="frag frag-edge" id="sq-d">
+    <div class="frag" id="sq-d">
       <p class="frag-quote">"Hostility. Pure hostility. A rather supercilious, superior attitude. Just shrugging me off: the Geographic cover girl, that's all you are."</p>
       <span class="frag-src"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a></span>
     </div>
 
-    <!-- Paper clipping -->
-    <div class="frag frag-clip" id="sq-a">
+    <div class="frag" id="sq-a">
       <p class="frag-quote">"You can't have empathy with your subjects because science must be cold and objective, and you can't be objective if you have empathy."</p>
       <span class="frag-src"><a href="https://a24films.com/notes/2025/04/ambassador-of-the-heart-with-isaiah-saxon-jane-goodall" target="_blank">[source]</a></span>
     </div>
 
-    <!-- ——— CENTER NARRATIVE ——— -->
     <div class="center-doc" id="goodall-center">
       <p class="hist-line" id="hl-1">Jane Goodall was born in England in 1934 and loved animals from childhood.</p>
       <p class="hist-line" id="hl-2">In 1957, she traveled to Kenya and met Louis Leakey, who wanted someone to study wild chimpanzees.</p>
@@ -406,60 +257,51 @@
       <p class="hist-line" id="hl-11">For that, she faced criticism from scientists who believed animals should be studied in strictly objective terms and not described using human-like language.</p>
       <p class="hist-line" id="hl-12">She later earned a PhD at Cambridge, where she encountered resistance from those who disagreed with her approach to studying and describing chimpanzees.</p>
       <p class="hist-line" id="hl-13">Over time, her work transformed how many people understood chimpanzees and helped change the study of animal behavior.</p>
-
-      <div class="inline-nav hidden" id="inline-nav">
-        <button class="inline-next" id="inline-next">→</button>
-      </div>
     </div>
 
   </div>
 </div>
 
-<!-- PIVOT -->
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
-<!-- Fixed nav (pivot screen only) -->
 <div id="nav">
   <button class="nav-btn hidden" id="btn-prev">←</button>
-  <button class="nav-btn hidden" id="btn-next">→</button>
 </div>
 
 <script>
   let screenIndex = 0;
   let subStep = 0;
   let waiting = false;
+  let autoTimer = null;
+
+  const AUTO_DELAY = 3200; // ms between each line
 
   function revealEl(id) {
     const el = document.getElementById(id);
     if (el) el.classList.add('in');
   }
 
-  function scrollToArrow() {
-    const nav = document.getElementById('inline-nav');
-    if (nav) {
-      nav.classList.remove('hidden');
-      setTimeout(() => {
-        nav.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    }
+  function scrollToLine(id) {
+    const el = document.getElementById(id);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
   }
 
   const goodallSteps = [
-    () => { revealEl('hl-1');  scrollToArrow(); },
-    () => { revealEl('hl-2');  scrollToArrow(); },
-    () => { revealEl('hl-3');  revealEl('date-gombe'); scrollToArrow(); },
-    () => { revealEl('hl-4');  scrollToArrow(); },
-    () => { revealEl('hl-5');  revealEl('sq-f'); scrollToArrow(); },
-    () => { revealEl('hl-6');  scrollToArrow(); },
-    () => { revealEl('hl-7');  scrollToArrow(); },
-    () => { revealEl('hl-8');  revealEl('sq-e'); scrollToArrow(); },
-    () => { revealEl('hl-9');  scrollToArrow(); },
-    () => { revealEl('hl-10'); revealEl('sq-c'); scrollToArrow(); },
-    () => { revealEl('hl-11'); revealEl('sq-d'); scrollToArrow(); },
-    () => { revealEl('hl-12'); revealEl('sq-b'); revealEl('date-cambridge'); scrollToArrow(); },
-    () => { revealEl('hl-13'); revealEl('sq-a'); scrollToArrow(); },
+    () => { revealEl('hl-1'); },
+    () => { revealEl('hl-2'); },
+    () => { revealEl('hl-3'); },
+    () => { revealEl('hl-4');  scrollToLine('hl-4'); },
+    () => { revealEl('hl-5');  revealEl('sq-f'); scrollToLine('hl-5'); },
+    () => { revealEl('hl-6');  scrollToLine('hl-6'); },
+    () => { revealEl('hl-7');  scrollToLine('hl-7'); },
+    () => { revealEl('hl-8');  revealEl('sq-e'); scrollToLine('hl-8'); },
+    () => { revealEl('hl-9');  scrollToLine('hl-9'); },
+    () => { revealEl('hl-10'); revealEl('sq-c'); scrollToLine('hl-10'); },
+    () => { revealEl('hl-11'); revealEl('sq-d'); scrollToLine('hl-11'); },
+    () => { revealEl('hl-12'); revealEl('sq-b'); scrollToLine('hl-12'); },
+    () => { revealEl('hl-13'); revealEl('sq-a'); scrollToLine('hl-13'); },
   ];
 
   const screens = [
@@ -467,6 +309,13 @@
     { id: 'screen-goodall', steps: goodallSteps },
     { id: 'screen-pivot',   steps: [ () => revealEl('pivot-line') ] },
   ];
+
+  function scheduleNext() {
+    clearTimeout(autoTimer);
+    if (screenIndex === 1) {
+      autoTimer = setTimeout(advance, AUTO_DELAY);
+    }
+  }
 
   function showScreen(index, autoStep) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -482,12 +331,15 @@
         if (s && s.steps.length > 0) { s.steps[0](); subStep = 1; }
         waiting = false;
         updateNav();
+        scheduleNext();
       }, 600);
     }
   }
 
   function advance() {
     if (waiting) return;
+    clearTimeout(autoTimer);
+
     if (screenIndex === 0) {
       document.getElementById('screen-begin').classList.remove('active');
       screenIndex = 1;
@@ -495,37 +347,38 @@
       showScreen(1, true);
       return;
     }
+
     const cfg = screens[screenIndex];
     if (!cfg) return;
+
     if (subStep < cfg.steps.length) {
-      cfg.steps[subStep](); subStep++; updateNav(); return;
+      cfg.steps[subStep](); subStep++; updateNav();
+      scheduleNext();
+      return;
     }
+
     const nextIndex = screenIndex + 1;
     if (nextIndex >= screens.length) return;
     waiting = true;
-    setTimeout(() => { screenIndex = nextIndex; showScreen(nextIndex, true); waiting = false; }, 200);
+    setTimeout(() => { screenIndex = nextIndex; showScreen(nextIndex, true); waiting = false; }, 400);
   }
 
   function goBack() {
     if (waiting || screenIndex <= 1) return;
+    clearTimeout(autoTimer);
     waiting = true;
     setTimeout(() => { screenIndex--; showScreen(screenIndex, true); waiting = false; }, 200);
   }
 
   function updateNav() {
-    const prevBtn = document.getElementById('btn-prev');
-    const nextBtn = document.getElementById('btn-next');
-    prevBtn.classList.toggle('hidden', screenIndex <= 1);
-    const onGoodall = screenIndex === 1;
-    const cfg = screens[screenIndex];
-    const atEnd = screenIndex === screens.length - 1 && cfg && subStep >= cfg.steps.length;
-    nextBtn.classList.toggle('hidden', onGoodall || atEnd);
+    document.getElementById('btn-prev').classList.toggle('hidden', screenIndex <= 1);
   }
 
   document.getElementById('begin-btn').addEventListener('click', advance);
-  document.getElementById('inline-next').addEventListener('click', (e) => { e.stopPropagation(); advance(); });
-  document.getElementById('btn-next').addEventListener('click', (e) => { e.stopPropagation(); advance(); });
   document.getElementById('btn-prev').addEventListener('click', (e) => { e.stopPropagation(); goBack(); });
+
+  // Click anywhere on the Goodall screen to advance faster
+  document.querySelector('.goodall-spread').addEventListener('click', () => { if (screenIndex === 1) advance(); });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); advance(); }
