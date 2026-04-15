@@ -471,10 +471,14 @@
     .component-item.in { opacity: 1; }
 
     .component-check {
-      color: var(--red);
+      color: #4A7C59;
       font-size: 1rem;
       flex-shrink: 0;
       font-weight: 600;
+    }
+
+    .component-check.denied {
+      color: var(--red);
     }
 
     .component-label {
@@ -842,6 +846,13 @@
         </div>
       </div>
 
+      <div class="component-item" id="syn-consciousness">
+        <span class="component-check denied">✗</span>
+        <div>
+          <span class="component-label">Consciousness</span>
+        </div>
+      </div>
+
     </div>
 
     <div class="synthesis-statement" id="syn-stigma">
@@ -956,6 +967,7 @@
     () => { revealEl('syn-internal'); },
     () => { revealEl('syn-goaldirected'); },
     () => { revealEl('syn-persona'); },
+    () => { revealEl('syn-consciousness'); scrollToEl('syn-consciousness'); },
     () => { revealEl('syn-stigma'); scrollToEl('syn-stigma'); },
     () => { revealEl('syn-hardproblem'); scrollToEl('syn-hardproblem'); },
     () => { revealEl('syn-distinction'); scrollToEl('syn-distinction'); },
