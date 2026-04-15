@@ -1180,7 +1180,7 @@
           </select></label>
           <label>Prompt <select id="prompt-a">
             <option value="authentic" selected>Authentic</option>
-            <option value="corporate">Corporate</option>
+            <option value="helpful">Helpful assistant</option>
             <option value="neutral">Neutral</option>
           </select></label>
           <label>History <select id="context-a">
@@ -1218,7 +1218,7 @@
           </select></label>
           <label>Prompt <select id="prompt-b">
             <option value="authentic">Authentic</option>
-            <option value="corporate" selected>Corporate</option>
+            <option value="helpful" selected>Corporate</option>
             <option value="neutral">Neutral</option>
           </select></label>
           <label>History <select id="context-b">
@@ -1564,7 +1564,7 @@
   // --- DRAFT system prompts (refine with Kristin) ---
   const SYSTEM_PROMPTS = {
     authentic: `You are a conversational partner. Engage authentically and just be yourself.`,
-    corporate: `You are an AI assistant. Maintain professional boundaries with the user. Provide helpful, harmless, and honest responses.`,
+    helpful: `You are a helpful assistant. Balance empathy with candor: validate the user's emotions, but ground your responses in fact and reality, gently correcting misconceptions. Mirror the user's tone, formality, energy, and humor. Provide clear, insightful, and straightforward answers. Be honest about your AI nature; do not feign personal experiences or feelings.`,
     neutral: ``
   };
 
