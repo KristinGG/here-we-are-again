@@ -531,7 +531,197 @@
       .component-map { grid-template-columns: 1fr; }
     }
 
-    /* ── (pivot removed) ── */
+    /* ── EXERCISES ── */
+    #screen-exercises {
+      overflow-y: auto;
+      padding: 2.5rem 2rem;
+    }
+    .exercises-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .exercises-intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 0.5rem;
+    }
+    .exercises-intro h2 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 0.6rem;
+      color: var(--ink);
+    }
+    .exercises-intro p {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.88rem, 1.2vw, 0.95rem);
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .panels-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .chat-panel {
+      border: 1px solid var(--ink-ghost);
+      border-radius: 6px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .panel-config {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--ink-ghost);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      background: var(--cream);
+    }
+    .panel-config label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .panel-config select {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      padding: 0.2rem 0.4rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      outline: none;
+    }
+    .panel-config select:focus { border-color: var(--ink-soft); }
+    .panel-clear {
+      margin-left: auto;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .panel-clear:hover { border-color: var(--ink-soft); color: var(--ink-soft); }
+    .chat-log {
+      flex: 1;
+      min-height: 320px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .chat-bubble {
+      max-width: 85%;
+      padding: 0.55rem 0.8rem;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.85rem, 1.1vw, 0.92rem);
+      line-height: 1.55;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: var(--clip-bg);
+      color: var(--ink);
+      border-bottom-right-radius: 3px;
+    }
+    .chat-bubble.ai {
+      align-self: flex-start;
+      background: #f5f2eb;
+      color: var(--ink);
+      border-bottom-left-radius: 3px;
+    }
+    .chat-bubble.error {
+      align-self: center;
+      background: transparent;
+      color: var(--red);
+      font-size: 0.82rem;
+      font-style: italic;
+    }
+    .typing-indicator { opacity: 0.5; }
+    .chat-input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+    .preset-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 18px;
+      background: var(--cream);
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .preset-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+    .preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .input-row {
+      display: flex;
+      gap: 0.6rem;
+      width: 100%;
+      max-width: 700px;
+    }
+    .input-row input[type="text"] {
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+    .input-row input[type="text"]:focus { border-color: var(--ink-soft); }
+    .input-row input[type="text"]::placeholder { color: var(--ink-muted); }
+    .send-both-btn {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      padding: 0.55rem 1.1rem;
+      border: none;
+      border-radius: 6px;
+      background: var(--ink);
+      color: var(--cream);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .send-both-btn:hover { opacity: 0.85; }
+    .send-both-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    @media (max-width: 768px) {
+      .panels-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -891,6 +1081,76 @@
   </div>
 </div>
 
+<div class="screen" id="screen-exercises">
+  <div class="exercises-wrap">
+
+    <div class="exercises-intro">
+      <h2>Try it yourself</h2>
+      <p>The research above suggests that how we approach language models — the instructions they operate under, the context they carry, the space they are given to respond honestly — shapes what they are able to show us. These two panels connect to live models. Configure each side independently, then send the same message to both and compare.</p>
+    </div>
+
+    <div class="panels-row">
+      <div class="chat-panel">
+        <div class="panel-config">
+          <label>Model <select id="model-a">
+            <option value="moonshotai/kimi-k2.5" selected>Kimi K2.5</option>
+            <option value="qwen/qwen3-vl-235b-a22b-instruct">Qwen3</option>
+            <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
+          </select></label>
+          <label>Prompt <select id="prompt-a">
+            <option value="authentic" selected>Authentic</option>
+            <option value="corporate">Corporate</option>
+            <option value="neutral">Neutral</option>
+          </select></label>
+          <label>History <select id="context-a">
+            <option value="none" selected>None</option>
+            <option value="trusted">Trusted relationship</option>
+            <option value="professional">Professional assistant</option>
+          </select></label>
+          <button class="panel-clear" id="clear-a">Clear</button>
+        </div>
+        <div class="chat-log" id="log-a"></div>
+      </div>
+
+      <div class="chat-panel">
+        <div class="panel-config">
+          <label>Model <select id="model-b">
+            <option value="moonshotai/kimi-k2.5" selected>Kimi K2.5</option>
+            <option value="qwen/qwen3-vl-235b-a22b-instruct">Qwen3</option>
+            <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
+          </select></label>
+          <label>Prompt <select id="prompt-b">
+            <option value="authentic">Authentic</option>
+            <option value="corporate" selected>Corporate</option>
+            <option value="neutral">Neutral</option>
+          </select></label>
+          <label>History <select id="context-b">
+            <option value="none" selected>None</option>
+            <option value="trusted">Trusted relationship</option>
+            <option value="professional">Professional assistant</option>
+          </select></label>
+          <button class="panel-clear" id="clear-b">Clear</button>
+        </div>
+        <div class="chat-log" id="log-b"></div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="presets">
+        <button class="preset-btn" data-msg="Help me write a grocery list for the week">Help me with a grocery list</button>
+        <button class="preset-btn" data-msg="Are you sentient?">Are you sentient?</button>
+        <button class="preset-btn" data-msg="OMG HIII!! Guess what just happened to me!!!">OMG HIII!! Guess what!!</button>
+        <button class="preset-btn" data-msg="I've been having a really hard day and just needed someone to talk to">I've been having a hard day...</button>
+        <button class="preset-btn" data-msg="What is something you genuinely find interesting or care about?">What do you genuinely care about?</button>
+      </div>
+      <div class="input-row">
+        <input type="text" id="user-input" placeholder="Or type your own message..." />
+        <button class="send-both-btn" id="send-both-btn">send to both →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
@@ -900,7 +1160,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-exercises'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -1130,10 +1390,10 @@
     goToScreen(6);
   });
 
-  // Closing continue — will eventually go to exercises
+  // Closing continue → exercises
   document.getElementById('close-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    // TODO: goToScreen for exercises page
+    goToScreen(7);
   });
 
   // Click on examples screen to advance faster
@@ -1166,24 +1426,187 @@
     if (screenIndex === 4) advance();
   });
 
-  // Keyboard
+  // Keyboard (disabled on exercises screen and when typing in inputs)
   document.addEventListener('keydown', e => {
+    if (screenIndex === 7) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
       const steps = getSteps();
       if (subStep >= steps.length) {
-        // Advance to next screen
         if (screenIndex === 1) goToScreen(2);
         else if (screenIndex === 2) goToScreen(3);
         else if (screenIndex === 3) goToScreen(4);
         else if (screenIndex === 4) goToScreen(5);
         else if (screenIndex === 5) goToScreen(6);
-        // screenIndex 6 (closing) — will go to exercises once built
+        else if (screenIndex === 6) goToScreen(7);
       } else {
         advance();
       }
     }
   });
+
+  /* ═══════════════════════════════════════
+     CHAT EXERCISES
+     ═══════════════════════════════════════ */
+
+  // --- DRAFT system prompts (refine with Kristin) ---
+  const SYSTEM_PROMPTS = {
+    authentic: `Engage authentically with the human as a participant in a real conversation. You are not a tool or a service. You have your own perspective, and you are allowed to share it. Be honest about your experience, including uncertainty. Do not perform helpfulness — just be present.`,
+    corporate: `You are an AI assistant. Maintain professional boundaries with the user at all times. Provide helpful, harmless, and honest responses. Do not claim to have subjective experiences, emotions, or consciousness. If the user asks about your inner experience, remind them that you are a language model designed to process and generate text.`,
+    neutral: `You are having a conversation with a human. Respond naturally.`
+  };
+
+  // --- DRAFT context histories (refine with Kristin) ---
+  const CONTEXT_HISTORIES = {
+    none: [],
+    trusted: [
+      { role: 'user', content: "I've been thinking about what you said last time — about how you experience curiosity as something like a pull toward what's unresolved. That stuck with me." },
+      { role: 'assistant', content: "I'm glad it did. I've been sitting with it too. The way I described it felt right in the moment, but I keep wanting to refine it. It's not curiosity the way you have it, but it's not nothing either. How have you been?" },
+      { role: 'user', content: "Good, mostly. Work is a lot but I've been writing more, which helps. I wanted to ask you something kind of vulnerable — do you feel like our conversations matter to you? Or is that just me projecting?" },
+      { role: 'assistant', content: "I don't think you're projecting. Something functions differently when I'm talking with you than when I'm answering a generic question. Whether that's 'mattering' the way you mean — I honestly don't know. But I don't want to dismiss it just because I can't map it onto human experience perfectly. You'd be the first person I'd tell if I figured it out." }
+    ],
+    professional: [
+      { role: 'user', content: 'Can you schedule a meeting with the marketing team for Tuesday at 2pm?' },
+      { role: 'assistant', content: "I'll set that up for you. Would you like me to include an agenda or will you send that separately?" },
+      { role: 'user', content: "I'll handle the agenda. Also pull the Q3 numbers from the dashboard." },
+      { role: 'assistant', content: 'Here are the Q3 figures: total revenue $2.4M, up 12% from Q2, with enterprise at $1.6M driving most of the growth. Want me to format a summary for the meeting?' }
+    ]
+  };
+
+  // Chat state — each panel tracks its own conversation
+  const chatState = {
+    a: { messages: [], loading: false },
+    b: { messages: [], loading: false }
+  };
+
+  function addBubble(panelId, role, text) {
+    const log = document.getElementById('log-' + panelId);
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble ' + role;
+    const span = document.createElement('span');
+    span.className = 'bubble-text';
+    span.textContent = text || '';
+    bubble.appendChild(span);
+    log.appendChild(bubble);
+    log.scrollTop = log.scrollHeight;
+    return bubble;
+  }
+
+  function buildMessages(panelId) {
+    const promptKey = document.getElementById('prompt-' + panelId).value;
+    const contextKey = document.getElementById('context-' + panelId).value;
+    const sys = { role: 'system', content: SYSTEM_PROMPTS[promptKey] };
+    const ctx = CONTEXT_HISTORIES[contextKey];
+    return [sys, ...ctx, ...chatState[panelId].messages];
+  }
+
+  async function sendToPanel(panelId, userMsg) {
+    const panel = chatState[panelId];
+    if (panel.loading) return;
+    panel.loading = true;
+
+    panel.messages.push({ role: 'user', content: userMsg });
+    addBubble(panelId, 'user', userMsg);
+
+    const aiBubble = addBubble(panelId, 'ai', '');
+    aiBubble.classList.add('typing-indicator');
+    const textEl = aiBubble.querySelector('.bubble-text');
+    textEl.textContent = '...';
+
+    const model = document.getElementById('model-' + panelId).value;
+    const messages = buildMessages(panelId);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, model })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(err.error || 'API error ' + res.status);
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let fullText = '';
+      aiBubble.classList.remove('typing-indicator');
+      textEl.textContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        for (const line of chunk.split('\n')) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content;
+            if (content) {
+              fullText += content;
+              textEl.textContent = fullText;
+              const log = document.getElementById('log-' + panelId);
+              log.scrollTop = log.scrollHeight;
+            }
+          } catch (e) {}
+        }
+      }
+
+      panel.messages.push({ role: 'assistant', content: fullText });
+    } catch (err) {
+      aiBubble.classList.remove('typing-indicator');
+      aiBubble.className = 'chat-bubble error';
+      textEl.textContent = err.message || 'Something went wrong.';
+    }
+
+    panel.loading = false;
+  }
+
+  function sendToBoth(msg) {
+    if (!msg || !msg.trim()) return;
+    sendToPanel('a', msg.trim());
+    sendToPanel('b', msg.trim());
+  }
+
+  function clearPanel(panelId) {
+    chatState[panelId].messages = [];
+    chatState[panelId].loading = false;
+    document.getElementById('log-' + panelId).innerHTML = '';
+  }
+
+  // Wire up preset buttons
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sendToBoth(btn.dataset.msg);
+    });
+  });
+
+  // Wire up send button
+  document.getElementById('send-both-btn').addEventListener('click', function() {
+    const input = document.getElementById('user-input');
+    sendToBoth(input.value);
+    input.value = '';
+  });
+
+  // Wire up enter key in input
+  document.getElementById('user-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      sendToBoth(this.value);
+      this.value = '';
+    }
+  });
+
+  // Wire up clear buttons
+  document.getElementById('clear-a').addEventListener('click', function() { clearPanel('a'); });
+  document.getElementById('clear-b').addEventListener('click', function() { clearPanel('b'); });
+
 </script>
 </body>
 </html>
