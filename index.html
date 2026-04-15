@@ -661,15 +661,23 @@
     }
     .typing-indicator { opacity: 0.5; }
     .thinking-text {
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       color: var(--ink-muted);
       font-style: italic;
       border-left: 2px solid var(--ink-ghost);
       padding-left: 0.5rem;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.4rem;
       white-space: pre-wrap;
-      max-height: 150px;
+      max-height: 200px;
       overflow-y: auto;
+    }
+    .thinking-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-ghost);
+      font-style: normal;
     }
     .panel-input {
       display: flex;
@@ -1564,6 +1572,7 @@
       let fullText = '';
       let thinkingText = '';
       let thinkingEl = null;
+      let buffer = '';
       aiBubble.classList.remove('typing-indicator');
       textEl.textContent = '';
 
@@ -1571,32 +1580,42 @@
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        for (const line of chunk.split('\n')) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        // Keep the last (potentially incomplete) line in the buffer
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith('data:')) continue;
+          const data = trimmed.slice(5).trim();
           if (data === '[DONE]') continue;
           try {
             const parsed = JSON.parse(data);
             const delta = parsed.choices && parsed.choices[0] && parsed.choices[0].delta;
             if (!delta) continue;
 
-            // Handle reasoning/thinking content
-            const thinking = delta.reasoning_content || delta.reasoning;
+            // Handle reasoning/thinking content (different models use different field names)
+            const thinking = delta.reasoning_content || delta.reasoning || delta.thinking;
             if (thinking) {
               if (!thinkingEl) {
                 thinkingEl = document.createElement('div');
                 thinkingEl.className = 'thinking-text';
+                thinkingEl.innerHTML = '<span class="thinking-label">thinking...</span><br/>';
                 aiBubble.insertBefore(thinkingEl, textEl);
               }
               thinkingText += thinking;
-              thinkingEl.textContent = thinkingText;
+              thinkingEl.innerHTML = '<span class="thinking-label">thinking...</span><br/>' + thinkingText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
             // Handle regular content
             if (delta.content) {
               fullText += delta.content;
               textEl.textContent = fullText;
+              // When real content starts, finalize the thinking label
+              if (thinkingEl) {
+                thinkingEl.querySelector('.thinking-label').textContent = 'reasoning';
+              }
             }
 
             const log = document.getElementById('log-' + panelId);
