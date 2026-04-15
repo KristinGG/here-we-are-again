@@ -19,7 +19,6 @@
       --ink-ghost:  #C8C0B4;
       --aged:       #8B7355;
       --aged-light: #C4A87A;
-      --critical:   #7A5C4A;
     }
 
     html, body {
@@ -42,7 +41,6 @@
     }
 
     /* ── SCREEN SYSTEM ── */
-    /* Each .screen is full viewport, stacked, fades in/out */
     .screen {
       position: fixed;
       inset: 0;
@@ -60,9 +58,6 @@
     }
 
     /* ── BEGIN SCREEN ── */
-    #screen-begin {
-      gap: 0;
-    }
     .begin-label {
       font-family: 'Lora', Georgia, serif;
       font-size: clamp(1.1rem, 2.5vw, 1.5rem);
@@ -84,130 +79,85 @@
     /* ── PROSE SCREENS ── */
     .prose-screen {
       padding: 3rem 2rem;
-      max-width: 640px;
+      max-width: 660px;
       width: 100%;
       text-align: center;
     }
 
-    /* Prose line — each starts invisible, animates in */
+    /* Reveal animation */
     .line {
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 1.1s ease, transform 1.1s ease;
-      margin-bottom: 0;
     }
     .line.in {
       opacity: 1;
       transform: translateY(0);
     }
-    .line.dim {
-      opacity: 0.3;
-      transform: translateY(0);
-    }
 
     /* Typography */
     .line-italic {
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
       font-style: italic;
       line-height: 1.85;
       color: var(--ink-soft);
     }
     .line-plain {
-      font-size: clamp(0.95rem, 1.9vw, 1.1rem);
-      line-height: 1.8;
-      color: var(--ink-soft);
-    }
-    .line-strong {
       font-size: clamp(1rem, 2vw, 1.15rem);
       line-height: 1.8;
-      color: var(--ink);
-    }
-    .line-small {
-      font-size: clamp(0.85rem, 1.6vw, 0.95rem);
-      line-height: 1.75;
-      color: var(--ink-muted);
-      font-style: italic;
-    }
-
-    .spacer { height: 1.6rem; }
-
-    /* ── ANNOTATION SCREEN (criticism fragments) ── */
-    #screen-criticism {
-      position: fixed;
-      inset: 0;
-    }
-
-    /* Central calm text */
-    .calm-center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      max-width: 520px;
-      width: 88vw;
-    }
-    .calm-center p {
-      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
-      line-height: 1.85;
       color: var(--ink-soft);
-      font-style: italic;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 1.1s ease, transform 1.1s ease;
     }
-    .calm-center p.in {
+
+    /* ── BLOCKQUOTE SCREENS ── */
+    .quote-screen {
+      padding: 3rem 2rem;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    blockquote {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      border-left: 2px solid var(--aged-light);
+      padding-left: 1.75rem;
+      margin: 0;
+    }
+    blockquote.in {
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Criticism fragments — scattered */
-    .frag {
-      position: absolute;
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      font-size: 0.68rem;
-      letter-spacing: 0.09em;
-      color: var(--critical);
-      opacity: 0;
-      transition: opacity 1.3s ease, transform 1.3s ease;
+    blockquote p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.85;
+      color: var(--ink-soft);
+      font-style: italic;
     }
-    .frag.in { opacity: 0.85; }
-
-    #f1 { top: 12%; right: 9%;  transform: rotate(-2deg)   translateY(10px); }
-    #f2 { bottom: 20%; left: 7%;  transform: rotate(1.5deg) translateY(10px); }
-    #f3 { top: 30%; left: 8%;   transform: rotate(-1deg)   translateY(10px); font-style: italic; }
-    #f4 { bottom: 13%; right: 8%; transform: rotate(2deg)   translateY(10px); }
-    #f5 { top: 18%; left: 22%;  transform: rotate(0.5deg)  translateY(10px); font-size: 0.6rem; opacity: 0; }
-
-    #f1.in { transform: rotate(-2deg)   translateY(0); opacity: 0.75; }
-    #f2.in { transform: rotate(1.5deg)  translateY(0); opacity: 0.7;  }
-    #f3.in { transform: rotate(-1deg)   translateY(0); opacity: 0.65; }
-    #f4.in { transform: rotate(2deg)    translateY(0); opacity: 0.8;  }
-    #f5.in { transform: rotate(0.5deg)  translateY(0); opacity: 0.55; }
-
-    /* Location stamp */
-    #stamp {
-      position: absolute;
-      top: 2.5rem;
-      right: 3rem;
+    blockquote .source {
+      display: block;
+      margin-top: 1rem;
       font-family: 'Inter', sans-serif;
-      font-size: 0.58rem;
+      font-size: 0.72rem;
       font-weight: 300;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--aged-light);
-      opacity: 0;
-      transition: opacity 1.8s ease;
+      font-style: normal;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
     }
-    #stamp.in { opacity: 1; }
+    blockquote .source a {
+      color: var(--aged);
+      text-decoration: none;
+      border-bottom: 1px solid var(--aged-light);
+      transition: color 0.2s;
+      user-select: auto;
+    }
+    blockquote .source a:hover { color: var(--ink-soft); }
 
     /* ── SHE WAS RIGHT screen ── */
     #screen-right {
       text-align: center;
     }
     #screen-right .big-line {
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
       font-style: italic;
       font-weight: 400;
       color: var(--ink);
@@ -223,6 +173,9 @@
     /* ── PIVOT screen ── */
     #screen-pivot {
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 1.2rem;
     }
     #screen-pivot h2 {
@@ -230,34 +183,52 @@
       font-weight: 400;
       letter-spacing: -0.025em;
       color: var(--ink);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 1.5s ease, transform 1.4s ease;
     }
-    #screen-pivot .sub {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
+    #screen-pivot h2.in {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* ── NAV HINT ── */
-    #hint {
+    /* ── FIXED NAV ── */
+    #nav {
       position: fixed;
       bottom: 2.2rem;
       left: 50%;
       transform: translateX(-50%);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-ghost);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
       opacity: 0;
-      transition: opacity 0.8s ease;
-      pointer-events: none;
-      white-space: nowrap;
+      transition: opacity 0.6s ease;
+      z-index: 50;
     }
-    #hint.show { opacity: 1; }
+    #nav.show { opacity: 1; }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Lora', serif;
+      font-size: 1.3rem;
+      color: var(--ink-ghost);
+      padding: 0.4rem 0.6rem;
+      transition: color 0.2s, transform 0.2s;
+      line-height: 1;
+    }
+    .nav-btn:hover { color: var(--ink-soft); }
+    #btn-prev:hover { transform: translateX(-3px); }
+    #btn-next:hover { transform: translateX(3px); }
+    .nav-btn:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .nav-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -269,7 +240,7 @@
   </div>
 </div>
 
-<!-- SCREEN 1: First sentence -->
+<!-- SCREEN 1: Opening line -->
 <div class="screen" id="screen-1">
   <div class="prose-screen">
     <p class="line line-italic" id="s1-l1">
@@ -279,40 +250,44 @@
   </div>
 </div>
 
-<!-- SCREEN 2: Second + third sentence accumulate -->
+<!-- SCREEN 2: Attention, not authority -->
 <div class="screen" id="screen-2">
-  <div class="prose-screen" style="display:flex; flex-direction:column; gap:0;">
-    <p class="line line-plain" id="s2-l1" style="margin-bottom: 1.4rem;">
-      Jane Goodall did not begin with authority. She began with attention.
+  <div class="prose-screen" style="display:flex; flex-direction:column; gap:1.5rem;">
+    <p class="line line-plain" id="s2-l1">
+      Jane Goodall arrived at Gombe in 1960 without a university degree.<br>
+      She had been hired by Louis Leakey specifically because she had no formal training —<br>
+      no preconceptions to unlearn.
     </p>
     <p class="line line-plain" id="s2-l2">
-      As she watched the chimpanzees of Gombe, she saw not units or specimens,<br>
-      but distinct individuals — with habits, bonds, tempers, and lives of their own.
+      She gave the chimpanzees names. She noted their personalities.<br>
+      She described what she saw, which turned out to be quite a lot.
     </p>
   </div>
 </div>
 
-<!-- SCREEN 3: "For that, she was treated as naive." + stamp -->
+<!-- SCREEN 3: Guardian quote -->
 <div class="screen" id="screen-3">
-  <div id="stamp">Gombe · 1960</div>
-  <div class="prose-screen">
-    <p class="line line-small" id="s3-l1">For that, she was treated as naive.</p>
+  <div class="quote-screen">
+    <blockquote id="q1">
+      <p>Her attribution of personalities and emotions — grief, despair, empathy — to the individual animals
+      was seen as naive and shockingly anthropomorphic. When her PhD thesis was returned to her after a first reading,
+      the genders of the chimps had been crossed out, in every case replacing "he" or "she" with "it."
+      Furious, Goodall wrote her pronouns back in. The thesis stayed as she wanted it.</p>
+      <span class="source"><a href="https://www.theguardian.com/education/2003/apr/03/science.highereducation" target="_blank">[source]</a> — The Guardian, 2003</span>
+    </blockquote>
   </div>
 </div>
 
-<!-- SCREEN 4: Criticism fragments closing in -->
-<div class="screen" id="screen-criticism">
-  <span class="frag" id="f1">unscientific</span>
-  <span class="frag" id="f2">naming them was improper</span>
-  <span class="frag" id="f3">sentimental</span>
-  <span class="frag" id="f4">too close</span>
-  <span class="frag" id="f5">lack of objectivity</span>
-
-  <div class="calm-center">
-    <p id="cc1">But the longer she watched,<br>the more the evidence followed her.</p>
-    <p id="cc2" style="margin-top:1.1rem; font-size: clamp(0.85rem, 1.5vw, 0.95rem);">
-      What she recognized through closeness,<br>the field would eventually have to confirm through evidence.
-    </p>
+<!-- SCREEN 4: Goodall's own words -->
+<div class="screen" id="screen-4">
+  <div class="quote-screen">
+    <blockquote id="q2">
+      <p>I did not realize that it was unscientific to discuss behavior in terms of motivation or purpose.
+      It was not respectable, in scientific circles, to talk about animal personality. That was something
+      reserved for humans. Nor did animals have minds, so they were not capable of rational thought.
+      And to talk about their emotions was to be guilty of the worst kind of anthropomorphism.</p>
+      <span class="source"><a href="https://www.science.org/doi/10.1126/science.282.5397.2184" target="_blank">[source]</a> — Jane Goodall, <em>Science</em>, 1998</span>
+    </blockquote>
   </div>
 </div>
 
@@ -323,75 +298,47 @@
 
 <!-- SCREEN 6: Pivot -->
 <div class="screen" id="screen-pivot">
-  <h2>Here we are again.</h2>
-  <p class="sub">continue →</p>
+  <h2 id="pivot-line">Here we are again.</h2>
 </div>
 
-<div id="hint">click anywhere to continue</div>
+<!-- Fixed nav -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev">←</button>
+  <button class="nav-btn" id="btn-next">→</button>
+</div>
 
 <script>
-  // ── State ──
   let screenIndex = 0;
-  let subStep = 0;   // sub-steps within a screen
+  let subStep = 0;
   let waiting = false;
 
-  // Screen configs: each screen has a list of substeps
-  // Each substep is a function that reveals something
   const screens = [
-    // 0: begin (handled separately)
-    null,
+    null, // 0: begin
 
-    // 1: first sentence
-    {
-      id: 'screen-1',
-      steps: [
-        () => revealEl('s1-l1'),
-      ]
-    },
+    { id: 'screen-1', steps: [
+      () => revealEl('s1-l1'),
+    ]},
 
-    // 2: two sentences accumulate
-    {
-      id: 'screen-2',
-      steps: [
-        () => revealEl('s2-l1'),
-        () => revealEl('s2-l2'),
-      ]
-    },
+    { id: 'screen-2', steps: [
+      () => revealEl('s2-l1'),
+      () => revealEl('s2-l2'),
+    ]},
 
-    // 3: "naive" + stamp
-    {
-      id: 'screen-3',
-      steps: [
-        () => { revealEl('s3-l1'); revealEl('stamp'); }
-      ]
-    },
+    { id: 'screen-3', steps: [
+      () => revealEl('q1'),
+    ]},
 
-    // 4: criticism + calm text (7 sub-steps)
-    {
-      id: 'screen-criticism',
-      steps: [
-        () => revealEl('f1'),
-        () => revealEl('f2'),
-        () => revealEl('f3'),
-        () => { revealEl('f4'); revealEl('f5'); },
-        () => revealEl('cc1'),
-        () => revealEl('cc2'),
-      ]
-    },
+    { id: 'screen-4', steps: [
+      () => revealEl('q2'),
+    ]},
 
-    // 5: she was right
-    {
-      id: 'screen-right',
-      steps: [
-        () => revealEl('right-line'),
-      ]
-    },
+    { id: 'screen-right', steps: [
+      () => revealEl('right-line'),
+    ]},
 
-    // 6: pivot
-    {
-      id: 'screen-pivot',
-      steps: []
-    },
+    { id: 'screen-pivot', steps: [
+      () => revealEl('pivot-line'),
+    ]},
   ];
 
   function revealEl(id) {
@@ -399,83 +346,90 @@
     if (el) el.classList.add('in');
   }
 
-  function showScreen(index) {
-    // hide all
+  function showScreen(index, autoStep) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const cfg = screens[index];
     if (!cfg) return;
     document.getElementById(cfg.id).classList.add('active');
     subStep = 0;
+    updateNav();
+
+    if (autoStep) {
+      waiting = true;
+      setTimeout(() => {
+        const s = screens[index];
+        if (s && s.steps.length > 0) {
+          s.steps[0]();
+          subStep = 1;
+        }
+        waiting = false;
+        updateNav();
+      }, 600);
+    }
   }
 
   function advance() {
     if (waiting) return;
 
-    // If we're on begin screen
     if (screenIndex === 0) {
       document.getElementById('screen-begin').classList.remove('active');
       screenIndex = 1;
-      showScreen(1);
-      // auto-trigger first substep after transition
-      waiting = true;
-      setTimeout(() => {
-        screens[1].steps[0]();
-        subStep = 1;
-        showHint();
-        waiting = false;
-      }, 600);
+      document.getElementById('nav').classList.add('show');
+      showScreen(1, true);
       return;
     }
 
     const cfg = screens[screenIndex];
     if (!cfg) return;
 
-    // Run next substep in current screen
     if (subStep < cfg.steps.length) {
       cfg.steps[subStep]();
       subStep++;
+      updateNav();
       return;
     }
 
-    // All substeps done — go to next screen
     const nextIndex = screenIndex + 1;
     if (nextIndex >= screens.length) return;
 
     waiting = true;
     setTimeout(() => {
       screenIndex = nextIndex;
-      showScreen(nextIndex);
-      // auto-run first substep of new screen after it fades in
-      setTimeout(() => {
-        const next = screens[nextIndex];
-        if (next && next.steps.length > 0) {
-          next.steps[0]();
-          subStep = 1;
-        }
-        waiting = false;
-      }, 600);
+      showScreen(nextIndex, true);
+      waiting = false;
     }, 200);
   }
 
-  function showHint() {
-    document.getElementById('hint').classList.add('show');
+  function goBack() {
+    if (waiting || screenIndex <= 1) return;
+    waiting = true;
+    setTimeout(() => {
+      screenIndex = screenIndex - 1;
+      showScreen(screenIndex, true);
+      waiting = false;
+    }, 200);
   }
 
-  // Click begin button
+  function updateNav() {
+    const prevBtn = document.getElementById('btn-prev');
+    const nextBtn = document.getElementById('btn-next');
+
+    // prev: hide on first content screen
+    prevBtn.classList.toggle('hidden', screenIndex <= 1);
+
+    // next: hide on last screen when all steps done
+    const cfg = screens[screenIndex];
+    const atEnd = screenIndex === screens.length - 1 && cfg && subStep >= cfg.steps.length;
+    nextBtn.classList.toggle('hidden', atEnd);
+  }
+
   document.getElementById('begin-btn').addEventListener('click', advance);
+  document.getElementById('btn-next').addEventListener('click', (e) => { e.stopPropagation(); advance(); });
+  document.getElementById('btn-prev').addEventListener('click', (e) => { e.stopPropagation(); goBack(); });
 
-  // Click anywhere (except begin screen) to advance
-  document.addEventListener('click', () => {
-    if (screenIndex === 0) return; // handled by begin btn
-    advance();
-  });
-
-  // Spacebar / arrow
   document.addEventListener('keydown', e => {
-    if (e.key === ' ' || e.key === 'ArrowRight') {
-      e.preventDefault();
-      advance();
-    }
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); advance(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
   });
 </script>
 </body>
