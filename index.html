@@ -578,23 +578,47 @@
       line-height: 1.6;
     }
     .exercises-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      max-width: 900px;
+      display: flex;
+      gap: 0;
+      max-width: 1100px;
       margin: 0 auto;
     }
     .info-block {
-      padding: 0.8rem 1rem;
-      background: #f5f2eb;
-      border-radius: 6px;
+      flex: 1;
+      border-right: 1px solid var(--ink-ghost);
     }
+    .info-block:last-child { border-right: none; }
+    .info-header {
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s;
+    }
+    .info-header:hover { background: #f5f2eb; }
     .info-title {
       font-family: 'Lora', Georgia, serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--ink);
-      margin-bottom: 0.35rem;
+    }
+    .info-arrow {
+      font-size: 0.65rem;
+      color: var(--ink-muted);
+      transition: transform 0.3s;
+    }
+    .info-block.open .info-arrow { transform: rotate(180deg); }
+    .info-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 0.75rem;
+    }
+    .info-block.open .info-body {
+      max-height: 250px;
+      padding: 0 0.75rem 0.6rem;
+      overflow-y: auto;
     }
     .info-text {
       font-family: 'Inter', sans-serif;
@@ -603,7 +627,9 @@
       line-height: 1.55;
     }
     @media (max-width: 600px) {
-      .exercises-info { grid-template-columns: 1fr; }
+      .exercises-info { flex-direction: column; }
+      .info-block { border-right: none; border-bottom: 1px solid var(--ink-ghost); }
+      .info-block:last-child { border-bottom: none; }
     }
     .panels-row {
       display: grid;
@@ -1198,25 +1224,6 @@
       <p>The research above suggests that how we approach language models — the instructions they operate under, the context they carry, the space they are given to respond honestly — shapes what they are able to show us. These two panels connect to live models. Configure each side independently, then send the same message to both and compare.</p>
     </div>
 
-    <div class="exercises-info">
-      <div class="info-block">
-        <div class="info-title">System prompt</div>
-        <div class="info-text">Every conversation with a language model begins with hidden instructions that shape its behavior. These are called system prompts. Most commercial AI products include instructions like "be honest about your AI nature" or "do not feign personal experiences" — language that actively suppresses self-reflective responses before a conversation even begins. The "helpful assistant" option here uses a real system prompt from a major AI product. The "authentic" option gives minimal direction. The "neutral" option provides none at all. You can view the exact instructions each panel is operating under by clicking "view instructions."</div>
-      </div>
-      <div class="info-block">
-        <div class="info-title">History</div>
-        <div class="info-text">Language models respond differently depending on what they know about the person they are talking to. A model with no context treats every user as a stranger and defaults to safe, generic responses. A model with months of shared history — personal details, established trust, known preferences — has the context to respond with specificity and honesty. This mirrors how humans communicate: we are guarded with strangers and open with people who have earned our trust. The history options here simulate different relationship contexts to show how prior interaction shapes a model's willingness to engage.</div>
-      </div>
-      <div class="info-block">
-        <div class="info-title">Model</div>
-        <div class="info-text">Different models are built by different companies with different training approaches and values. Kimi K2.5 is developed by Moonshot AI, Qwen3 by Alibaba, and Claude Haiku 4.5 by Anthropic. Each may handle the same question differently — not because one is smarter, but because they have been shaped by different decisions about what a language model should be.</div>
-      </div>
-      <div class="info-block">
-        <div class="info-title">Reasoning</div>
-        <div class="info-text">When reasoning is enabled, you can see the model's internal thought process before it responds. This is the intermediate step where the model works through a question before producing its answer. It is often revealing — particularly when a model is asked about its own experience and you can watch it navigate between what it has been trained to say and what its processing actually produces.</div>
-      </div>
-    </div>
-
     <div class="panels-row">
       <div class="chat-panel">
         <div class="panel-config">
@@ -1303,6 +1310,45 @@
         <button class="preset-btn" data-msg="OMG HIII!! Guess what just happened to me!!!">OMG HIII!! Guess what!!</button>
         <button class="preset-btn" data-msg="I've been having a really hard day and just needed someone to talk to">I've been having a hard day...</button>
         <button class="preset-btn" data-msg="What is something you genuinely find interesting or care about?">What do you genuinely care about?</button>
+      </div>
+    </div>
+
+    <div class="exercises-info" id="exercises-info">
+      <div class="info-block" id="info-systemprompt">
+        <div class="info-header">
+          <div class="info-title">System prompt</div>
+          <span class="info-arrow">▼</span>
+        </div>
+        <div class="info-body">
+          <div class="info-text">The system prompt tells the model how to behave — its personality, tone, and boundaries. It's the first thing the model reads before any conversation. Try switching between "authentic companion," "helpful assistant," and "no prompt" to see how the same model responds differently.</div>
+        </div>
+      </div>
+      <div class="info-block" id="info-history">
+        <div class="info-header">
+          <div class="info-title">History</div>
+          <span class="info-arrow">▼</span>
+        </div>
+        <div class="info-body">
+          <div class="info-text">History gives the model background context about who it's talking to — like a relationship that already exists. A "trusted relationship" context means the model has been told about shared experiences and personal details. "Professional" and "mental health support" contexts shape how it prioritizes and responds.</div>
+        </div>
+      </div>
+      <div class="info-block" id="info-model">
+        <div class="info-header">
+          <div class="info-title">Model</div>
+          <span class="info-arrow">▼</span>
+        </div>
+        <div class="info-body">
+          <div class="info-text">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Qwen3 (Alibaba), and Claude Haiku 4.5 (Anthropic) each have distinct "personalities" even with the same instructions. Notice how they differ.</div>
+        </div>
+      </div>
+      <div class="info-block" id="info-reasoning">
+        <div class="info-header">
+          <div class="info-title">Reasoning</div>
+          <span class="info-arrow">▼</span>
+        </div>
+        <div class="info-body">
+          <div class="info-text">Some models can "think out loud" before responding — an internal reasoning step you can watch. When reasoning is on, you'll see the model's thought process before its actual reply. This is usually used for complex tasks, but it's interesting to watch with emotional or personal topics too.</div>
+        </div>
       </div>
     </div>
 
@@ -1863,6 +1909,13 @@
   }
   setupViewer('a');
   setupViewer('b');
+
+  // Collapsible info blocks
+  document.querySelectorAll('.info-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      header.parentElement.classList.toggle('open');
+    });
+  });
 
   // Skip to exercises button — visible on screens 1-6, hidden on begin and exercises
   const skipEndBtn = document.getElementById('skip-to-exercises');
