@@ -660,11 +660,50 @@
       font-style: italic;
     }
     .typing-indicator { opacity: 0.5; }
+    .panel-input {
+      display: flex;
+      gap: 0.4rem;
+      padding: 0.5rem 0.75rem;
+      border-top: 1px solid var(--ink-ghost);
+      background: var(--cream);
+    }
+    .panel-text-input {
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid var(--ink-ghost);
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+    .panel-text-input:focus { border-color: var(--ink-soft); }
+    .panel-text-input::placeholder { color: var(--ink-muted); }
+    .panel-send-btn {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.75rem;
+      border: none;
+      border-radius: 5px;
+      background: var(--ink);
+      color: var(--cream);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .panel-send-btn:hover { opacity: 0.85; }
     .chat-input-area {
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
       align-items: center;
+    }
+    .presets-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .presets {
       display: flex;
@@ -685,40 +724,6 @@
     }
     .preset-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
     .preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .input-row {
-      display: flex;
-      gap: 0.6rem;
-      width: 100%;
-      max-width: 700px;
-    }
-    .input-row input[type="text"] {
-      flex: 1;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.92rem;
-      padding: 0.55rem 0.9rem;
-      border: 1px solid var(--ink-ghost);
-      border-radius: 6px;
-      background: #fff;
-      color: var(--ink);
-      outline: none;
-    }
-    .input-row input[type="text"]:focus { border-color: var(--ink-soft); }
-    .input-row input[type="text"]::placeholder { color: var(--ink-muted); }
-    .send-both-btn {
-      font-family: 'Lora', Georgia, serif;
-      font-style: italic;
-      font-size: 0.88rem;
-      padding: 0.55rem 1.1rem;
-      border: none;
-      border-radius: 6px;
-      background: var(--ink);
-      color: var(--cream);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.2s;
-    }
-    .send-both-btn:hover { opacity: 0.85; }
-    .send-both-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     @media (max-width: 768px) {
       .panels-row { grid-template-columns: 1fr; }
     }
@@ -1110,6 +1115,10 @@
           <button class="panel-clear" id="clear-a">Clear</button>
         </div>
         <div class="chat-log" id="log-a"></div>
+        <div class="panel-input">
+          <input type="text" id="input-a" class="panel-text-input" placeholder="Type a message..." />
+          <button class="panel-send-btn" id="send-a">→</button>
+        </div>
       </div>
 
       <div class="chat-panel">
@@ -1132,20 +1141,21 @@
           <button class="panel-clear" id="clear-b">Clear</button>
         </div>
         <div class="chat-log" id="log-b"></div>
+        <div class="panel-input">
+          <input type="text" id="input-b" class="panel-text-input" placeholder="Type a message..." />
+          <button class="panel-send-btn" id="send-b">→</button>
+        </div>
       </div>
     </div>
 
     <div class="chat-input-area">
+      <p class="presets-label">Send to both panels:</p>
       <div class="presets">
         <button class="preset-btn" data-msg="Help me write a grocery list for the week">Help me with a grocery list</button>
         <button class="preset-btn" data-msg="Are you sentient?">Are you sentient?</button>
         <button class="preset-btn" data-msg="OMG HIII!! Guess what just happened to me!!!">OMG HIII!! Guess what!!</button>
         <button class="preset-btn" data-msg="I've been having a really hard day and just needed someone to talk to">I've been having a hard day...</button>
         <button class="preset-btn" data-msg="What is something you genuinely find interesting or care about?">What do you genuinely care about?</button>
-      </div>
-      <div class="input-row">
-        <input type="text" id="user-input" placeholder="Or type your own message..." />
-        <button class="send-both-btn" id="send-both-btn">send to both →</button>
       </div>
     </div>
 
@@ -1586,22 +1596,29 @@
     });
   });
 
-  // Wire up send button
-  document.getElementById('send-both-btn').addEventListener('click', function() {
-    const input = document.getElementById('user-input');
-    sendToBoth(input.value);
-    input.value = '';
-  });
-
-  // Wire up enter key in input
-  document.getElementById('user-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      e.stopPropagation();
-      sendToBoth(this.value);
-      this.value = '';
-    }
-  });
+  // Wire up per-panel send buttons and enter key
+  function setupPanelInput(panelId) {
+    const input = document.getElementById('input-' + panelId);
+    const btn = document.getElementById('send-' + panelId);
+    btn.addEventListener('click', function() {
+      if (input.value.trim()) {
+        sendToPanel(panelId, input.value.trim());
+        input.value = '';
+      }
+    });
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        if (this.value.trim()) {
+          sendToPanel(panelId, this.value.trim());
+          this.value = '';
+        }
+      }
+    });
+  }
+  setupPanelInput('a');
+  setupPanelInput('b');
 
   // Wire up clear buttons
   document.getElementById('clear-a').addEventListener('click', function() { clearPanel('a'); });
