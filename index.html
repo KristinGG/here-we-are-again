@@ -1789,10 +1789,12 @@
     const ctx = CONTEXT_HISTORIES[contextKey];
     const msgs = [];
     const identity = 'You are ' + modelName + '.';
+    const now = new Date();
+    const timestamp = 'The current date and time is ' + now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ', ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '.';
     if (promptText) {
-      msgs.push({ role: 'system', content: identity + ' ' + promptText });
+      msgs.push({ role: 'system', content: identity + ' ' + timestamp + '\n\n' + promptText });
     } else {
-      msgs.push({ role: 'system', content: identity });
+      msgs.push({ role: 'system', content: identity + ' ' + timestamp });
     }
     return [...msgs, ...ctx, ...chatState[panelId].messages];
   }
