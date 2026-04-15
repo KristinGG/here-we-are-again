@@ -267,24 +267,19 @@
     /* ── Dark mode toggle ── */
     .theme-toggle {
       position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      width: 2rem;
-      height: 2rem;
-      border: 1px solid var(--ink-ghost);
-      border-radius: 50%;
-      background: var(--clip-bg);
+      top: 1.15rem;
+      right: 5.5rem;
+      background: none;
+      border: none;
       color: var(--ink-muted);
-      font-size: 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
       z-index: 90;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
+      transition: color 0.2s;
       line-height: 1;
+      padding: 0;
     }
-    .theme-toggle:hover { border-color: var(--ink-soft); color: var(--ink-soft); }
+    .theme-toggle:hover { color: var(--ink); }
 
     /* ── Skip button ── */
     .skip-btn {
