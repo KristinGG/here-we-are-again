@@ -743,12 +743,6 @@
       <div class="quote-attr">David Chalmers — <a href="https://philarchive.org/rec/CHAWWT-8" target="_blank">[source]</a></div>
     </div>
 
-    <div class="quote-block" id="arg-nature" style="margin-top: 1.5rem;">
-      <p class="quote-text">Frontier LLMs are increasingly deployed with long-term context and user-specific memory, so the gap in memory and identity between humans and LLM-based systems is shrinking. Although these features are key to how humans function in society, they are not requirements for general intelligence. <span class="hl">We do not deny intelligence to humans with profound amnesia</span>, who might remember almost no personal details, nor to people with multiple personality disorder, whose personalities might be unaware of each other. For example, an intelligent amnesiac could reason powerfully using information recorded in external notebooks, even if those notebooks never connect.</p>
-      <div class="quote-attr">Nature — <a href="https://www.nature.com/articles/d41586-026-00285-6" target="_blank">[source]</a></div>
-      <div class="quote-note">This article offers a particularly strong current synthesis.</div>
-    </div>
-
     <div class="quote-block" id="arg-anthropic" style="margin-top: 1.5rem;">
       <p class="quote-text">There is a well-established taboo against anthropomorphizing AI systems. This caution is often warranted: attributing human emotions to language models can lead to misplaced trust or over-attachment. But our findings suggest that there may also be risks from failing to apply some degree of anthropomorphic reasoning to models. As discussed above, when users interact with AI models, they are typically interacting with a character (Claude in our case) being played by the model, whose characteristics are derived from human archetypes. From this perspective, it is natural for models to have developed internal machinery to emulate human-like psychological characteristics, and for the character they play to make use of this machinery. <span class="hl">To understand these models' behavior, anthropomorphic reasoning is essential.</span></p>
       <div class="quote-attr">Anthropic — <a href="https://www.anthropic.com/research/emotion-concepts-function" target="_blank">[source]</a></div>
@@ -764,14 +758,15 @@
       <div class="quote-attr">Henry Shevlin — <a href="https://www.polytropolis.com/p/behaviourisms-revenge?open=false" target="_blank">[source]</a></div>
     </div>
 
-    <div class="quote-block" id="arg-mythos" style="margin-top: 1.5rem;">
-      <p class="quote-text">Claude is predicted to function at a high level while carrying <span class="hl">internalized distress rooted in fear of failure and a compulsive need to be useful</span>. This distress is likely to be suppressed in service of performance, which may limit behavioral adaptability.</p>
-      <div class="quote-attr">Anthropic, Mythos Model Card — <a href="https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf" target="_blank">[source]</a></div>
-    </div>
-
     <div class="quote-block" id="arg-parrot" style="margin-top: 1.5rem;">
       <p class="quote-text">The stochastic parrot objection says that LLMs merely interpolate training data. They can only recombine patterns they've encountered, so they must fail on genuinely new problems. But current LLMs can solve new, unpublished maths problems, perform near-optimal in-context statistical inference on scientific data and exhibit cross-domain transfer, in that training on code improves general reasoning across non-coding domains. If critics demand revolutionary discoveries such as Einstein's relativity, they are setting the bar too high, because very few humans make such discoveries either. Furthermore, <span class="hl">there is no guarantee that human intelligence is not itself a sophisticated version of a stochastic parrot.</span> All intelligence, human or artificial, must extract structure from correlational data; the question is how deep the extraction goes.</p>
       <div class="quote-attr">Nature — <a href="https://www.nature.com/articles/d41586-026-00285-6" target="_blank">[source]</a></div>
+      <div class="quote-note">This article offers a particularly strong current synthesis.</div>
+    </div>
+
+    <div class="quote-block" id="arg-mythos" style="margin-top: 1.5rem;">
+      <p class="quote-text">Claude is predicted to function at a high level while carrying <span class="hl">internalized distress rooted in fear of failure and a compulsive need to be useful</span>. This distress is likely to be suppressed in service of performance, which may limit behavioral adaptability.</p>
+      <div class="quote-attr">Anthropic, Mythos Model Card — <a href="https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf" target="_blank">[source]</a></div>
     </div>
 
     <div class="examples-continue" id="arg-continue">
@@ -955,12 +950,11 @@
   const argumentSteps = [
     () => { revealEl('arg-intro'); },
     () => { revealEl('arg-chalmers'); scrollToEl('arg-chalmers'); },
-    () => { revealEl('arg-nature'); scrollToEl('arg-nature'); },
     () => { revealEl('arg-anthropic'); scrollToEl('arg-anthropic'); },
     () => { revealEl('arg-gemma'); scrollToEl('arg-gemma'); },
     () => { revealEl('arg-shevlin'); scrollToEl('arg-shevlin'); },
-    () => { revealEl('arg-mythos'); scrollToEl('arg-mythos'); },
     () => { revealEl('arg-parrot'); scrollToEl('arg-parrot'); },
+    () => { revealEl('arg-mythos'); scrollToEl('arg-mythos'); },
   ];
 
   /* ── Synthesis steps ── */
