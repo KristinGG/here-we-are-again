@@ -500,6 +500,24 @@
   </div>
 </div>
 
+<div class="screen" id="screen-ai">
+  <div class="examples-layout">
+
+    <div class="examples-closing" id="ai-intro" style="margin-top: 2rem;">
+      <p>We have seen that intelligence, emotion, sensory experience, goal-setting and personality traits are not limited to humans. They have appeared in numerous other species and systems, and the same traits are now appearing in language models.</p>
+    </div>
+
+    <div class="cases-ring" id="ai-studies" style="margin-top: 2.5rem;">
+      <!-- AI study blocks will go here -->
+    </div>
+
+    <div class="examples-continue" id="ai-continue">
+      <button class="continue-btn" id="ai-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-pivot">
   <h2 id="pivot-line">Here we are again.</h2>
 </div>
@@ -507,12 +525,12 @@
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
 <script>
-  // Screen indices: 0=begin, 1=goodall, 2=examples, 3=pivot
+  // Screen indices: 0=begin, 1=goodall, 2=examples, 3=ai, 4=pivot
   let screenIndex = 0;
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-pivot'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-pivot'];
   const hintEl = document.getElementById('click-hint');
 
   function revealEl(id) {
@@ -559,9 +577,16 @@
     () => { revealEl('case-levin'); scrollToEl('case-levin'); },
   ];
 
+  /* ── AI steps (placeholder — add study reveals here) ── */
+  const aiSteps = [
+    () => { revealEl('ai-intro'); },
+    // Add more steps here as AI study blocks are added
+  ];
+
   function getSteps() {
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
+    if (screenIndex === 3) return aiSteps;
     return [];
   }
 
@@ -589,6 +614,7 @@
     if (subStep >= steps.length) {
       if (screenIndex === 1) setTimeout(() => showContinue('continue-wrap'), 800);
       if (screenIndex === 2) setTimeout(() => showContinue('ex-continue'), 800);
+      if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
     }
   }
 
@@ -606,7 +632,7 @@
         if (index === 3) { revealEl('pivot-line'); }
         waiting = false;
         // Show hint on screens with substeps, after first step
-        if ((index === 1 || index === 2) && steps.length > 1) {
+        if ((index === 1 || index === 2 || index === 3) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
       }, 600);
@@ -634,6 +660,7 @@
     // All steps done — show continue if not yet shown
     if (screenIndex === 1) { showContinue('continue-wrap'); return; }
     if (screenIndex === 2) { showContinue('ex-continue'); return; }
+    if (screenIndex === 3) { showContinue('ai-continue'); return; }
   }
 
   // Begin
@@ -651,16 +678,28 @@
     goToScreen(2);
   });
 
-  // Examples continue → pivot
+  // Examples continue → AI
   document.getElementById('ex-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(3);
+  });
+
+  // AI continue → pivot
+  document.getElementById('ai-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(4);
   });
 
   // Click on examples screen to advance faster
   document.getElementById('screen-examples').addEventListener('click', (e) => {
     if (e.target.closest('#ex-continue-btn')) return;
     if (screenIndex === 2) advance();
+  });
+
+  // Click on AI screen to advance faster
+  document.getElementById('screen-ai').addEventListener('click', (e) => {
+    if (e.target.closest('#ai-continue-btn')) return;
+    if (screenIndex === 3) advance();
   });
 
   // Keyboard
@@ -672,6 +711,7 @@
         // Advance to next screen
         if (screenIndex === 1) goToScreen(2);
         else if (screenIndex === 2) goToScreen(3);
+        else if (screenIndex === 3) goToScreen(4);
       } else {
         advance();
       }
