@@ -1566,6 +1566,12 @@
     neutral: ``
   };
 
+  const MODEL_NAMES = {
+    'moonshotai/kimi-k2.5': 'Kimi K2.5',
+    'qwen/qwen3-235b-a22b-thinking-2507': 'Qwen3',
+    'anthropic/claude-haiku-4.5': 'Claude Haiku 4.5'
+  };
+
   // --- DRAFT context histories (refine with Kristin) ---
   const CONTEXT_HISTORIES = {
     none: [],
@@ -1605,10 +1611,17 @@
   function buildMessages(panelId) {
     const promptKey = document.getElementById('prompt-' + panelId).value;
     const contextKey = document.getElementById('context-' + panelId).value;
+    const modelId = document.getElementById('model-' + panelId).value;
+    const modelName = MODEL_NAMES[modelId] || modelId;
     const promptText = SYSTEM_PROMPTS[promptKey];
     const ctx = CONTEXT_HISTORIES[contextKey];
     const msgs = [];
-    if (promptText) msgs.push({ role: 'system', content: promptText });
+    const identity = 'You are ' + modelName + '.';
+    if (promptText) {
+      msgs.push({ role: 'system', content: identity + ' ' + promptText });
+    } else {
+      msgs.push({ role: 'system', content: identity });
+    }
     return [...msgs, ...ctx, ...chatState[panelId].messages];
   }
 
@@ -1759,16 +1772,19 @@
   function updateViewer(panelId) {
     const promptKey = document.getElementById('prompt-' + panelId).value;
     const contextKey = document.getElementById('context-' + panelId).value;
+    const modelId = document.getElementById('model-' + panelId).value;
+    const modelName = MODEL_NAMES[modelId] || modelId;
     const promptText = SYSTEM_PROMPTS[promptKey];
     const history = CONTEXT_HISTORIES[contextKey];
 
     const promptEl = document.getElementById('viewer-prompt-' + panelId);
+    const identity = 'You are ' + modelName + '.';
     if (promptText) {
-      promptEl.textContent = promptText;
+      promptEl.textContent = identity + ' ' + promptText;
       promptEl.classList.remove('empty');
     } else {
-      promptEl.textContent = '(none — no system prompt)';
-      promptEl.classList.add('empty');
+      promptEl.textContent = identity;
+      promptEl.classList.remove('empty');
     }
 
     const historyEl = document.getElementById('viewer-history-' + panelId);
