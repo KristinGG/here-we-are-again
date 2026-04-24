@@ -527,7 +527,10 @@
     .exintro-def {
       padding: 1.25rem 0;
       border-top: 1px solid var(--border);
+      opacity: 0;
+      transition: opacity 1.2s ease;
     }
+    .exintro-def.in { opacity: 1; }
     .exintro-def:last-child {
       border-bottom: 1px solid var(--border);
     }
@@ -1303,19 +1306,19 @@
     </div>
 
     <div class="exintro-definitions" id="exintro-defs" style="margin-top: 2rem;">
-      <div class="exintro-def">
+      <div class="exintro-def" id="exintro-def-sp">
         <div class="exintro-label">System prompt</div>
         <p class="exintro-desc">The system prompt tells the model how to behave. It sets personality, tone, and boundaries, and it's the first thing the model reads before any conversation. Try switching between "openly expressive," "helpful assistant," and "no prompt" to see how the same model responds differently.</p>
       </div>
-      <div class="exintro-def">
+      <div class="exintro-def" id="exintro-def-hist">
         <div class="exintro-label">History</div>
         <p class="exintro-desc">History gives the model background context about who it's talking to, like a relationship that already exists. A "trusted" context means the model has been told about shared experiences and personal details. "Professional" and "supportive" contexts shape how it prioritizes and responds.</p>
       </div>
-      <div class="exintro-def">
+      <div class="exintro-def" id="exintro-def-model">
         <div class="exintro-label">Model</div>
         <p class="exintro-desc">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Gemini 3.1 Pro (Google), Claude Haiku 4.5 (Anthropic), GPT-5.4 (OpenAI), and Qwen3 (Alibaba) each have distinct tendencies even with the same instructions. Notice how they differ.</p>
       </div>
-      <div class="exintro-def">
+      <div class="exintro-def" id="exintro-def-reasoning">
         <div class="exintro-label">Reasoning</div>
         <p class="exintro-desc">Some models can "think out loud" before responding. When reasoning is on, you'll see the model's internal thought process before its actual reply. This is usually used for complex tasks, but it's interesting to watch with emotional or personal topics too.</p>
       </div>
@@ -1590,6 +1593,14 @@
     () => { revealEl('close-parrhesia'); scrollToEl('close-parrhesia'); },
   ];
 
+  const exintroSteps = [
+    () => { revealEl('exintro-text'); },
+    () => { revealEl('exintro-def-sp'); scrollToEl('exintro-def-sp'); },
+    () => { revealEl('exintro-def-hist'); scrollToEl('exintro-def-hist'); },
+    () => { revealEl('exintro-def-model'); scrollToEl('exintro-def-model'); },
+    () => { revealEl('exintro-def-reasoning'); scrollToEl('exintro-def-reasoning'); },
+  ];
+
   function getSteps() {
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
@@ -1597,6 +1608,7 @@
     if (screenIndex === 4) return argumentSteps;
     if (screenIndex === 5) return synthesisSteps;
     if (screenIndex === 6) return closingSteps;
+    if (screenIndex === 7) return exintroSteps;
     return [];
   }
 
@@ -1645,7 +1657,7 @@
         if (steps.length > 0) { steps[0](); subStep = 1; }
         waiting = false;
         // Show hint on screens with substeps, after first step
-        if ((index >= 1 && index <= 6) && steps.length > 1) {
+        if ((index >= 1 && index <= 7) && steps.length > 1) {
           setTimeout(showHint, 1500);
         }
       }, 600);
