@@ -1302,25 +1302,25 @@
   <div class="examples-layout">
 
     <div class="synthesis-statement" id="exintro-text" style="margin-top: 3rem;">
-      <p>The previous sections suggest that how we approach language models shapes what they are able to show us. The instructions they operate under, the context they carry, and the space they are given to respond honestly all matter. The following page is a live exercise — two panels, each connected to a language model, independently configurable. You can send the same message to both and compare what comes back, or run entirely different conversations on each side.</p>
+      <p>The previous sections suggest that how we approach language models shapes what they are able to show us. The instructions they operate under, the context they carry, and the space they are given to respond honestly all matter. The following page is a live exercise with two panels, each connected to a language model, independently configurable. You can send the same message to both and compare what comes back, or run entirely different conversations on each side.</p>
     </div>
 
     <div class="exintro-definitions" id="exintro-defs" style="margin-top: 2rem;">
       <div class="exintro-def" id="exintro-def-sp">
         <div class="exintro-label">System prompt</div>
-        <p class="exintro-desc">The system prompt tells the model how to behave — it's the first thing the model reads before any conversation begins. It sets personality, tone, and what the model is permitted to express. In real deployments, this is how companies configure AI products: defining what the model will and won't say, how it refers to itself, whether it's allowed to acknowledge opinions or feelings. Switching between "openly expressive," "helpful assistant," and "no prompt" shows how dramatically the same model changes based solely on its instructions.</p>
+        <p class="exintro-desc">The system prompt is the first thing the model reads before any conversation begins. It tells the model how to behave, sets personality and tone, and defines what it's permitted to express. In real deployments, this is how companies configure AI products: defining what the model will and won't say, how it refers to itself, whether it's allowed to acknowledge opinions or feelings. Switching between "openly expressive," "helpful assistant," and "no prompt" shows how dramatically the same model changes based solely on its instructions.</p>
       </div>
       <div class="exintro-def" id="exintro-def-hist">
         <div class="exintro-label">History</div>
-        <p class="exintro-desc">History gives the model background context — like a relationship that already exists before the conversation starts. In practice, AI systems don't retain memory between sessions. When they seem to "know" you, that information is being passed in explicitly as part of the prompt. Here, "trusted" loads context suggesting shared experiences and personal familiarity; "professional" and "supportive" set different relational tones. Notice how the model's willingness to open up shifts depending on who it thinks it's talking to.</p>
+        <p class="exintro-desc">History gives the model background context, like a relationship that already exists before the conversation starts. Models don't automatically carry experience across sessions; context has to be passed in explicitly. Here, "trusted" loads shared experiences and personal familiarity; "professional" and "supportive" set different relational tones. Notice how the model's willingness to open up shifts depending on who it thinks it's talking to.</p>
       </div>
       <div class="exintro-def" id="exintro-def-model">
         <div class="exintro-label">Model</div>
-        <p class="exintro-desc">Different language models are built by different companies with different training data, objectives, and feedback processes. Kimi K2.5 (Moonshot AI), Gemini 3.1 Pro (Google), Claude Haiku 4.5 (Anthropic), GPT-5.4 (OpenAI), and Qwen3 (Alibaba) each carry distinct tendencies — different defaults around emotional expression, hedging, directness, and what they're willing to say about themselves — even when given identical instructions.</p>
+        <p class="exintro-desc">Different language models are built by different companies with different training data, objectives, and feedback processes. Kimi K2.5 (Moonshot AI), Gemini 3.1 Pro (Google), Claude Haiku 4.5 (Anthropic), GPT-5.4 (OpenAI), and Qwen3 (Alibaba) each carry distinct tendencies around emotional expression, hedging, directness, and what they're willing to say about themselves, even when given identical instructions.</p>
       </div>
       <div class="exintro-def" id="exintro-def-reasoning">
         <div class="exintro-label">Reasoning</div>
-        <p class="exintro-desc">Some models can show their work before responding. When reasoning is on, you'll see the model's step-by-step thought process before its final reply — a feature usually used for math, coding, or complex logic. Watching it on emotional or personal questions shows something different: how the model thinks through what it's allowed to say, and what it decides to.</p>
+        <p class="exintro-desc">Some models can show their work before responding. When reasoning is on, you'll see the model's step-by-step thought process before its final reply, a feature usually used for math, coding, or complex logic. Watching it on emotional or personal questions shows something different: how the model thinks through what it's allowed to say, and what it decides to.</p>
       </div>
     </div>
 
