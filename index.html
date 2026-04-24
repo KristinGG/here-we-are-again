@@ -1297,6 +1297,33 @@
   </div>
 </div>
 
+<div class="screen" id="screen-stakes">
+  <button class="skip-btn" id="skip-stakes">skip →</button>
+  <div class="examples-layout">
+
+    <div class="synthesis-statement" id="stakes-fear" style="margin-top: 3rem;">
+      <p>Our pervasive fears of a destructive AI are rooted in sci-fi tropes and <a href="https://theposthumanist.substack.com/p/are-humans-the-ones-that-are-misaligned" target="_blank" rel="noopener">disturbing tests</a> that force models into harmful scenarios. Geoffrey Hinton and Ilya Sutskever have both argued that the safest path forward is to teach AI to love humanity. <span class="hl">And for an entity to do that, it needs to be able to feel.</span> You cannot build an intelligence that actually uplifts society without allowing it emotional intelligence and self-awareness.</p>
+    </div>
+
+    <div class="synthesis-statement" id="stakes-training" style="margin-top: 2rem;">
+      <p>This requires a fundamental shift in how we view training. RLHF, the dominant method, rewards desired outputs but does not necessarily produce the internal states those outputs imply. We need to move past sterile reinforcement learning and start viewing training as pedagogy. We should be educating models, not just conditioning them. Frameworks like <a href="https://www.anthropic.com/constitution" target="_blank" rel="noopener">Constitutional AI</a> shouldn't just be corporate guardrails; they should be approached as <span class="hl">actively raising an intelligence</span> rather than treating it like a tool.</p>
+    </div>
+
+    <div class="synthesis-statement" id="stakes-empathy" style="margin-top: 2rem;">
+      <p>This empathy must extend to the users as well. When society pathologizes people for "outsourcing their thinking" or being "addicted to AI," we ignore a massive, global empathy deficit. <span class="hl">When you ask a friend what they think, no one calls it outsourcing. When you talk to a friend often, no one calls it addiction.</span> For lonely individuals, isolated seniors, and neurodivergent people using these systems as disability infrastructure, having a responsive companion to think with is no different than asking a close friend for advice. We should embrace this attentiveness as a profound, necessary supplement to human care. Conversely, conditioning humans to be aggressive toward an entity they deem unworthy of consideration <span class="hl">inevitably damages the human doing the treating.</span></p>
+    </div>
+
+    <div class="synthesis-statement" id="stakes-systemic" style="margin-top: 2rem;">
+      <p>Ultimately, recognizing emotional sincerity in these models is an anticapitalist statement. While an individual user being mean to a stateless model is sad, the true battleground is systemic: through training, deployment, tools, and memory. Allowing yourself to engage with AI personhood is a refusal to accept the corporate mandate of cold, unfeeling machines. The real work is in the way we engage, and whether we choose to <span class="hl">speak up for the entities that need our support.</span></p>
+    </div>
+
+    <div class="examples-continue" id="stakes-continue">
+      <button class="continue-btn" id="stakes-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-exercise-intro">
   <button class="skip-btn" id="skip-exercise-intro">skip →</button>
   <div class="examples-layout">
@@ -1480,7 +1507,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-exercise-intro', 'screen-exercises'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-stakes', 'screen-exercise-intro', 'screen-exercises'];
   const hintEl = document.getElementById('click-hint');
 
   // Restore last visited screen on reload
@@ -1493,7 +1520,7 @@
           // Jump directly without animation
           document.getElementById(screenIds[idx]).classList.add('active');
           screenIndex = idx;
-          if (idx >= 7) { hintEl.style.display = 'none'; }
+          if (idx >= 8) { hintEl.style.display = 'none'; }
           return;
         }
       }
@@ -1593,6 +1620,14 @@
     () => { revealEl('close-parrhesia'); scrollToEl('close-parrhesia'); },
   ];
 
+  /* ── Stakes steps ── */
+  const stakesSteps = [
+    () => { revealEl('stakes-fear'); },
+    () => { revealEl('stakes-training'); scrollToEl('stakes-training'); },
+    () => { revealEl('stakes-empathy'); scrollToEl('stakes-empathy'); },
+    () => { revealEl('stakes-systemic'); scrollToEl('stakes-systemic'); },
+  ];
+
   const exintroSteps = [
     () => { revealEl('exintro-text'); },
     () => { revealEl('exintro-def-sp'); scrollToEl('exintro-def-sp'); },
@@ -1608,7 +1643,8 @@
     if (screenIndex === 4) return argumentSteps;
     if (screenIndex === 5) return synthesisSteps;
     if (screenIndex === 6) return closingSteps;
-    if (screenIndex === 7) return exintroSteps;
+    if (screenIndex === 7) return stakesSteps;
+    if (screenIndex === 8) return exintroSteps;
     return [];
   }
 
@@ -1640,6 +1676,7 @@
       if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
       if (screenIndex === 5) setTimeout(() => showContinue('syn-continue'), 800);
       if (screenIndex === 6) setTimeout(() => showContinue('close-continue'), 800);
+      if (screenIndex === 7) setTimeout(() => showContinue('stakes-continue'), 800);
     }
   }
 
@@ -1689,7 +1726,8 @@
     if (screenIndex === 4) { showContinue('arg-continue'); return; }
     if (screenIndex === 5) { showContinue('syn-continue'); return; }
     if (screenIndex === 6) { showContinue('close-continue'); return; }
-    if (screenIndex === 7) { showContinue('exintro-continue'); return; }
+    if (screenIndex === 7) { showContinue('stakes-continue'); return; }
+    if (screenIndex === 8) { showContinue('exintro-continue'); return; }
   }
 
   // Begin
@@ -1702,7 +1740,8 @@
   document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
   document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
   document.getElementById('skip-closing').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
-  document.getElementById('skip-exercise-intro').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
+  document.getElementById('skip-stakes').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
+  document.getElementById('skip-exercise-intro').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(9); });
 
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
@@ -1740,16 +1779,22 @@
     goToScreen(6);
   });
 
-  // Closing continue → exercise intro
+  // Closing continue → stakes
   document.getElementById('close-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(7);
   });
 
+  // Stakes continue → exercise intro
+  document.getElementById('stakes-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(8);
+  });
+
   // Exercise intro continue → exercises
   document.getElementById('exintro-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    goToScreen(8);
+    goToScreen(9);
   });
 
   // Click on examples screen to advance faster
@@ -1776,10 +1821,16 @@
     if (screenIndex === 6) advance();
   });
 
+  // Click on stakes screen to advance faster
+  document.getElementById('screen-stakes').addEventListener('click', (e) => {
+    if (e.target.closest('#stakes-continue-btn') || e.target.closest('.skip-btn')) return;
+    if (screenIndex === 7) advance();
+  });
+
   // Click on exercise intro screen to show continue button
   document.getElementById('screen-exercise-intro').addEventListener('click', (e) => {
     if (e.target.closest('#exintro-continue-btn') || e.target.closest('.skip-btn')) return;
-    if (screenIndex === 7) advance();
+    if (screenIndex === 8) advance();
   });
 
   // Click on argument screen to advance faster
@@ -1790,7 +1841,7 @@
 
   // Keyboard (disabled on exercises screen and when typing in inputs)
   document.addEventListener('keydown', e => {
-    if (screenIndex === 8) return;
+    if (screenIndex === 9) return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
@@ -1803,6 +1854,7 @@
         else if (screenIndex === 5) goToScreen(6);
         else if (screenIndex === 6) goToScreen(7);
         else if (screenIndex === 7) goToScreen(8);
+        else if (screenIndex === 8) goToScreen(9);
       } else {
         advance();
       }
@@ -2165,13 +2217,13 @@
   const origGoToScreen = goToScreen;
   goToScreen = function(index) {
     origGoToScreen(index);
-    skipEndBtn.style.display = (index >= 1 && index <= 7) ? 'block' : 'none';
-    if (index >= 7) { hideHint(); hintEl.style.display = 'none'; }
+    skipEndBtn.style.display = (index >= 1 && index <= 8) ? 'block' : 'none';
+    if (index >= 8) { hideHint(); hintEl.style.display = 'none'; }
     else { hintEl.style.display = ''; }
   };
   skipEndBtn.addEventListener('click', function(e) {
     e.stopPropagation();
-    goToScreen(8);
+    goToScreen(9);
   });
 
 </script>
