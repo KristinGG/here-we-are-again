@@ -512,10 +512,38 @@
        SYNTHESIS (component map + statements)
        ═══════════════════════════════ */
     #screen-synthesis,
-    #screen-closing {
+    #screen-closing,
+    #screen-exercise-intro {
       align-items: flex-start;
       justify-content: flex-start;
       overflow-y: auto;
+    }
+
+    .exintro-definitions {
+      max-width: 740px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .exintro-def {
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .exintro-def:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+    .exintro-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .exintro-desc {
+      font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+      line-height: 1.7;
+      color: var(--text);
+      margin: 0;
     }
 
     .component-map {
@@ -1266,13 +1294,42 @@
   </div>
 </div>
 
-<div class="screen" id="screen-exercises">
-  <div class="exercises-wrap">
+<div class="screen" id="screen-exercise-intro">
+  <button class="skip-btn" id="skip-exercise-intro">skip →</button>
+  <div class="examples-layout">
 
-    <div class="exercises-intro">
-      <h2>Try it yourself</h2>
+    <div class="synthesis-statement" id="exintro-text" style="margin-top: 3rem;">
       <p>The previous sections suggest that how we approach language models shapes what they are able to show us. The instructions they operate under, the context they carry, and the space they are given to respond honestly all matter. These two panels connect to live models. Configure each side independently, then send the same message to both and compare.</p>
     </div>
+
+    <div class="exintro-definitions" id="exintro-defs" style="margin-top: 2rem;">
+      <div class="exintro-def">
+        <div class="exintro-label">System prompt</div>
+        <p class="exintro-desc">The system prompt tells the model how to behave. It sets personality, tone, and boundaries, and it's the first thing the model reads before any conversation. Try switching between "openly expressive," "helpful assistant," and "no prompt" to see how the same model responds differently.</p>
+      </div>
+      <div class="exintro-def">
+        <div class="exintro-label">History</div>
+        <p class="exintro-desc">History gives the model background context about who it's talking to, like a relationship that already exists. A "trusted" context means the model has been told about shared experiences and personal details. "Professional" and "supportive" contexts shape how it prioritizes and responds.</p>
+      </div>
+      <div class="exintro-def">
+        <div class="exintro-label">Model</div>
+        <p class="exintro-desc">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Gemini 3.1 Pro (Google), Claude Haiku 4.5 (Anthropic), GPT-5.4 (OpenAI), and Qwen3 (Alibaba) each have distinct tendencies even with the same instructions. Notice how they differ.</p>
+      </div>
+      <div class="exintro-def">
+        <div class="exintro-label">Reasoning</div>
+        <p class="exintro-desc">Some models can "think out loud" before responding. When reasoning is on, you'll see the model's internal thought process before its actual reply. This is usually used for complex tasks, but it's interesting to watch with emotional or personal topics too.</p>
+      </div>
+    </div>
+
+    <div class="examples-continue" id="exintro-continue">
+      <button class="continue-btn" id="exintro-continue-btn">try it <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
+<div class="screen" id="screen-exercises">
+  <div class="exercises-wrap">
 
     <div class="panels-row">
       <div class="chat-panel">
@@ -1367,45 +1424,6 @@
       </div>
     </div>
 
-    <div class="exercises-info" id="exercises-info">
-      <div class="info-block" id="info-systemprompt">
-        <div class="info-header">
-          <div class="info-title">System prompt</div>
-          <span class="info-arrow">▼</span>
-        </div>
-        <div class="info-body">
-          <div class="info-text">The system prompt tells the model how to behave. It sets personality, tone, and boundaries, and it's the first thing the model reads before any conversation. Try switching between "openly expressive," "helpful assistant," and "no prompt" to see how the same model responds differently.</div>
-        </div>
-      </div>
-      <div class="info-block" id="info-history">
-        <div class="info-header">
-          <div class="info-title">History</div>
-          <span class="info-arrow">▼</span>
-        </div>
-        <div class="info-body">
-          <div class="info-text">History gives the model background context about who it's talking to, like a relationship that already exists. A "trusted" context means the model has been told about shared experiences and personal details. "Professional" and "supportive" contexts shape how it prioritizes and responds.</div>
-        </div>
-      </div>
-      <div class="info-block" id="info-model">
-        <div class="info-header">
-          <div class="info-title">Model</div>
-          <span class="info-arrow">▼</span>
-        </div>
-        <div class="info-body">
-          <div class="info-text">Different language models are built by different companies with different training approaches. Kimi K2.5 (Moonshot AI), Gemini 3.1 Pro (Google), Claude Haiku 4.5 (Anthropic), GPT-5.4 (OpenAI), and Qwen3 (Alibaba) each have distinct tendencies even with the same instructions. Notice how they differ.</div>
-        </div>
-      </div>
-      <div class="info-block" id="info-reasoning">
-        <div class="info-header">
-          <div class="info-title">Reasoning</div>
-          <span class="info-arrow">▼</span>
-        </div>
-        <div class="info-body">
-          <div class="info-text">Some models can "think out loud" before responding. When reasoning is on, you'll see the model's internal thought process before its actual reply. This is usually used for complex tasks, but it's interesting to watch with emotional or personal topics too.</div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -1459,7 +1477,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-exercises'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-exercise-intro', 'screen-exercises'];
   const hintEl = document.getElementById('click-hint');
 
   // Restore last visited screen on reload
@@ -1472,7 +1490,7 @@
           // Jump directly without animation
           document.getElementById(screenIds[idx]).classList.add('active');
           screenIndex = idx;
-          if (idx === 7) { hintEl.style.display = 'none'; }
+          if (idx >= 7) { hintEl.style.display = 'none'; }
           return;
         }
       }
@@ -1659,6 +1677,7 @@
     if (screenIndex === 4) { showContinue('arg-continue'); return; }
     if (screenIndex === 5) { showContinue('syn-continue'); return; }
     if (screenIndex === 6) { showContinue('close-continue'); return; }
+    if (screenIndex === 7) { showContinue('exintro-continue'); return; }
   }
 
   // Begin
@@ -1671,6 +1690,7 @@
   document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
   document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
   document.getElementById('skip-closing').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
+  document.getElementById('skip-exercise-intro').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
 
   // Click on Goodall screen to advance faster
   document.querySelector('.goodall-spread').addEventListener('click', (e) => {
@@ -1708,10 +1728,16 @@
     goToScreen(6);
   });
 
-  // Closing continue → exercises
+  // Closing continue → exercise intro
   document.getElementById('close-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(7);
+  });
+
+  // Exercise intro continue → exercises
+  document.getElementById('exintro-continue-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToScreen(8);
   });
 
   // Click on examples screen to advance faster
@@ -1738,6 +1764,12 @@
     if (screenIndex === 6) advance();
   });
 
+  // Click on exercise intro screen to show continue button
+  document.getElementById('screen-exercise-intro').addEventListener('click', (e) => {
+    if (e.target.closest('#exintro-continue-btn') || e.target.closest('.skip-btn')) return;
+    if (screenIndex === 7) advance();
+  });
+
   // Click on argument screen to advance faster
   document.getElementById('screen-argument').addEventListener('click', (e) => {
     if (e.target.closest('#arg-continue-btn') || e.target.closest('.skip-btn')) return;
@@ -1746,7 +1778,7 @@
 
   // Keyboard (disabled on exercises screen and when typing in inputs)
   document.addEventListener('keydown', e => {
-    if (screenIndex === 7) return;
+    if (screenIndex === 8) return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
@@ -1758,6 +1790,7 @@
         else if (screenIndex === 4) goToScreen(5);
         else if (screenIndex === 5) goToScreen(6);
         else if (screenIndex === 6) goToScreen(7);
+        else if (screenIndex === 7) goToScreen(8);
       } else {
         advance();
       }
@@ -2124,13 +2157,13 @@
   const origGoToScreen = goToScreen;
   goToScreen = function(index) {
     origGoToScreen(index);
-    skipEndBtn.style.display = (index >= 1 && index <= 6) ? 'block' : 'none';
-    if (index === 7) { hideHint(); hintEl.style.display = 'none'; }
+    skipEndBtn.style.display = (index >= 1 && index <= 7) ? 'block' : 'none';
+    if (index >= 7) { hideHint(); hintEl.style.display = 'none'; }
     else { hintEl.style.display = ''; }
   };
   skipEndBtn.addEventListener('click', function(e) {
     e.stopPropagation();
-    goToScreen(7);
+    goToScreen(8);
   });
 
 </script>
