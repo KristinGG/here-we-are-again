@@ -513,10 +513,23 @@
        ═══════════════════════════════ */
     #screen-synthesis,
     #screen-closing,
+    #screen-stakes,
     #screen-exercise-intro {
       align-items: flex-start;
       justify-content: flex-start;
       overflow-y: auto;
+    }
+
+    .synthesis-statement a {
+      color: var(--red);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(139, 50, 38, 0.45);
+      transition: text-decoration-color 0.2s ease;
+    }
+    .synthesis-statement a:hover {
+      text-decoration-color: var(--red);
     }
 
     .exintro-definitions {
