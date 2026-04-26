@@ -1712,7 +1712,7 @@
         if (steps.length > 0) { steps[0](); subStep = 1; }
         waiting = false;
         // Show hint on screens with substeps, with first step
-        if ((index >= 1 && index <= 7) && steps.length > 1) {
+        if (index === 1 && steps.length > 1) {
           showHint();
         }
       }, 600);
