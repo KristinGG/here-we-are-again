@@ -1708,9 +1708,9 @@
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
         waiting = false;
-        // Show hint on screens with substeps, after first step
+        // Show hint on screens with substeps, with first step
         if ((index >= 1 && index <= 7) && steps.length > 1) {
-          setTimeout(showHint, 1500);
+          showHint();
         }
       }, 600);
     }, 400);
