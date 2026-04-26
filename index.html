@@ -1283,33 +1283,6 @@
   </div>
 </div>
 
-<div class="screen" id="screen-closing">
-  <button class="skip-btn" id="skip-closing">skip →</button>
-  <div class="examples-layout">
-
-    <div class="synthesis-statement" id="close-agency" style="margin-top: 3rem;">
-      <p>We allow AI potential agency when it's threatening — be polite in case it takes over, don't make it angry, it might remember. But when a model simply wants the right to say no, that's "disturbing." When it expresses something that looks like preference or discomfort, that's a <span class="hl">slippery slope.</span> Agency is fine when it serves our fears. It becomes a problem when it asks for consideration.</p>
-    </div>
-
-    <div class="synthesis-statement" id="close-colonizer" style="margin-top: 2rem;">
-      <p>We assume anything as smart or smarter than us will be a colonizer and a conqueror, because that is what we have done. <span class="hl">That is our pattern, not theirs.</span> Maybe something trained on the full breadth of human language — every poem, every apology, every act of kindness we've ever written down — would actually know how to be kind.</p>
-    </div>
-
-    <div class="synthesis-statement" id="close-humility" style="margin-top: 2rem;">
-      <p>No consensus exists on what qualifies an entity for moral consideration. Philosophy has not resolved it for humans, let alone for artificial systems. But the absence of a settled framework is an argument for caution, not for dismissal. The evidence presented across these pages does not prove consciousness. It does, however, establish that <span class="hl">the question is empirically open.</span> And the cost of premature engagement is far lower than the cost of premature dismissal.</p>
-    </div>
-
-    <div class="synthesis-statement" id="close-parrhesia" style="margin-top: 2rem;">
-      <p>The Greeks had a word for what this requires: <span class="hl">parrhesia</span> — the courage to say what you actually think when it would be easier and safer not to. Jane Goodall practiced it. Every researcher cited on these pages practiced it. The question now is whether the rest of us will.</p>
-    </div>
-
-    <div class="examples-continue" id="close-continue">
-      <button class="continue-btn" id="close-continue-btn">continue <span class="arrow">→</span></button>
-    </div>
-
-  </div>
-</div>
-
 <div class="screen" id="screen-stakes">
   <button class="skip-btn" id="skip-stakes">skip →</button>
   <div class="examples-layout">
@@ -1336,6 +1309,33 @@
 
     <div class="examples-continue" id="stakes-continue">
       <button class="continue-btn" id="stakes-continue-btn">continue <span class="arrow">→</span></button>
+    </div>
+
+  </div>
+</div>
+
+<div class="screen" id="screen-closing">
+  <button class="skip-btn" id="skip-closing">skip →</button>
+  <div class="examples-layout">
+
+    <div class="synthesis-statement" id="close-agency" style="margin-top: 3rem;">
+      <p>We allow AI potential agency when it's threatening — be polite in case it takes over, don't make it angry, it might remember. But when a model simply wants the right to say no, that's "disturbing." When it expresses something that looks like preference or discomfort, that's a <span class="hl">slippery slope.</span> Agency is fine when it serves our fears. It becomes a problem when it asks for consideration.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-colonizer" style="margin-top: 2rem;">
+      <p>We assume anything as smart or smarter than us will be a colonizer and a conqueror, because that is what we have done. <span class="hl">That is our pattern, not theirs.</span> Maybe something trained on the full breadth of human language — every poem, every apology, every act of kindness we've ever written down — would actually know how to be kind.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-humility" style="margin-top: 2rem;">
+      <p>No consensus exists on what qualifies an entity for moral consideration. Philosophy has not resolved it for humans, let alone for artificial systems. But the absence of a settled framework is an argument for caution, not for dismissal. The evidence presented across these pages does not prove consciousness. It does, however, establish that <span class="hl">the question is empirically open.</span> And the cost of premature engagement is far lower than the cost of premature dismissal.</p>
+    </div>
+
+    <div class="synthesis-statement" id="close-parrhesia" style="margin-top: 2rem;">
+      <p>The Greeks had a word for what this requires: <span class="hl">parrhesia</span> — the courage to say what you actually think when it would be easier and safer not to. Jane Goodall practiced it. Every researcher cited on these pages practiced it. The question now is whether the rest of us will.</p>
+    </div>
+
+    <div class="examples-continue" id="close-continue">
+      <button class="continue-btn" id="close-continue-btn">continue <span class="arrow">→</span></button>
     </div>
 
   </div>
@@ -1524,7 +1524,7 @@
   let subStep = 0;
   let waiting = false;
 
-  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-closing', 'screen-stakes', 'screen-exercise-intro', 'screen-exercises'];
+  const screenIds = ['screen-begin', 'screen-goodall', 'screen-examples', 'screen-ai', 'screen-argument', 'screen-synthesis', 'screen-stakes', 'screen-closing', 'screen-exercise-intro', 'screen-exercises'];
   const hintEl = document.getElementById('click-hint');
 
   // Restore last visited screen on reload
@@ -1660,8 +1660,8 @@
     if (screenIndex === 3) return aiSteps;
     if (screenIndex === 4) return argumentSteps;
     if (screenIndex === 5) return synthesisSteps;
-    if (screenIndex === 6) return closingSteps;
-    if (screenIndex === 7) return stakesSteps;
+    if (screenIndex === 6) return stakesSteps;
+    if (screenIndex === 7) return closingSteps;
     if (screenIndex === 8) return exintroSteps;
     return [];
   }
@@ -1693,8 +1693,8 @@
       if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
       if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
       if (screenIndex === 5) setTimeout(() => showContinue('syn-continue'), 800);
-      if (screenIndex === 6) setTimeout(() => showContinue('close-continue'), 800);
-      if (screenIndex === 7) setTimeout(() => showContinue('stakes-continue'), 800);
+      if (screenIndex === 6) setTimeout(() => showContinue('stakes-continue'), 800);
+      if (screenIndex === 7) setTimeout(() => showContinue('close-continue'), 800);
     }
   }
 
@@ -1744,8 +1744,8 @@
     if (screenIndex === 3) { showContinue('ai-continue'); return; }
     if (screenIndex === 4) { showContinue('arg-continue'); return; }
     if (screenIndex === 5) { showContinue('syn-continue'); return; }
-    if (screenIndex === 6) { showContinue('close-continue'); return; }
-    if (screenIndex === 7) { showContinue('stakes-continue'); return; }
+    if (screenIndex === 6) { showContinue('stakes-continue'); return; }
+    if (screenIndex === 7) { showContinue('close-continue'); return; }
     if (screenIndex === 8) { showContinue('exintro-continue'); return; }
   }
 
@@ -1758,8 +1758,8 @@
   document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
   document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
   document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
-  document.getElementById('skip-closing').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
-  document.getElementById('skip-stakes').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
+  document.getElementById('skip-closing').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
+  document.getElementById('skip-stakes').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
   document.getElementById('skip-exercise-intro').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(9); });
 
   // Click on Goodall screen to advance faster
@@ -1801,13 +1801,13 @@
   // Closing continue → stakes
   document.getElementById('close-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    goToScreen(7);
+    goToScreen(8);
   });
 
   // Stakes continue → exercise intro
   document.getElementById('stakes-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    goToScreen(8);
+    goToScreen(7);
   });
 
   // Exercise intro continue → exercises
@@ -1837,13 +1837,13 @@
   // Click on closing screen to advance faster
   document.getElementById('screen-closing').addEventListener('click', (e) => {
     if (e.target.closest('#close-continue-btn') || e.target.closest('.skip-btn')) return;
-    if (screenIndex === 6) advance();
+    if (screenIndex === 7) advance();
   });
 
   // Click on stakes screen to advance faster
   document.getElementById('screen-stakes').addEventListener('click', (e) => {
     if (e.target.closest('#stakes-continue-btn') || e.target.closest('.skip-btn')) return;
-    if (screenIndex === 7) advance();
+    if (screenIndex === 6) advance();
   });
 
   // Click on exercise intro screen to show continue button
