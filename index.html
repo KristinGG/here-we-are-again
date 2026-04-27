@@ -1001,7 +1001,7 @@
     .continue-row {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
     }
     .begin-icon-wrap {
       display: flex;
@@ -1014,13 +1014,7 @@
       stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
       fill: none; overflow: visible;
     }
-    @keyframes icon-ellipse-wobble {
-      0%,100%{transform:scale(1,1)}
-      20%{transform:scale(1.09,0.92)}
-      40%{transform:scale(0.95,1.07)}
-      60%{transform:scale(1.06,0.94)}
-      80%{transform:scale(0.97,1.05)}
-    }
+    @keyframes icon-ellipse-wobble { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -300; } }
     @keyframes icon-rock { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
     @keyframes icon-flowerspin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     @keyframes icon-nodepulse { 0%,100%{opacity:0.2} 50%{opacity:1} }
@@ -1086,7 +1080,7 @@
 <div class="screen" id="screen-begin">
   <div class="begin-orbit-wrap">
     <svg class="begin-orbit-svg" width="160" height="140" viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="80" cy="70" rx="68" ry="60" style="transform-box:view-box;transform-origin:80px 70px;animation:icon-ellipse-wobble 3.5s ease-in-out infinite;"/>
+      <ellipse cx="80" cy="70" rx="68" ry="60" stroke-dasharray="8 10" style="animation:icon-ellipse-wobble 4s linear infinite;"/>
     </svg>
     <div class="begin-label" id="begin-btn">
       begin <span class="begin-arrow">→</span>
@@ -1307,12 +1301,13 @@
       <div class="continue-row">
         <div class="screen-icon">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14,22 C10,22 7,19 7,15 C7,11 9,9 12,8 C12,6 13,5 14,5 C15,5 16,6 16,8 C19,9 21,11 21,15 C21,19 18,22 14,22 Z"/>
-    <line x1="14" y1="5" x2="14" y2="22" opacity="0.4"/>
-    <path d="M9,12 Q12,10 12,14" opacity="0.5"/>
-    <path d="M9,17 Q11,15 11,18" opacity="0.5"/>
-    <path d="M19,12 Q16,10 16,14" opacity="0.5"/>
-    <path d="M19,17 Q17,15 17,18" opacity="0.5"/>
+    <path d="M14,4 C12,2 10,2 9,3 C8,4 7,4 7,7 C6,9 6,12 7,14 C7,17 8,20 10,22 C11,23 13,23 14,23"/>
+    <path d="M14,4 C16,2 18,2 19,3 C20,4 21,4 21,7 C22,9 22,12 21,14 C21,17 20,20 18,22 C17,23 15,23 14,23"/>
+    <line x1="14" y1="4" x2="14" y2="23" opacity="0.35"/>
+    <path d="M9,10 Q12,8 11,13" opacity="0.45"/>
+    <path d="M10,17 Q12,15 11,19" opacity="0.45"/>
+    <path d="M19,10 Q16,8 17,13" opacity="0.45"/>
+    <path d="M18,17 Q16,15 17,19" opacity="0.45"/>
   </svg>
 </div>
         <button class="continue-btn" id="ai-continue-btn">continue <span class="arrow">→</span></button>
@@ -1534,9 +1529,9 @@
         <div class="screen-icon">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
     <line x1="4" y1="26" x2="24" y2="26"/>
-    <g style="transform-box:view-box;transform-origin:13px 20px;animation:icon-gaveltap 3.5s ease-in-out infinite;">
-      <line x1="7" y1="24" x2="19" y2="12" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M15,7 L22,14 L20,16 L13,9 Z"/>
+    <g style="transform-box:view-box;transform-origin:12px 24px;animation:icon-gaveltap 3.5s ease-in-out infinite;">
+      <line x1="8" y1="24" x2="18" y2="12" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M14,8 L22,16 L20,18 L12,10 Z"/>
     </g>
   </svg>
 </div>
@@ -1573,8 +1568,8 @@
       <div class="continue-row">
         <div class="screen-icon">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14,26 C10,26 7,23 8,19 C9,15 11,13 12,9 C12,6 13,4 14,3 C15,6 15,9 17,12 C19,15 20,18 20,21 C20,24 17,26 14,26 Z" style="transform-box:view-box;transform-origin:14px 26px;animation:icon-flicker 2s ease-in-out infinite;"/>
-    <path d="M14,23 C12,23 11,21 12,18 C13,16 14,14 14,12 C14,15 15,17 16,19 C17,21 16,23 14,23 Z" opacity="0.3"/>
+    <path d="M14,26 C9,26 6,22 7,18 C8,15 10,13 11,10 C11,7 12,5 14,4 C16,6 15,10 18,13 C20,15 21,19 20,22 C19,25 17,26 14,26 Z" style="transform-box:view-box;transform-origin:14px 26px;animation:icon-flicker 2s ease-in-out infinite;"/>
+    <path d="M14,23 C12,23 11,20 12,17 C13,15 14,13 14,11 C14,14 15,16 16,18 C17,21 16,23 14,23 Z" opacity="0.3"/>
   </svg>
 </div>
         <button class="continue-btn" id="close-continue-btn">continue <span class="arrow">→</span></button>
