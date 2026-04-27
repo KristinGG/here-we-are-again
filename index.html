@@ -223,39 +223,23 @@
         align-items: flex-start;
       }
       .goodall-spread {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         height: auto;
         min-height: auto;
       }
       .center-doc {
-        max-width: 90vw;
+        max-width: 92vw;
         width: 100%;
-        padding: 0.5rem 1.5rem;
+        padding: 0.5rem 1.2rem;
         max-height: none;
         overflow-y: visible;
         border-left: none;
         border-right: none;
-        order: 1;
       }
-      .side-col {
-        position: static;
-        width: 90vw;
-        max-width: 90vw;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-        justify-content: center;
-        padding-bottom: 1rem;
-        order: 2;
-      }
-      .side-col.left { margin-top: 1.5rem; }
-      .side-col.right { order: 3; }
-      .side-col .clip {
-        width: calc(50% - 0.5rem);
-        min-width: 140px;
-        flex-shrink: 0;
+      .side-col { display: none; }
+      /* Clips moved inline on mobile via JS */
+      .center-doc .clip {
+        margin: 0.8rem 0;
+        width: 100%;
       }
     }
 
@@ -1952,6 +1936,19 @@
     document.getElementById('screen-begin').classList.add('active');
   })();
 
+  // On mobile, move clips inline after their corresponding narrative lines
+  if (window.innerWidth <= 960) {
+    const clipMap = [
+      ['hl-5', 'sq-f'], ['hl-8', 'sq-e'], ['hl-10', 'sq-c'],
+      ['hl-11', 'sq-d'], ['hl-12', 'sq-b'], ['hl-13', 'sq-a']
+    ];
+    clipMap.forEach(([lineId, clipId]) => {
+      const line = document.getElementById(lineId);
+      const clip = document.getElementById(clipId);
+      if (line && clip) line.after(clip);
+    });
+  }
+
   function revealEl(id) {
     const el = document.getElementById(id);
     if (el) el.classList.add('in');
@@ -1968,15 +1965,15 @@
     () => { revealEl('hl-2'); },
     () => { revealEl('hl-3'); },
     () => { revealEl('hl-4');  scrollToLine('hl-4'); },
-    () => { revealEl('hl-5');  revealEl('sq-f'); scrollToLine('hl-5'); },
+    () => { revealEl('hl-5');  revealEl('sq-f'); scrollToLine(window.innerWidth<=960?'sq-f':'hl-5'); },
     () => { revealEl('hl-6');  scrollToLine('hl-6'); },
     () => { revealEl('hl-7');  scrollToLine('hl-7'); },
-    () => { revealEl('hl-8');  revealEl('sq-e'); scrollToLine('hl-8'); },
+    () => { revealEl('hl-8');  revealEl('sq-e'); scrollToLine(window.innerWidth<=960?'sq-e':'hl-8'); },
     () => { revealEl('hl-9');  scrollToLine('hl-9'); },
-    () => { revealEl('hl-10'); revealEl('sq-c'); scrollToLine('hl-10'); },
-    () => { revealEl('hl-11'); revealEl('sq-d'); scrollToLine('hl-11'); },
-    () => { revealEl('hl-12'); revealEl('sq-b'); scrollToLine('hl-12'); },
-    () => { revealEl('hl-13'); revealEl('sq-a'); scrollToLine('hl-13'); },
+    () => { revealEl('hl-10'); revealEl('sq-c'); scrollToLine(window.innerWidth<=960?'sq-c':'hl-10'); },
+    () => { revealEl('hl-11'); revealEl('sq-d'); scrollToLine(window.innerWidth<=960?'sq-d':'hl-11'); },
+    () => { revealEl('hl-12'); revealEl('sq-b'); scrollToLine(window.innerWidth<=960?'sq-b':'hl-12'); },
+    () => { revealEl('hl-13'); revealEl('sq-a'); scrollToLine(window.innerWidth<=960?'sq-a':'hl-13'); },
   ];
 
   /* ── Examples steps ── */
