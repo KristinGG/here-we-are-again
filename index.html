@@ -1027,16 +1027,18 @@
     .nb-l4{animation:line-draw 5s ease-out infinite 1.4s}
 
     /* Tree icon animations */
-    @keyframes trunk-sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
-    @keyframes leaf-drift-1{0%,100%{transform:translateX(0px)}50%{transform:translateX(0.7px)}}
-    @keyframes leaf-drift-2{0%,100%{transform:translateX(0px)}50%{transform:translateX(-0.6px)}}
-    @keyframes leaf-drift-3{0%,100%{transform:translateX(0.3px)}50%{transform:translateX(-0.4px)}}
-    .tree-trunk{transform-box:view-box;transform-origin:14px 26px;animation:trunk-sway 5s ease-in-out infinite}
-    .ld1{transform-box:view-box;transform-origin:center;animation:leaf-drift-1 4s ease-in-out infinite}
-    .ld2{transform-box:view-box;transform-origin:center;animation:leaf-drift-2 4.5s ease-in-out infinite 0.5s}
-    .ld3{transform-box:view-box;transform-origin:center;animation:leaf-drift-3 3.8s ease-in-out infinite 1s}
-    .ld4{transform-box:view-box;transform-origin:center;animation:leaf-drift-1 4.2s ease-in-out infinite 1.5s}
-    .ld5{transform-box:view-box;transform-origin:center;animation:leaf-drift-2 3.5s ease-in-out infinite 0.8s}
+    @keyframes trunk-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+    @keyframes ld-a{0%,100%{transform:translate(0,0)}30%{transform:translate(1.5px,-0.8px)}70%{transform:translate(-0.5px,0.4px)}}
+    @keyframes ld-b{0%,100%{transform:translate(0,0)}40%{transform:translate(-1.2px,-0.5px)}80%{transform:translate(0.8px,0.6px)}}
+    @keyframes ld-c{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(0.6px,-1px) scale(1.06)}}
+    @keyframes ld-d{0%,100%{transform:translate(0,0)}35%{transform:translate(-1px,0.7px)}65%{transform:translate(1.2px,-0.3px)}}
+    @keyframes ld-e{0%,100%{transform:translate(0,0) scale(1)}45%{transform:translate(-0.8px,-0.6px) scale(0.95)}85%{transform:translate(1px,0.4px) scale(1.04)}}
+    .tree-trunk{transform-box:view-box;transform-origin:14px 26px;animation:trunk-sway 3.5s ease-in-out infinite}
+    .ld1{transform-box:view-box;transform-origin:center;animation:ld-a 2.8s ease-in-out infinite}
+    .ld2{transform-box:view-box;transform-origin:center;animation:ld-b 3.2s ease-in-out infinite 0.3s}
+    .ld3{transform-box:view-box;transform-origin:center;animation:ld-c 2.5s ease-in-out infinite 0.7s}
+    .ld4{transform-box:view-box;transform-origin:center;animation:ld-d 3s ease-in-out infinite 1.1s}
+    .ld5{transform-box:view-box;transform-origin:center;animation:ld-e 2.7s ease-in-out infinite 0.5s}
 
     @keyframes ex-circle-morph {
       0%,100%{border-radius:50%}
