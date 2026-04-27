@@ -362,15 +362,21 @@
       transition: opacity 1.2s ease;
     }
     .circle-center.in { opacity: 1; }
-    .circle-center::before {
-      content: '';
+    .circle-center .circle-ring {
       position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 1.5px dotted var(--ink-ghost);
-      animation: circle-spin 25s linear infinite;
+      inset: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+      pointer-events: none;
     }
-    @keyframes circle-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .circle-ring circle {
+      fill: none;
+      stroke: var(--ink-ghost);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 8;
+      animation: dash-travel 12s linear infinite;
+    }
+    @keyframes dash-travel { from{stroke-dashoffset:0} to{stroke-dashoffset:-816} }
 
     .circle-center p {
       font-family: 'Lora', Georgia, serif;
@@ -1229,6 +1235,7 @@
   <div class="examples-layout">
 
     <div class="circle-center" id="ex-center">
+      <svg class="circle-ring" viewBox="0 0 262 262"><circle cx="131" cy="131" r="130"/></svg>
       <p>But Jane Goodall's story is only one example.</p>
     </div>
 
