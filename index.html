@@ -1014,7 +1014,7 @@
       stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
       fill: none; overflow: visible;
     }
-    @keyframes icon-ellipse-wobble { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -300; } }
+    /* begin wave handled by SVG filter */
     @keyframes icon-rock { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
     @keyframes icon-flowerspin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     @keyframes icon-nodepulse { 0%,100%{opacity:0.2} 50%{opacity:1} }
@@ -1079,8 +1079,16 @@
 
 <div class="screen" id="screen-begin">
   <div class="begin-orbit-wrap">
-    <svg class="begin-orbit-svg" width="160" height="140" viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="80" cy="70" rx="68" ry="60" stroke-dasharray="8 10" style="animation:icon-ellipse-wobble 4s linear infinite;"/>
+    <svg class="begin-orbit-svg" width="200" height="180" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="wave-filter" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.025 0.02" numOctaves="3" result="noise">
+            <animate attributeName="seed" from="0" to="50" dur="5s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <circle cx="100" cy="90" r="70" fill="none" stroke="currentColor" stroke-width="1.4" filter="url(#wave-filter)"/>
     </svg>
     <div class="begin-label" id="begin-btn">
       begin <span class="begin-arrow">→</span>
@@ -1301,13 +1309,9 @@
       <div class="continue-row">
         <div class="screen-icon">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14,4 C12,2 10,2 9,3 C8,4 7,4 7,7 C6,9 6,12 7,14 C7,17 8,20 10,22 C11,23 13,23 14,23"/>
-    <path d="M14,4 C16,2 18,2 19,3 C20,4 21,4 21,7 C22,9 22,12 21,14 C21,17 20,20 18,22 C17,23 15,23 14,23"/>
-    <line x1="14" y1="4" x2="14" y2="23" opacity="0.35"/>
-    <path d="M9,10 Q12,8 11,13" opacity="0.45"/>
-    <path d="M10,17 Q12,15 11,19" opacity="0.45"/>
-    <path d="M19,10 Q16,8 17,13" opacity="0.45"/>
-    <path d="M18,17 Q16,15 17,19" opacity="0.45"/>
+    <path d="M3,14 C7,8 21,8 25,14 C21,20 7,20 3,14 Z"/>
+    <circle cx="14" cy="14" r="4"/>
+    <circle cx="14" cy="14" r="1.5" fill="currentColor" stroke="none"/>
   </svg>
 </div>
         <button class="continue-btn" id="ai-continue-btn">continue <span class="arrow">→</span></button>
@@ -1528,11 +1532,8 @@
       <div class="continue-row">
         <div class="screen-icon">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-    <line x1="4" y1="26" x2="24" y2="26"/>
-    <g style="transform-box:view-box;transform-origin:12px 24px;animation:icon-gaveltap 3.5s ease-in-out infinite;">
-      <line x1="8" y1="24" x2="18" y2="12" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M14,8 L22,16 L20,18 L12,10 Z"/>
-    </g>
+    <path d="M14,3 L23,6 L23,15 C23,20 19,24 14,26 C9,24 5,20 5,15 L5,6 Z"/>
+    <path d="M14,8 L19,10 L19,16 C19,19 17,21 14,23 C11,21 9,19 9,16 L9,10 Z" opacity="0.35"/>
   </svg>
 </div>
         <button class="continue-btn" id="stakes-continue-btn">continue <span class="arrow">→</span></button>
@@ -1567,9 +1568,8 @@
             <div class="examples-continue" id="close-continue">
       <div class="continue-row">
         <div class="screen-icon">
-  <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14,26 C9,26 6,22 7,18 C8,15 10,13 11,10 C11,7 12,5 14,4 C16,6 15,10 18,13 C20,15 21,19 20,22 C19,25 17,26 14,26 Z" style="transform-box:view-box;transform-origin:14px 26px;animation:icon-flicker 2s ease-in-out infinite;"/>
-    <path d="M14,23 C12,23 11,20 12,17 C13,15 14,13 14,11 C14,14 15,16 16,18 C17,21 16,23 14,23 Z" opacity="0.3"/>
+  <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" style="transform-box:view-box;transform-origin:14px 26px;animation:icon-flicker 2s ease-in-out infinite;">
+    <path d="M7,25 C5,21 6,17 9,14 C10,12 10,9 9,6 C11,9 11,12 12,14 C13,11 14,6 14,3 C14,6 15,11 16,14 C17,12 17,9 19,6 C18,9 18,12 19,14 C22,17 23,21 21,25 C20,27 18,28 14,28 C10,28 8,27 7,25 Z"/>
   </svg>
 </div>
         <button class="continue-btn" id="close-continue-btn">continue <span class="arrow">→</span></button>
