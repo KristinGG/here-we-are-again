@@ -296,7 +296,7 @@
     .theme-toggle {
       position: fixed;
       top: 1rem;
-      right: 6rem;
+      right: 4.8rem;
       border: 1px solid var(--ink-ghost);
       border-radius: 50%;
       background: var(--cream);
@@ -313,53 +313,69 @@
     }
     .theme-toggle:hover { border-color: var(--ink-soft); color: var(--ink); }
 
-    /* ── Skip button ── */
-    .skip-btn {
+    /* ── Skip buttons (hidden, replaced by nav menu) ── */
+    .skip-btn { display: none; }
+    .skip-end-btn { display: none; }
+    .restart-btn { display: none; }
+
+    /* ── Nav menu ── */
+    .nav-menu-wrap {
       position: fixed;
-      top: 1.2rem;
-      right: 1.5rem;
-      font-family: 'Lora', Georgia, serif;
-      font-size: 0.85rem;
-      font-style: italic;
+      top: 1rem;
+      right: 1.8rem;
+      z-index: 90;
+    }
+    .nav-menu-btn {
+      border: 1px solid var(--ink-ghost);
+      border-radius: 50%;
+      background: var(--cream);
       color: var(--ink-muted);
+      font-size: 1.1rem;
+      width: 2.2rem;
+      height: 2.2rem;
       cursor: pointer;
-      z-index: 50;
-      transition: color 0.3s;
-      background: none;
-      border: none;
-      letter-spacing: 0.02em;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .skip-btn:hover { color: var(--ink); }
-    .skip-end-btn {
-      position: fixed;
-      top: 4rem;
-      right: 1.5rem;
+    .nav-menu-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+    .nav-dropdown {
+      position: absolute;
+      top: 2.6rem;
+      right: 0;
+      background: var(--cream);
+      border: 1px solid var(--ink-ghost);
+      border-radius: 6px;
+      padding: 0.35rem 0;
+      min-width: 130px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-dropdown.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    .nav-dropdown button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.45rem 0.9rem;
       font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      color: var(--ink-ghost);
-      cursor: pointer;
-      z-index: 50;
-      transition: color 0.3s;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
       background: none;
       border: none;
-      letter-spacing: 0.02em;
-    }
-    .skip-end-btn:hover { color: var(--ink-muted); }
-    .restart-btn {
-      position: fixed;
-      top: 5.8rem;
-      right: 1.5rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      color: var(--ink-ghost);
       cursor: pointer;
-      z-index: 50;
-      transition: color 0.3s;
-      background: none;
-      border: none;
+      transition: color 0.15s, background 0.15s;
       letter-spacing: 0.02em;
     }
-    .restart-btn:hover { color: var(--ink-muted); }
+    .nav-dropdown button:hover { color: var(--ink); background: var(--hover-bg); }
+    .nav-dropdown button.nav-hidden { display: none; }
 
     /* ═══════════════════════════════
        EXAMPLES (animal consciousness)
@@ -1879,9 +1895,15 @@
   </div>
 </div>
 
-<button class="skip-end-btn" id="skip-to-exercises" style="display:none;">skip to exercises →</button>
-<button class="restart-btn" id="restart-btn" style="display:none;">restart ↺</button>
 <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">☾</button>
+<div class="nav-menu-wrap" id="nav-menu-wrap" style="display:none;">
+  <button class="nav-menu-btn" id="nav-menu-btn" title="Navigation">⋯</button>
+  <div class="nav-dropdown" id="nav-dropdown">
+    <button id="nav-skip">skip →</button>
+    <button id="nav-chat">skip to chat →</button>
+    <button id="nav-restart">restart ↺</button>
+  </div>
+</div>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
 <script>
@@ -2656,21 +2678,43 @@
   });
 
   // Skip to exercises button — visible on screens 1-6, hidden on begin and exercises
-  const skipEndBtn = document.getElementById('skip-to-exercises');
-  const restartBtn = document.getElementById('restart-btn');
+  // Nav dropdown menu
+  const navWrap = document.getElementById('nav-menu-wrap');
+  const navBtn = document.getElementById('nav-menu-btn');
+  const navDrop = document.getElementById('nav-dropdown');
+  const navSkip = document.getElementById('nav-skip');
+  const navChat = document.getElementById('nav-chat');
+  const navRestart = document.getElementById('nav-restart');
+
+  navBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    navDrop.classList.toggle('open');
+  });
+  document.addEventListener('click', function() { navDrop.classList.remove('open'); });
+
   const origGoToScreen = goToScreen;
   goToScreen = function(index) {
     origGoToScreen(index);
-    skipEndBtn.style.display = (index >= 1 && index <= 8) ? 'block' : 'none';
-    restartBtn.style.display = (index >= 1) ? 'block' : 'none';
+    navDrop.classList.remove('open');
+    // Show nav menu on all screens except begin
+    navWrap.style.display = (index >= 1) ? 'block' : 'none';
+    // Show/hide menu items based on screen
+    navSkip.classList.toggle('nav-hidden', index >= 9);
+    navChat.classList.toggle('nav-hidden', index >= 9);
+    navRestart.classList.toggle('nav-hidden', false);
     if (index >= 8) { hideHint(); hintEl.style.display = 'none'; }
     else { hintEl.style.display = ''; }
   };
-  skipEndBtn.addEventListener('click', function(e) {
+
+  navSkip.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (screenIndex < 9) goToScreen(screenIndex + 1);
+  });
+  navChat.addEventListener('click', function(e) {
     e.stopPropagation();
     goToScreen(9);
   });
-  restartBtn.addEventListener('click', function(e) {
+  navRestart.addEventListener('click', function(e) {
     e.stopPropagation();
     goToScreen(0);
   });
