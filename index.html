@@ -345,6 +345,21 @@
       letter-spacing: 0.02em;
     }
     .skip-end-btn:hover { color: var(--ink-muted); }
+    .restart-btn {
+      position: fixed;
+      top: 5.8rem;
+      right: 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      color: var(--ink-ghost);
+      cursor: pointer;
+      z-index: 50;
+      transition: color 0.3s;
+      background: none;
+      border: none;
+      letter-spacing: 0.02em;
+    }
+    .restart-btn:hover { color: var(--ink-muted); }
 
     /* ═══════════════════════════════
        EXAMPLES (animal consciousness)
@@ -1865,6 +1880,7 @@
 </div>
 
 <button class="skip-end-btn" id="skip-to-exercises" style="display:none;">skip to exercises →</button>
+<button class="restart-btn" id="restart-btn" style="display:none;">restart ↺</button>
 <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">☾</button>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
@@ -2641,16 +2657,22 @@
 
   // Skip to exercises button — visible on screens 1-6, hidden on begin and exercises
   const skipEndBtn = document.getElementById('skip-to-exercises');
+  const restartBtn = document.getElementById('restart-btn');
   const origGoToScreen = goToScreen;
   goToScreen = function(index) {
     origGoToScreen(index);
     skipEndBtn.style.display = (index >= 1 && index <= 8) ? 'block' : 'none';
+    restartBtn.style.display = (index >= 1) ? 'block' : 'none';
     if (index >= 8) { hideHint(); hintEl.style.display = 'none'; }
     else { hintEl.style.display = ''; }
   };
   skipEndBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     goToScreen(9);
+  });
+  restartBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    goToScreen(0);
   });
 
 </script>
