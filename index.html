@@ -237,6 +237,7 @@
         overflow-y: visible;
         border-left: none;
         border-right: none;
+        order: 1;
       }
       .side-col {
         position: static;
@@ -246,9 +247,11 @@
         flex-wrap: wrap;
         gap: 0.8rem;
         justify-content: center;
-        margin-top: 1.5rem;
         padding-bottom: 1rem;
+        order: 2;
       }
+      .side-col.left { margin-top: 1.5rem; }
+      .side-col.right { order: 3; }
       .side-col .clip {
         width: calc(50% - 0.5rem);
         min-width: 140px;
@@ -1028,15 +1031,26 @@
     .preset-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
     .preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     @media (max-width: 768px) {
-      .panels-row { grid-template-columns: 1fr; }
+      .panels-row { grid-template-columns: 1fr; gap: 1.5rem; }
+      #screen-exercises {
+        position: fixed;
+        inset: 0;
+        overflow-y: auto;
+        padding: 1.5rem 1rem;
+      }
+      .exercises-wrap { gap: 1rem; }
       .chat-panel { max-height: none; }
-      .chat-log { min-height: 250px; max-height: 350px; }
-      .panel-config { flex-wrap: wrap; gap: 0.4rem; padding: 0.5rem; }
+      .chat-log { min-height: 220px; max-height: 320px; }
+      .panel-config {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding: 0.5rem;
+      }
       .panel-config label { font-size: 0.68rem; }
-      .panel-config select { font-size: 0.78rem; padding: 0.25rem 0.3rem; }
+      .panel-config select { font-size: 16px; padding: 0.25rem 0.3rem; }
       .preset-btn { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
-      .panel-text-input { font-size: 16px; /* prevents iOS zoom */ }
-      #screen-exercises { padding: 1.5rem 1rem; }
+      .panel-text-input { font-size: 16px; }
+      .panel-send-btn { font-size: 0.85rem; padding: 0.4rem 0.65rem; }
     }
 
     /* ── Screen icons ── */
