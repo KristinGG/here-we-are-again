@@ -1201,6 +1201,21 @@
     .icon-sparkle1{transform-box:view-box;transform-origin:14px 3px;animation:icon-sparkle 3s ease-in-out infinite 0.5s}
     .icon-sparkle2{transform-box:view-box;transform-origin:26px 14px;animation:icon-sparkle 3s ease-in-out infinite 1.5s}
 
+    /* Compass icon animation */
+    @keyframes compass-drift {
+      0%   { transform: rotate(0deg) }
+      12%  { transform: rotate(25deg) }
+      20%  { transform: rotate(10deg) }
+      35%  { transform: rotate(175deg) }
+      42%  { transform: rotate(165deg) }
+      50%  { transform: rotate(180deg) }
+      62%  { transform: rotate(205deg) }
+      70%  { transform: rotate(190deg) }
+      85%  { transform: rotate(355deg) }
+      92%  { transform: rotate(365deg) }
+      100% { transform: rotate(360deg) }
+    }
+
     .begin-orbit-wrap {
       position: relative;
       display: inline-flex;
@@ -1672,6 +1687,20 @@
 
             <div class="examples-continue" id="stakes-continue">
       <div class="continue-row">
+        <div class="screen-icon">
+  <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="14" r="11" fill="none"/>
+    <line x1="14" y1="3.5" x2="14" y2="5" stroke-width="0.8"/>
+    <line x1="14" y1="23" x2="14" y2="24.5" stroke-width="0.8"/>
+    <line x1="3.5" y1="14" x2="5" y2="14" stroke-width="0.8"/>
+    <line x1="23" y1="14" x2="24.5" y2="14" stroke-width="0.8"/>
+    <g style="transform-box:view-box;transform-origin:14px 14px;animation:compass-drift 10s ease-in-out infinite">
+      <path d="M14,5 L15.8,13 L14,11 L12.2,13 Z" fill="currentColor" fill-opacity="0.35" stroke-width="0.9"/>
+      <path d="M14,23 L15.3,15.5 L14,17 L12.7,15.5 Z" fill="none" stroke-width="0.7" opacity="0.6"/>
+    </g>
+    <circle cx="14" cy="14" r="1.2" fill="currentColor"/>
+  </svg>
+</div>
         <button class="continue-btn" id="stakes-continue-btn">continue <span class="arrow">→</span></button>
       </div>
     </div>
