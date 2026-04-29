@@ -2209,8 +2209,8 @@
       if (screenIndex === 1) setTimeout(() => showContinue('continue-wrap'), 800);
       if (screenIndex === 2) setTimeout(() => showContinue('ex-continue'), 800);
       if (screenIndex === 3) setTimeout(() => showContinue('ai-continue'), 800);
-      if (screenIndex === 4) setTimeout(() => showContinue('arg-continue'), 800);
-      if (screenIndex === 5) setTimeout(() => showContinue('syn-continue'), 800);
+      if (screenIndex === 4) setTimeout(() => showContinue('syn-continue'), 800);
+      if (screenIndex === 5) setTimeout(() => showContinue('arg-continue'), 800);
       if (screenIndex === 6) setTimeout(() => showContinue('stakes-continue'), 800);
       if (screenIndex === 7) setTimeout(() => showContinue('comp-continue'), 800);
       if (screenIndex === 8) setTimeout(() => showContinue('pol-continue'), 800);
@@ -2226,7 +2226,10 @@
     setTimeout(() => {
       screenIndex = index;
       subStep = 0;
-      document.getElementById(screenIds[index]).classList.add('active');
+      // Reset content on destination screen so it fades in fresh
+      const dest = document.getElementById(screenIds[index]);
+      dest.querySelectorAll('.hist-line, .clip, .continue-wrap, .circle-center, .case-block, .examples-closing, .examples-continue, .quote-block, .exintro-def, .component-item, .synthesis-statement').forEach(el => el.classList.remove('in'));
+      dest.classList.add('active');
       setTimeout(() => {
         const steps = getSteps();
         if (steps.length > 0) { steps[0](); subStep = 1; }
