@@ -2174,8 +2174,8 @@
     if (screenIndex === 1) return goodallSteps;
     if (screenIndex === 2) return exampleSteps;
     if (screenIndex === 3) return aiSteps;
-    if (screenIndex === 4) return argumentSteps;
-    if (screenIndex === 5) return synthesisSteps;
+    if (screenIndex === 4) return synthesisSteps;
+    if (screenIndex === 5) return argumentSteps;
     if (screenIndex === 6) return stakesSteps;
     if (screenIndex === 7) return companionsSteps;
     if (screenIndex === 8) return politicalSteps;
@@ -2278,8 +2278,8 @@
   document.getElementById('skip-goodall').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(2); });
   document.getElementById('skip-examples').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(3); });
   document.getElementById('skip-ai').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(4); });
-  document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
-  document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
+  document.getElementById('skip-synthesis').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(5); });
+  document.getElementById('skip-argument').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(6); });
   document.getElementById('skip-stakes').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(7); });
   document.getElementById('skip-companions').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(8); });
   document.getElementById('skip-political').addEventListener('click', (e) => { e.stopPropagation(); goToScreen(9); });
@@ -2304,20 +2304,20 @@
     goToScreen(3);
   });
 
-  // AI continue → argument
+  // AI continue → synthesis
   document.getElementById('ai-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(4);
   });
 
-  // Argument continue → synthesis
-  document.getElementById('arg-continue-btn').addEventListener('click', (e) => {
+  // Synthesis continue → argument
+  document.getElementById('syn-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(5);
   });
 
-  // Synthesis continue → closing
-  document.getElementById('syn-continue-btn').addEventListener('click', (e) => {
+  // Argument continue → stakes
+  document.getElementById('arg-continue-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     goToScreen(6);
   });
@@ -2367,7 +2367,7 @@
   // Click on synthesis screen to advance faster
   document.getElementById('screen-synthesis').addEventListener('click', (e) => {
     if (e.target.closest('#syn-continue-btn') || e.target.closest('.skip-btn')) return;
-    if (screenIndex === 5) advance();
+    if (screenIndex === 4) advance();
   });
 
   // Click on stakes screen to advance faster
@@ -2403,7 +2403,7 @@
   // Click on argument screen to advance faster
   document.getElementById('screen-argument').addEventListener('click', (e) => {
     if (e.target.closest('#arg-continue-btn') || e.target.closest('.skip-btn')) return;
-    if (screenIndex === 4) advance();
+    if (screenIndex === 5) advance();
   });
 
   // Keyboard (disabled on exercises screen and when typing in inputs)
