@@ -2260,9 +2260,8 @@
     setTimeout(() => {
       screenIndex = index;
       subStep = 0;
-      // Reset content on destination screen so it fades in fresh
       const dest = document.getElementById(screenIds[index]);
-      dest.querySelectorAll('.hist-line, .clip, .continue-wrap, .circle-center, .case-block, .examples-closing, .examples-continue, .quote-block, .exintro-def, .component-item, .synthesis-statement').forEach(el => el.classList.remove('in'));
+      dest.scrollTop = 0;
       dest.classList.add('active');
       setTimeout(() => {
         const steps = getSteps();
