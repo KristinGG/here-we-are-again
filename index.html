@@ -1201,8 +1201,29 @@
     .icon-sparkle1{transform-box:view-box;transform-origin:14px 3px;animation:icon-sparkle 3s ease-in-out infinite 0.5s}
     .icon-sparkle2{transform-box:view-box;transform-origin:26px 14px;animation:icon-sparkle 3s ease-in-out infinite 1.5s}
 
-    /* Open book icon — JS-driven page flip */
+    /* Open book icon — frame-based page flip */
     #book-icon { width: 64px; height: 64px; }
+    .pf { opacity: 0; }
+    .p01 { animation: f01 3s ease-in-out infinite; }
+    .p02 { animation: f02 3s ease-in-out infinite; }
+    .p03 { animation: f03 3s ease-in-out infinite; }
+    .p04 { animation: f04 3s ease-in-out infinite; }
+    .p05 { animation: f05 3s ease-in-out infinite; }
+    .p06 { animation: f06 3s ease-in-out infinite; }
+    .p07 { animation: f07 3s ease-in-out infinite; }
+    .p08 { animation: f08 3s ease-in-out infinite; }
+    .p09 { animation: f09 3s ease-in-out infinite; }
+    .p10 { animation: f10 3s ease-in-out infinite; }
+    @keyframes f01 { 0%,1% { opacity:1 } 4%,100% { opacity:0 } }
+    @keyframes f02 { 0%,2% { opacity:0 } 4%,6% { opacity:1 } 8%,100% { opacity:0 } }
+    @keyframes f03 { 0%,6% { opacity:0 } 8%,10% { opacity:1 } 12%,100% { opacity:0 } }
+    @keyframes f04 { 0%,10% { opacity:0 } 12%,14% { opacity:1 } 16%,100% { opacity:0 } }
+    @keyframes f05 { 0%,14% { opacity:0 } 16%,18% { opacity:1 } 20%,100% { opacity:0 } }
+    @keyframes f06 { 0%,18% { opacity:0 } 20%,22% { opacity:1 } 24%,100% { opacity:0 } }
+    @keyframes f07 { 0%,22% { opacity:0 } 24%,26% { opacity:1 } 28%,100% { opacity:0 } }
+    @keyframes f08 { 0%,26% { opacity:0 } 28%,30% { opacity:1 } 32%,100% { opacity:0 } }
+    @keyframes f09 { 0%,30% { opacity:0 } 32%,34% { opacity:1 } 36%,100% { opacity:0 } }
+    @keyframes f10 { 0%,34% { opacity:0 } 36%,60% { opacity:1 } 65%,100% { opacity:0 } }
 
     /* Compass icon animation */
     @keyframes compass-drift {
@@ -1736,9 +1757,6 @@
     <!-- Front pages -->
     <path d="M14,7 C11,6 7,6.5 5,7.5 L5,22.5 C7,21.5 11,21 14,23" fill="url(#lp-sh)"/>
     <path d="M14,7 C17,6 21,6.5 23,7.5 L23,22.5 C21,21.5 17,21 14,23" fill="url(#rp-sh)"/>
-    <!-- Spine -->
-    <rect x="13.4" y="6.8" width="1.2" height="16.4" fill="url(#sp-g)" rx="0.2" stroke="none"/>
-    <line x1="14" y1="6.8" x2="14" y2="23.2" stroke="#6b6660" stroke-width="0.5" opacity="0.6"/>
     <!-- Left text lines -->
     <g opacity="0.35" stroke-width="0.5">
       <path d="M7,9.5 Q10,8.8 12.8,9.2" fill="none"/>
@@ -1755,8 +1773,20 @@
       <path d="M15.2,16.8 Q18.5,16.2 21.2,17" fill="none"/>
       <path d="M15.2,19.2 Q18,18.8 21,19.5" fill="none"/>
     </g>
-    <!-- Animated turning page (JS-driven) -->
-    <path id="book-flip-path" d="" fill="none" stroke-width="0.6" opacity="0"/>
+    <!-- 10-frame page turn -->
+    <g class="pf p01"><path d="M14.8,7 C17,6 21,6.5 23,7.5 L23,22.5 C21,21.5 17,21 14.8,23" fill="#8a8578" fill-opacity="0.07" stroke-width="0.6"/></g>
+    <g class="pf p02"><path d="M14.8,7 C16.5,6.3 20,6.8 21.5,7.8 L21,22 C19.5,21.2 16,21 14.8,23" fill="#8a8578" fill-opacity="0.08" stroke-width="0.6"/></g>
+    <g class="pf p03"><path d="M14.8,7 C15.8,6.5 18.5,7 19.5,8 L19,21.5 C17.5,21 15.5,21 14.8,23" fill="#8a8578" fill-opacity="0.08" stroke-width="0.6"/></g>
+    <g class="pf p04"><path d="M14.6,7 C15.2,6.8 17,7.5 17.5,8.5 L17,21.5 C16,21 15,21.2 14.6,23" fill="#8a8578" fill-opacity="0.09" stroke-width="0.6"/></g>
+    <g class="pf p05"><path d="M14.4,7 C14.8,6.9 15.8,7.8 16,9 L15.5,21 C15,21 14.6,21.5 14.4,23" fill="#8a8578" fill-opacity="0.09" stroke-width="0.6"/></g>
+    <g class="pf p06"><path d="M13.6,7 C13.2,6.9 12.2,7.8 12,9 L12.5,21 C13,21 13.4,21.5 13.6,23" fill="#8a8578" fill-opacity="0.09" stroke-width="0.6"/></g>
+    <g class="pf p07"><path d="M13.4,7 C12.8,6.8 11,7.5 10.5,8.5 L11,21.5 C12,21 13,21.2 13.4,23" fill="#8a8578" fill-opacity="0.09" stroke-width="0.6"/></g>
+    <g class="pf p08"><path d="M13.2,7 C12.2,6.5 9.5,7 8.5,8 L9,21.5 C10.5,21 12.5,21 13.2,23" fill="#8a8578" fill-opacity="0.08" stroke-width="0.6"/></g>
+    <g class="pf p09"><path d="M13.2,7 C11.5,6.3 8,6.8 6.5,7.8 L7,22 C8.5,21.2 12,21 13.2,23" fill="#8a8578" fill-opacity="0.08" stroke-width="0.6"/></g>
+    <g class="pf p10"><path d="M13.2,7 C11,6 7,6.5 5,7.5 L5,22.5 C7,21.5 11,21 13.2,23" fill="#8a8578" fill-opacity="0.07" stroke-width="0.6"/></g>
+    <!-- Spine drawn LAST so always on top -->
+    <rect x="13.4" y="6.8" width="1.2" height="16.4" fill="url(#sp-g)" rx="0.2" stroke="none"/>
+    <line x1="14" y1="6.8" x2="14" y2="23.2" stroke="#6b6660" stroke-width="0.5" opacity="0.6"/>
   </svg>
 </div>
         <button class="continue-btn" id="stakes-continue-btn">continue <span class="arrow">→</span></button>
@@ -2045,45 +2075,6 @@
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
 
 <script>
-  // Book page-flip animation (JS-driven smooth SVG)
-  (function() {
-    var fp = document.getElementById('book-flip-path');
-    if (!fp) return;
-    function lerp(a,b,t){return a+(b-a)*t}
-    function ease(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
-    function frame(now) {
-      var cycle = 3500;
-      var t = (now % cycle) / cycle;
-      if (t >= 0.08 && t < 0.35) {
-        var raw = (t - 0.08) / 0.27;
-        var ft = ease(raw);
-        // Page edge sweeps from 23 (right) to 5 (left)
-        var ex = lerp(23, 5, ft);
-        var dist = Math.abs(ex - 14);
-        // Control points for top and bottom curves (matching book page shape)
-        var topCPx = (14 + ex) / 2;
-        var topCPy = ft < 0.5 ? lerp(6, 6.5, ft*2) : lerp(6.5, 6, (ft-0.5)*2);
-        var botCPx = (14 + ex) / 2;
-        var botCPy = ft < 0.5 ? lerp(21, 21.5, ft*2) : lerp(21.5, 21, (ft-0.5)*2);
-        // Full closed page shape: spine top -> curve to edge top -> edge bottom -> curve back to spine bottom
-        fp.setAttribute('d',
-          'M14,7' +
-          ' C' + topCPx + ',' + topCPy + ' ' + ex + ',' + (7 + dist*0.05) + ' ' + ex + ',' + (7.5) +
-          ' L' + ex + ',' + (22.5) +
-          ' C' + botCPx + ',' + botCPy + ' 14,22 14,23' +
-          ' Z'
-        );
-        // Fade near spine so it doesn't pile on the spine line
-        var spineProximity = dist < 1.5 ? dist / 1.5 : 1;
-        fp.setAttribute('opacity', String(0.65 * spineProximity));
-      } else {
-        fp.setAttribute('opacity', '0');
-      }
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  })();
-
   // Dark mode toggle
   (function() {
     const root = document.documentElement;
