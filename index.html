@@ -2024,6 +2024,11 @@
               scr.querySelectorAll('.hist-line, .clip, .continue-wrap, .circle-center, .case-block, .examples-closing, .examples-continue, .quote-block, .exintro-def, .component-item, .synthesis-statement').forEach(el => el.classList.add('in'));
             }
           }
+          // Scroll restored screen to top so user isn't stranded at the bottom
+          setTimeout(() => {
+            const restored = document.getElementById(screenIds[idx]);
+            if (restored) restored.scrollTop = 0;
+          }, 50);
           return;
         }
       }
