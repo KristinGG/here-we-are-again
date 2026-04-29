@@ -1201,7 +1201,8 @@
     .icon-sparkle1{transform-box:view-box;transform-origin:14px 3px;animation:icon-sparkle 3s ease-in-out infinite 0.5s}
     .icon-sparkle2{transform-box:view-box;transform-origin:26px 14px;animation:icon-sparkle 3s ease-in-out infinite 1.5s}
 
-    /* Open book icon — no CSS animation, JS-driven page flip */
+    /* Open book icon — JS-driven page flip */
+    #book-icon { width: 64px; height: 64px; }
 
     /* Compass icon animation */
     @keyframes compass-drift {
@@ -2056,21 +2057,25 @@
       if (t >= 0.08 && t < 0.35) {
         var raw = (t - 0.08) / 0.27;
         var ft = ease(raw);
+        // Page edge sweeps from 23 (right) to 5 (left)
         var ex = lerp(23, 5, ft);
         var dist = Math.abs(ex - 14);
-        var topCPx = lerp(14, ex, 0.55);
-        var topCPy = 6 + dist * 0.03;
-        var botCPx = lerp(14, ex, 0.55);
-        var botCPy = 23 - dist * 0.08;
-        var topEdgeY = 7.5 - dist * 0.06;
-        var botEdgeY = 22.5 + dist * 0.03;
+        // Control points for top and bottom curves (matching book page shape)
+        var topCPx = (14 + ex) / 2;
+        var topCPy = ft < 0.5 ? lerp(6, 6.5, ft*2) : lerp(6.5, 6, (ft-0.5)*2);
+        var botCPx = (14 + ex) / 2;
+        var botCPy = ft < 0.5 ? lerp(21, 21.5, ft*2) : lerp(21.5, 21, (ft-0.5)*2);
+        // Full closed page shape: spine top -> curve to edge top -> edge bottom -> curve back to spine bottom
         fp.setAttribute('d',
-          'M' + ex + ',' + topEdgeY +
-          ' C' + topCPx + ',' + topCPy + ' ' + topCPx + ',' + topCPy + ' ' + ex + ',' + topEdgeY +
-          ' L' + ex + ',' + botEdgeY
+          'M14,7' +
+          ' C' + topCPx + ',' + topCPy + ' ' + ex + ',' + (7 + dist*0.05) + ' ' + ex + ',' + (7.5) +
+          ' L' + ex + ',' + (22.5) +
+          ' C' + botCPx + ',' + botCPy + ' 14,22 14,23' +
+          ' Z'
         );
-        var spineProximity = dist < 2 ? dist / 2 : 1;
-        fp.setAttribute('opacity', String(0.7 * spineProximity));
+        // Fade near spine so it doesn't pile on the spine line
+        var spineProximity = dist < 1.5 ? dist / 1.5 : 1;
+        fp.setAttribute('opacity', String(0.65 * spineProximity));
       } else {
         fp.setAttribute('opacity', '0');
       }
