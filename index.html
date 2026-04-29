@@ -2017,6 +2017,13 @@
           document.getElementById(screenIds[idx]).classList.add('active');
           screenIndex = idx;
           if (idx >= 8) { hintEl.style.display = 'none'; }
+          // Reveal all content on current and previous screens so nothing is invisible
+          for (let i = 0; i <= idx; i++) {
+            const scr = document.getElementById(screenIds[i]);
+            if (scr) {
+              scr.querySelectorAll('.hist-line, .clip, .continue-wrap, .circle-center, .case-block, .examples-closing, .examples-continue, .quote-block, .exintro-def, .component-item, .synthesis-statement').forEach(el => el.classList.add('in'));
+            }
+          }
           return;
         }
       }
