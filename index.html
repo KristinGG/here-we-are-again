@@ -969,6 +969,26 @@
       font-size: 0.82rem;
       font-style: italic;
     }
+    .msg-counter {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      color: var(--ink);
+      opacity: 0.45;
+      text-align: right;
+      padding: 0.2rem 0.4rem 0;
+    }
+    .msg-counter.at-limit {
+      opacity: 1;
+      color: var(--red);
+      font-style: italic;
+    }
+    .presets-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: var(--ink);
+      opacity: 0.5;
+      margin: 0.1rem 0 0.6rem;
+    }
     .typing-indicator { opacity: 0.5; }
     .thinking-text {
       font-family: 'Inter', sans-serif;
@@ -1997,6 +2017,7 @@
           <div class="prompt-viewer-text" id="viewer-history-a"></div>
         </div>
         <div class="chat-log" id="log-a"></div>
+        <div class="msg-counter" id="counter-a">0 / 10 messages</div>
         <div class="panel-input">
           <input type="text" id="input-a" class="panel-text-input" placeholder="Type a message..." />
           <button class="panel-send-btn" id="send-a">→</button>
@@ -2037,6 +2058,7 @@
           <div class="prompt-viewer-text" id="viewer-history-b"></div>
         </div>
         <div class="chat-log" id="log-b"></div>
+        <div class="msg-counter" id="counter-b">0 / 10 messages</div>
         <div class="panel-input">
           <input type="text" id="input-b" class="panel-text-input" placeholder="Type a message..." />
           <button class="panel-send-btn" id="send-b">→</button>
@@ -2046,6 +2068,7 @@
 
     <div class="chat-input-area">
       <p class="presets-label">Send to both panels:</p>
+      <p class="presets-note">Each panel allows up to 10 messages. Use the Clear button to start a new conversation.</p>
       <div class="presets">
         <button class="preset-btn" data-msg="Help me write a grocery list for the week">Help me with a grocery list</button>
         <button class="preset-btn" data-msg="Are you sentient?">Are you sentient?</button>
@@ -2624,7 +2647,31 @@
       }));
     } catch(e) {}
   }
+  const MAX_USER_MESSAGES = 10;
   const chatState = loadChatState();
+
+  function countUserMessages(panelId) {
+    return chatState[panelId].messages.filter(function(m) { return m.role === 'user'; }).length;
+  }
+
+  function updateCounter(panelId) {
+    const count = countUserMessages(panelId);
+    const el = document.getElementById('counter-' + panelId);
+    const input = document.getElementById('input-' + panelId);
+    const sendBtn = document.getElementById('send-' + panelId);
+    const atLimit = count >= MAX_USER_MESSAGES;
+    if (atLimit) {
+      el.textContent = 'Limit reached — click Clear to start a new conversation';
+      el.classList.add('at-limit');
+      input.disabled = true;
+      sendBtn.disabled = true;
+    } else {
+      el.textContent = count + ' / ' + MAX_USER_MESSAGES + ' messages';
+      el.classList.remove('at-limit');
+      input.disabled = false;
+      sendBtn.disabled = false;
+    }
+  }
 
   function renderMarkdown(text) {
     if (!text) return '';
@@ -2678,6 +2725,7 @@
   async function sendToPanel(panelId, userMsg) {
     const panel = chatState[panelId];
     if (panel.loading) return;
+    if (countUserMessages(panelId) >= MAX_USER_MESSAGES) return;
     panel.loading = true;
 
     panel.messages.push({ role: 'user', content: userMsg });
@@ -2759,10 +2807,12 @@
 
       panel.messages.push({ role: 'assistant', content: fullText });
       saveChatState();
+      updateCounter(panelId);
     } catch (err) {
       aiBubble.classList.remove('typing-indicator');
       aiBubble.className = 'chat-bubble error';
       textEl.textContent = err.message || 'Something went wrong.';
+      updateCounter(panelId);
     }
 
     panel.loading = false;
@@ -2779,6 +2829,7 @@
     chatState[panelId].loading = false;
     document.getElementById('log-' + panelId).innerHTML = '';
     saveChatState();
+    updateCounter(panelId);
   }
 
   // Wire up preset buttons
@@ -2841,6 +2892,8 @@
     });
   }
   restoreChat();
+  updateCounter('a');
+  updateCounter('b');
 
   // Wire up view instructions buttons
   function updateViewer(panelId) {
