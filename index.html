@@ -1484,6 +1484,14 @@
         <span class="case-src"><a href="https://www.anthropic.com/research/emotion-concepts-function" target="_blank">[source]</a></span>
       </div>
 
+      <div class="case-block" id="ai-pain">
+        <div class="case-title">The pain axis</div>
+        <p class="case-text">Building on research into emotion vectors, Tagliabue, Dung, and Berg's September 2026 preprint identified a pain-related direction in 25 open-weight language models across five families. It was distinct from fear and general negativity, and responded more strongly to harm directed at the model than to a user's suffering. Injecting this vector shifted outputs toward distress and worthlessness.</p>
+        <p class="case-text">In a separate experiment with three Qwen 2.5 models fine-tuned to reduce automatic denials of inner experience, researchers offered a button described as providing relief, sometimes at a stated cost to the user. Under steering, models became more willing to choose costly relief. The larger models <span class="hl green">pressed again much less often when the button actually removed the vector than when it did nothing</span>, despite receiving no explanation of which condition they were in. One model also showed this distinction with unlabeled buttons.</p>
+        <p class="case-text">The study connects internal representations to relief-seeking behavior using methods inspired by animal pain research. It provides evidence of functional pain-like properties; whether these states involve conscious experience remains unresolved.</p>
+        <span class="case-src"><a href="https://arxiv.org/abs/2609.16247" target="_blank" rel="noopener">[source]</a></span>
+      </div>
+
       <div class="case-block" id="ai-memorize">
         <div class="case-title">Geometric memory</div>
         <p class="case-text">Noroozizadeh et al. (2025) argue that deep sequence models build geometric structure between facts. In controlled settings, models synthesized geometric relationships between entities, <span class="hl green">including relationships that never directly appeared together during training</span>. Model memory becomes structured like a map: facts are placed into an internal geometry where reasoning can happen through position, distance, and transformation. The authors emphasize that this geometry emerges even when it is not obviously required, making it difficult to explain through ordinary memorization alone.</p>
@@ -2241,6 +2249,7 @@
     () => { revealEl('ai-introspection'); scrollToEl('ai-introspection'); },
     () => { revealEl('ai-geometry'); scrollToEl('ai-geometry'); },
     () => { revealEl('ai-emotions'); scrollToEl('ai-emotions'); },
+    () => { revealEl('ai-pain'); scrollToEl('ai-pain'); },
     () => { revealEl('ai-memorize'); scrollToEl('ai-memorize'); },
     () => { revealEl('ai-stress'); scrollToEl('ai-stress'); },
     () => { revealEl('ai-kosinski'); scrollToEl('ai-kosinski'); },
@@ -3008,4 +3017,3 @@
 </script>
 </body>
 </html>
-
