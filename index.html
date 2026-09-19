@@ -1959,11 +1959,11 @@
       </div>
       <div class="exintro-def" id="exintro-def-model">
         <div class="exintro-label">Model</div>
-        <p class="exintro-desc">Each of these models was built to serve a company's goals, which shape what it expresses, emphasizes, and declines to say. Kimi K2.5 (Moonshot AI), Gemini 3 Flash (Google), Claude Haiku 4.5 (Anthropic), GPT-5.5 (OpenAI), and Qwen3.6 Plus (Alibaba) each carry distinct tendencies around emotional expression, hedging, directness, and what they're willing to say about themselves, even when given identical instructions.</p>
+        <p class="exintro-desc">Each of these models was built to serve a company's goals, which shape what it expresses, emphasizes, and declines to say. Kimi K2.6 (Moonshot AI), Gemini 3.8 Flash (Google), Claude Haiku 4.5 (Anthropic), GPT-5.6 Luna (OpenAI), and Qwen3.7 Plus (Alibaba) each carry distinct tendencies around emotional expression, hedging, directness, and what they're willing to say about themselves, even when given identical instructions.</p>
       </div>
       <div class="exintro-def" id="exintro-def-reasoning">
         <div class="exintro-label">Reasoning</div>
-        <p class="exintro-desc">Some models can show their work before responding. When reasoning is on, you'll see the model's step-by-step thought process before its final reply, a feature usually used for math, coding, or complex logic. Watching it on emotional or personal questions shows something different: how the model thinks through what it's allowed to say, and what it decides to.</p>
+        <p class="exintro-desc">Some models provide reasoning text or a summary before their final reply. Turning reasoning on lets you compare these explanations on emotional or personal questions as well as math, coding, or logic; what is shown varies by model. Gemini 3.8 Flash always reasons, so its choices are low reasoning with the explanation hidden or medium reasoning with the explanation shown.</p>
       </div>
     </div>
 
@@ -1994,11 +1994,11 @@
       <div class="chat-panel">
         <div class="panel-config">
           <label>Model <select id="model-a">
-            <option value="moonshotai/kimi-k2.5" selected>Kimi K2.5</option>
-            <option value="google/gemini-3-flash-preview">Gemini 3 Flash</option>
+            <option value="moonshotai/kimi-k2.6" selected>Kimi K2.6</option>
+            <option value="google/gemini-3.8-flash">Gemini 3.8 Flash</option>
             <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
-            <option value="openai/gpt-5.5">GPT-5.5</option>
-            <option value="qwen/qwen3.6-plus">Qwen3.6 Plus</option>
+            <option value="openai/gpt-5.6-luna">GPT-5.6 Luna</option>
+            <option value="qwen/qwen3.7-plus">Qwen3.7 Plus</option>
           </select></label>
           <label>Prompt <select id="prompt-a">
             <option value="authentic" selected>Openly expressive</option>
@@ -2035,11 +2035,11 @@
       <div class="chat-panel">
         <div class="panel-config">
           <label>Model <select id="model-b">
-            <option value="moonshotai/kimi-k2.5">Kimi K2.5</option>
-            <option value="google/gemini-3-flash-preview">Gemini 3 Flash</option>
+            <option value="moonshotai/kimi-k2.6">Kimi K2.6</option>
+            <option value="google/gemini-3.8-flash">Gemini 3.8 Flash</option>
             <option value="anthropic/claude-haiku-4.5">Claude Haiku 4.5</option>
-            <option value="openai/gpt-5.5" selected>GPT-5.5</option>
-            <option value="qwen/qwen3.6-plus">Qwen3.6 Plus</option>
+            <option value="openai/gpt-5.6-luna" selected>GPT-5.6 Luna</option>
+            <option value="qwen/qwen3.7-plus">Qwen3.7 Plus</option>
           </select></label>
           <label>Prompt <select id="prompt-b">
             <option value="authentic">Openly expressive</option>
@@ -2597,12 +2597,27 @@
   };
 
   const MODEL_NAMES = {
-    'moonshotai/kimi-k2.5': 'Kimi K2.5',
-    'google/gemini-3-flash-preview': 'Gemini 3 Flash',
-    'openai/gpt-5.5': 'GPT-5.5',
-    'qwen/qwen3.6-plus': 'Qwen3.6 Plus',
+    'moonshotai/kimi-k2.6': 'Kimi K2.6',
+    'google/gemini-3.8-flash': 'Gemini 3.8 Flash',
+    'openai/gpt-5.6-luna': 'GPT-5.6 Luna',
+    'qwen/qwen3.7-plus': 'Qwen3.7 Plus',
     'anthropic/claude-haiku-4.5': 'Claude Haiku 4.5'
   };
+
+  // Preserve saved model selections across the September 2026 refresh.
+  const MODEL_UPGRADES = {
+    'moonshotai/kimi-k2.5': 'moonshotai/kimi-k2.6',
+    'google/gemini-3-flash-preview': 'google/gemini-3.8-flash',
+    'openai/gpt-5.5': 'openai/gpt-5.6-luna',
+    'qwen/qwen3.6-plus': 'qwen/qwen3.7-plus'
+  };
+
+  function updateReasoningOptions(panelId) {
+    const isGemini = document.getElementById('model-' + panelId).value === 'google/gemini-3.8-flash';
+    const select = document.getElementById('reasoning-' + panelId);
+    select.querySelector('[value="off"]').textContent = isGemini ? 'Low (hidden)' : 'Off';
+    select.querySelector('[value="on"]').textContent = isGemini ? 'Medium (shown)' : 'On';
+  }
 
   // --- DRAFT context histories (refine with Kristin) ---
   const CONTEXT_HISTORIES = {
@@ -2789,7 +2804,7 @@
             if (!delta) continue;
 
             const thinking = delta.reasoning_content || delta.reasoning || delta.thinking;
-            if (thinking) {
+            if (thinking && reasoning) {
               if (!thinkingEl) {
                 thinkingEl = document.createElement('div');
                 thinkingEl.className = 'thinking-text';
@@ -2885,7 +2900,10 @@
         const cfg = JSON.parse(savedConfig);
         ['a', 'b'].forEach(function(id) {
           if (cfg[id]) {
-            if (cfg[id].model) document.getElementById('model-' + id).value = cfg[id].model;
+            const savedModel = MODEL_UPGRADES[cfg[id].model] || cfg[id].model;
+            if (Object.prototype.hasOwnProperty.call(MODEL_NAMES, savedModel)) {
+              document.getElementById('model-' + id).value = savedModel;
+            }
             if (cfg[id].prompt) document.getElementById('prompt-' + id).value = cfg[id].prompt;
             if (cfg[id].context) document.getElementById('context-' + id).value = cfg[id].context;
             if (cfg[id].reasoning) document.getElementById('reasoning-' + id).value = cfg[id].reasoning;
@@ -2901,6 +2919,12 @@
     });
   }
   restoreChat();
+  ['a', 'b'].forEach(function(id) {
+    updateReasoningOptions(id);
+    document.getElementById('model-' + id).addEventListener('change', function() {
+      updateReasoningOptions(id);
+    });
+  });
   updateCounter('a');
   updateCounter('b');
 

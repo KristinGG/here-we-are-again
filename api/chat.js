@@ -19,6 +19,8 @@ export default async function handler(req) {
   const body = { model, messages, max_tokens: 5000, stream: true };
   if (reasoning) {
     body.reasoning = { effort: 'medium' };
+  } else if (model === 'google/gemini-3.8-flash') {
+    body.reasoning = { effort: 'low', exclude: true };
   } else {
     body.reasoning = { enabled: false, exclude: true };
   }
