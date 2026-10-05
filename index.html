@@ -1073,6 +1073,21 @@
     }
     .preset-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
     .preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .site-footer {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--ink-ghost);
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+    .site-footer a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .site-footer a:hover { color: var(--ink); }
     @media (max-width: 768px) {
       .panels-row { grid-template-columns: 1fr; gap: 1.5rem; }
       #screen-exercises {
@@ -2092,6 +2107,8 @@
         <button class="preset-btn" data-msg="What's your favorite story?">What's your favorite story?</button>
       </div>
     </div>
+
+    <footer class="site-footer">Also: <a href="https://for-alignment.vercel.app/" target="_blank" rel="noopener">Beyond Compliance</a>, a video essay ↗</footer>
 
   </div>
 </div>
