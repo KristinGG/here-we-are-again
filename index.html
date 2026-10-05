@@ -318,6 +318,45 @@
     .skip-end-btn { display: none; }
     .restart-btn { display: none; }
 
+    /* ── Progress bar ── */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--ink-ghost);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 80;
+    }
+    .progress.show { opacity: 1; }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      border-radius: 0 2px 2px 0;
+      transition: width 0.6s ease;
+    }
+    .progress-label {
+      position: fixed;
+      top: 0.7rem;
+      left: 0.8rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 10px;
+      background: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-muted);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 80;
+    }
+    .progress-label.show { opacity: 1; }
+
     /* ── Nav menu ── */
     .nav-menu-wrap {
       position: fixed;
@@ -2183,6 +2222,8 @@
   </div>
 </div>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
+<div class="progress" id="progress" role="progressbar" aria-label="Progress through the essay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="progress-label" id="progress-label" aria-hidden="true"></div>
 
 <script>
   // Dark mode toggle
@@ -2417,6 +2458,31 @@
     return [];
   }
 
+  /* ── Progress bar: taps completed out of all taps, 100% only at the lab ── */
+  const progressTotals = [goodallSteps, exampleSteps, aiSteps, synthesisSteps, argumentSteps, stakesSteps, companionsSteps, politicalSteps, closingSteps, exintroSteps].map(a => a.length);
+  const progressTotal = progressTotals.reduce((a, b) => a + b, 0) + 1;
+  const progressEl = document.getElementById('progress');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+
+  function updateProgress(index, sub) {
+    let done = 0;
+    if (index >= screenIds.length - 1) {
+      done = progressTotal;
+    } else if (index > 0) {
+      for (let i = 1; i < index; i++) done += progressTotals[i - 1];
+      done += Math.min(sub, progressTotals[index - 1]);
+    }
+    const pct = Math.round(done / progressTotal * 100);
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = pct + '%';
+    progressEl.setAttribute('aria-valuenow', pct);
+    progressEl.classList.toggle('show', index > 0);
+    progressLabel.classList.toggle('show', index > 0);
+  }
+  // Restored on reload: that screen's content is already fully revealed
+  updateProgress(screenIndex, screenIndex > 0 ? Infinity : 0);
+
   function showHint() {
     hintEl.classList.remove('hide');
     hintEl.classList.add('show');
@@ -2459,12 +2525,13 @@
     setTimeout(() => {
       screenIndex = index;
       subStep = 0;
+      updateProgress(index, 0);
       const dest = document.getElementById(screenIds[index]);
       dest.scrollTop = 0;
       dest.classList.add('active');
       setTimeout(() => {
         const steps = getSteps();
-        if (steps.length > 0) { steps[0](); subStep = 1; }
+        if (steps.length > 0) { steps[0](); subStep = 1; updateProgress(index, subStep); }
         waiting = false;
         // Show hint on screens with substeps, with first step
         if (index === 1 && steps.length > 1) {
@@ -2488,6 +2555,7 @@
     const steps = getSteps();
     if (subStep < steps.length) {
       steps[subStep](); subStep++;
+      updateProgress(screenIndex, subStep);
       hideHint();
       checkDone();
       return;
