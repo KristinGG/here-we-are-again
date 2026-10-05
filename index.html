@@ -18,6 +18,8 @@
       --ink-ghost:  #C8C0B4;
       --red:        #8B3226;
       --green:      #3F6B45;
+      --gold:       #C9961A;
+      --gold-track: rgba(30, 28, 24, 0.12);
       --clip-bg:    #EDE8DE;
       --panel-bg:   #ffffff;
       --hover-bg:   #f5f2eb;
@@ -32,6 +34,8 @@
       --ink-ghost:  #3a3632;
       --red:        #c4574a;
       --green:      #7BA065;
+      --gold:       #E0B04A;
+      --gold-track: rgba(232, 228, 220, 0.16);
       --clip-bg:    #252220;
       --panel-bg:   #222222;
       --hover-bg:   #2a2724;
@@ -46,6 +50,8 @@
         --ink-muted:  #7a7268;
         --ink-ghost:  #3a3632;
         --red:        #c4574a;
+        --gold:       #E0B04A;
+        --gold-track: rgba(232, 228, 220, 0.16);
         --clip-bg:    #252220;
         --panel-bg:   #222222;
         --hover-bg:   #2a2724;
@@ -318,44 +324,51 @@
     .skip-end-btn { display: none; }
     .restart-btn { display: none; }
 
-    /* ── Progress bar ── */
+    /* ── Progress bar: floats near the bottom of whatever screen you're on ── */
     .progress {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--ink-ghost);
+      left: 50%;
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%) translateY(8px);
+      width: min(560px, calc(100% - 2rem));
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      background: var(--cream);
+      border: 1px solid var(--ink-ghost);
+      box-shadow: 0 6px 24px -8px rgba(30, 20, 10, 0.35);
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.6s ease, transform 0.6s ease;
       pointer-events: none;
       z-index: 80;
     }
-    .progress.show { opacity: 1; }
+    .progress.show { opacity: 1; transform: translateX(-50%); }
+    .progress-track {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gold-track);
+      overflow: hidden;
+    }
     .progress-fill {
       height: 100%;
       width: 0;
-      background: var(--green);
-      border-radius: 0 2px 2px 0;
+      background: var(--gold);
+      border-radius: 999px;
       transition: width 0.6s ease;
     }
     .progress-label {
-      position: fixed;
-      top: 0.7rem;
-      left: 0.8rem;
-      padding: 0.12rem 0.45rem;
-      border-radius: 10px;
-      background: var(--cream);
+      flex: none;
+      min-width: 2.6em;
+      text-align: right;
       font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
-      color: var(--ink-muted);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-      z-index: 80;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
     }
-    .progress-label.show { opacity: 1; }
 
     /* ── Nav menu ── */
     .nav-menu-wrap {
@@ -784,7 +797,7 @@
     #screen-exercises {
       top: 3.75rem;
       overflow-y: auto;
-      padding: 0.75rem 2rem 2.5rem;
+      padding: 0.75rem 2rem 5.5rem;
     }
     .exercises-wrap {
       max-width: 1100px;
@@ -1185,7 +1198,7 @@
         align-items: flex-start;
         justify-content: flex-start;
         overflow-y: auto;
-        padding: 0.5rem 1rem 1.5rem;
+        padding: 0.5rem 1rem 5.5rem;
       }
       .exercises-wrap { gap: 1rem; }
       .chat-panel { max-height: none; }
@@ -2222,8 +2235,7 @@
   </div>
 </div>
 <div class="click-hint" id="click-hint">click anywhere to continue</div>
-<div class="progress" id="progress" role="progressbar" aria-label="Progress through the essay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
-<div class="progress-label" id="progress-label" aria-hidden="true"></div>
+<div class="progress" id="progress" role="progressbar" aria-label="Progress through the essay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div><div class="progress-label" id="progress-label" aria-hidden="true"></div></div>
 
 <script>
   // Dark mode toggle
@@ -2478,7 +2490,6 @@
     progressLabel.textContent = pct + '%';
     progressEl.setAttribute('aria-valuenow', pct);
     progressEl.classList.toggle('show', index > 0);
-    progressLabel.classList.toggle('show', index > 0);
   }
   // Restored on reload: that screen's content is already fully revealed
   updateProgress(screenIndex, screenIndex > 0 ? Infinity : 0);
