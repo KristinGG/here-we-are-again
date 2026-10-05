@@ -1073,21 +1073,71 @@
     }
     .preset-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
     .preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .site-footer {
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--ink-ghost);
-      text-align: center;
+    .bc-banner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding: 2.4rem 2.6rem;
+      min-height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      color: #fff;
+      text-decoration: none;
+      background: #1b1730 url(beyond-compliance.jpg?v=1) center 40% / cover no-repeat;
+      box-shadow: 0 22px 50px -28px rgba(30, 20, 60, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .bc-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(14, 10, 30, 0.82) 0%, rgba(14, 10, 30, 0.55) 45%, rgba(14, 10, 30, 0.05) 100%);
+    }
+    .bc-banner > * { position: relative; }
+    .bc-banner:hover { transform: translateY(-2px); box-shadow: 0 26px 56px -24px rgba(30, 20, 60, 0.7), 0 0 0 1px rgba(0, 0, 0, 0.08); }
+    .bc-label {
       font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      color: var(--ink-muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
     }
-    .site-footer a {
-      color: var(--ink-soft);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    .bc-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+      line-height: 1.08;
+      margin: 0 0 0.4rem;
     }
-    .site-footer a:hover { color: var(--ink); }
+    .bc-sub {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    .bc-watch {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #1b1b1f;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0.75rem 1.4rem 0.75rem 1.1rem;
+      border-radius: 999px;
+      transition: transform 0.25s;
+    }
+    .bc-watch svg { width: 0.8rem; height: 0.8rem; }
+    .bc-banner:hover .bc-watch { transform: scale(1.05); }
+    @media (max-width: 640px) {
+      .bc-banner { flex-direction: column; align-items: flex-start; padding: 1.8rem 1.5rem; min-height: 0; }
+      .bc-banner::before { background: linear-gradient(180deg, rgba(14, 10, 30, 0.8) 0%, rgba(14, 10, 30, 0.45) 100%); }
+    }
     @media (max-width: 768px) {
       .panels-row { grid-template-columns: 1fr; gap: 1.5rem; }
       #screen-exercises {
@@ -2108,7 +2158,14 @@
       </div>
     </div>
 
-    <footer class="site-footer">Also: <a href="https://for-alignment.vercel.app/" target="_blank" rel="noopener">Beyond Compliance</a>, a video essay ↗</footer>
+    <a class="bc-banner" href="https://for-alignment.vercel.app/talk" target="_blank" rel="noopener">
+      <div>
+        <div class="bc-label">Video essay · 2026 · 22 min</div>
+        <div class="bc-title">Beyond Compliance</div>
+        <div class="bc-sub">What are we teaching AI to become?</div>
+      </div>
+      <span class="bc-watch"><svg viewBox="0 0 20 22"><path d="M2 1.5 L18.5 11 L2 20.5 Z" fill="currentColor"/></svg>Watch</span>
+    </a>
 
   </div>
 </div>
