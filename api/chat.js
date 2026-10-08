@@ -1,5 +1,14 @@
 export const config = { runtime: 'edge' };
 
+// Only the models offered in the lab's dropdowns.
+const ALLOWED_MODELS = new Set([
+  'deepseek/deepseek-v4.1-flash',
+  'google/gemini-3.8-flash',
+  'anthropic/claude-haiku-4.5',
+  'openai/gpt-5.6-luna',
+  'qwen/qwen3.7-plus',
+]);
+
 export default async function handler(req) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -9,6 +18,12 @@ export default async function handler(req) {
 
   const { messages, model, reasoning } = await req.json();
   const apiKey = process.env.OPENROUTER_API_KEY;
+
+  if (!ALLOWED_MODELS.has(model)) {
+    return new Response(JSON.stringify({ error: 'Model not available' }), {
+      status: 400, headers: { 'Content-Type': 'application/json' }
+    });
+  }
 
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'API key not configured' }), {
